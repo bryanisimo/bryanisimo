@@ -151,8 +151,49 @@ const JobDetail = () => {
               </div>
             </motion.div>
           </div>
+
+
+        </div>
+
+        <div className="flex flex-col gap-8 lg:gap-16 w-full">
+
+          {/* Navigation */}
+          <div className="pt-12 flex justify-between items-center mt-12">
+            {(() => {
+              const currentIndex = experiences.findIndex(e => e.id === experience.id);
+              const next = currentIndex < experiences.length - 1 ? experiences[currentIndex + 1] : null;
+              const prev = currentIndex > 0 ? experiences[currentIndex - 1] : null;
+
+              return (
+                <>
+                  {prev ? (
+                    <Link
+                      to={`/experience/${prev.id}`}
+                      className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-black hover:gap-3 transition-all"
+                    >
+                      <ArrowLeft size={16} />
+                      Next job
+                    </Link>
+                  ) : <div />}
+
+                  {next ? (
+                    <Link
+                      to={`/experience/${next.id}`}
+                      className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-black hover:gap-3 transition-all"
+                    >
+                      Previous job
+                      <ArrowLeft size={16} className="rotate-180" />
+                    </Link>
+                  ) : <div />}
+                </>
+              );
+            })()}
+          </div>
+
+
         </div>
       </div>
+
 
       <Lightbox
         index={index}
