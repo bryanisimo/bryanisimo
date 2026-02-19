@@ -21,7 +21,7 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                 >
-                    What a nice surprise to see you here 🤓
+                    Nice to see you here 🤓
                 </motion.h1>
                 <motion.h2
                     className="text-2xl md:text-4xl font-bold leading-tight"
