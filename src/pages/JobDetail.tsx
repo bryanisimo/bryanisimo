@@ -53,7 +53,7 @@ const JobDetail = () => {
       </div>
 
       <div className="container-custom">
-        <div className="flex flex-col md:flex-row-reverse gap-8 lg:gap-16">
+        <div className="flex flex-col-reverse md:flex-row-reverse gap-8 lg:gap-16">
           {/* Right Column: Scrollable Media */}
           <div className="w-full md:w-1/2 lg:w-2/3">
             <div className="flex flex-col gap-4 p-4 md:p-8 lg:p-12">
