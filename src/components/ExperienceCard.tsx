@@ -27,7 +27,7 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
 
           {/* Subtle cursor-follow or hover effect could go here */}
           <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <span className="px-3 py-1 bg-white text-[10px] uppercase tracking-widest font-bold">view project</span>
+            <span className="px-3 py-1 bg-white text-[10px] uppercase tracking-widest font-bold">View experience</span>
           </div>
         </div>
 
