@@ -14,6 +14,7 @@ export interface Experience {
   summary: string;
   highlights: string[];
   media?: MediaItem[];
+  cardBgImage?: string;
 }
 
 export interface Project {
@@ -43,10 +44,10 @@ export const experiences: Experience[] = [
       "Led the migration from legacy REST APIs to the modern GraphQL Admin API."
     ],
     media: [
-      { type: 'image', url: '/assets/images/jobs/vpv/verval-plus-visual-logo.png' },
       { type: 'image', url: '/assets/images/jobs/vpv/system-diagram.webp' },
-      { type: 'video', url: '/assets/images/jobs/vpv/paul-fredrick-android.webp' }
-    ]
+      { type: 'video', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', thumbnail: '/assets/images/jobs/vpv/paul-fredrick-android.webp' }
+    ],
+    cardBgImage: '/assets/images/jobs/vpv/verval-plus-visual-logo.png'
   },
   {
     id: "clara",

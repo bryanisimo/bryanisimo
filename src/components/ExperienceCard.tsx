@@ -18,9 +18,16 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
     >
       <Link to={`/experience/${experience.id}`}>
         <div className="aspect-[4/3] bg-brand-gray overflow-hidden rounded-sm mb-6 relative group">
-          <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-gray-300 font-bold text-2xl group-hover:scale-110 group-hover:text-gray-400 transition-all duration-700">
+          {experience.cardBgImage && (
+            <img
+              src={experience.cardBgImage}
+              alt={`${experience.company} background`}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          )}
+          <div className={`absolute inset-0 transition-colors duration-500 ${experience.cardBgImage ? 'bg-black/40 group-hover:bg-black/20' : 'bg-black/5 group-hover:bg-transparent'}`} />
+          <div className="absolute inset-0 flex items-center justify-center p-4">
+            <span className={`font-bold text-2xl group-hover:scale-110 transition-all duration-700 text-center ${experience.cardBgImage ? 'text-white group-hover:text-gray-100 drop-shadow-md' : 'text-gray-300 group-hover:text-gray-400'}`}>
               {experience.company}
             </span>
           </div>
