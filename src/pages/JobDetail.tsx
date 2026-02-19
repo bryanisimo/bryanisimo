@@ -1,10 +1,17 @@
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft, Play } from 'lucide-react';
 import { experiences } from '../data/experience';
-import { ArrowLeft } from 'lucide-react';
+import Lightbox from "yet-another-react-lightbox";
+import Video from "yet-another-react-lightbox/plugins/video";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import "yet-another-react-lightbox/styles.css";
 
 const JobDetail = () => {
   const { id } = useParams<{ id: string }>();
   const experience = experiences.find(e => e.id === id);
+  const [index, setIndex] = useState(-1);
 
   if (!experience) {
     return (
@@ -15,65 +22,146 @@ const JobDetail = () => {
     );
   }
 
+  // Prepare slides for Lightbox
+  const slides = experience.media?.map(m => {
+    if (m.type === 'video') {
+      return {
+        type: "video" as const,
+        sources: [
+          {
+            src: m.url,
+            type: "video/mp4",
+          },
+        ],
+        poster: m.thumbnail,
+      };
+    }
+    return { src: m.url };
+  }) || [];
+
   return (
-    <main className="container-custom py-24">
-      <Link
-        to="/"
-        className="inline-flex items-center gap-2 mb-12 text-sm font-medium hover:gap-3 transition-all"
-      >
-        <ArrowLeft size={16} />
-        Back
-      </Link>
+    <main className="min-h-screen bg-white pt-28 pb-12">
+      {/* Mobile Header (Back button only) */}
+      <div className="md:hidden px-6 mb-8">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-sm font-medium hover:gap-3 transition-all"
+        >
+          <ArrowLeft size={16} />
+          Back
+        </Link>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-        <div>
-          <h2 className="text-sm uppercase tracking-widest text-gray-500 mb-4">
-            {experience.company}
-          </h2>
-          <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-            {experience.role}
-          </h1>
-          <div className="h-px bg-black w-full mb-8" />
-          <div className="flex flex-wrap gap-12 text-sm">
-            <div>
-              <p className="text-gray-500 mb-1">Date</p>
-              <p className="font-medium">{experience.period}</p>
-            </div>
-            <div>
-              <p className="text-gray-500 mb-1">Location</p>
-              <p className="font-medium">{experience.location}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-12 pt-4">
-          <div>
-            <h3 className="text-2xl font-bold mb-4 italic">Summary</h3>
-            <p className="text-lg leading-relaxed text-gray-700">
-              {experience.summary}
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-2xl font-bold mb-6 italic">Highlights</h3>
-            <ul className="space-y-6">
-              {experience.highlights.map((highlight, index) => (
-                <li key={index} className="flex gap-4">
-                  <span className="shrink-0 w-6 h-6 border border-black rounded-full flex items-center justify-center text-xs">
-                    {index + 1}
-                  </span>
-                  <p className="text-lg text-gray-800">{highlight}</p>
-                </li>
+      <div className="container-custom">
+        <div className="flex flex-col md:flex-row-reverse gap-8 lg:gap-16">
+          {/* Right Column: Scrollable Media */}
+          <div className="w-full md:w-1/2 lg:w-2/3">
+            <div className="flex flex-col gap-4 p-4 md:p-8 lg:p-12">
+              {experience.media?.map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  className="relative cursor-pointer overflow-hidden rounded-sm bg-brand-gray aspect-video"
+                  initial={{ opacity: 0.4, y: -50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  onClick={() => setIndex(idx)}
+                >
+                  {item.type === 'image' ? (
+                    <img
+                      src={item.url}
+                      alt={experience.company}
+                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full relative group">
+                      <img
+                        src={item.thumbnail || "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=2000"}
+                        className="w-full h-full object-cover"
+                        alt="video thumbnail"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+                        <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/50 transition-transform group-hover:scale-110">
+                          <Play className="text-white fill-white ml-1" size={32} />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
               ))}
-            </ul>
+            </div>
+          </div>
+
+          {/* Left Column: Fixed Content */}
+          <div className="w-full md:w-1/2 lg:w-1/3 md:sticky md:top-32 h-fit">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <Link
+                to="/"
+                className="hidden md:inline-flex items-center gap-2 mb-12 text-sm font-medium hover:gap-3 transition-all"
+              >
+                <ArrowLeft size={16} />
+                Back
+              </Link>
+
+              <h2 className="text-sm uppercase tracking-widest text-gray-400 mb-4 font-bold">
+                {experience.company}
+              </h2>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
+                {experience.role}
+              </h1>
+
+              <div className="h-px bg-black/10 w-full mb-8" />
+
+              <div className="flex flex-wrap gap-12 text-xs uppercase tracking-widest font-bold mb-12">
+                <div>
+                  <p className="text-gray-400 mb-2">Duration</p>
+                  <p>{experience.period}</p>
+                </div>
+                <div>
+                  <p className="text-gray-400 mb-2">Location</p>
+                  <p>{experience.location}</p>
+                </div>
+              </div>
+
+              <div className="space-y-12">
+                <div>
+                  <h3 className="text-xl font-bold mb-4 italic">The Mission</h3>
+                  <p className="text-lg leading-relaxed text-gray-700">
+                    {experience.summary}
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-bold mb-6 italic">Impact & Growth</h3>
+                  <ul className="space-y-6">
+                    {experience.highlights.map((highlight, idx) => (
+                      <li key={idx} className="flex gap-4">
+                        <span className="shrink-0 w-6 h-6 border border-black rounded-full flex items-center justify-center text-[10px] font-bold">
+                          {idx + 1}
+                        </span>
+                        <p className="text-base text-gray-800 leading-relaxed font-medium">{highlight}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>
 
-      <div className="mt-24 h-[60vh] bg-gray-100 rounded-lg flex items-center justify-center">
-        <span className="text-gray-400">Project Visual Content Placeholder</span>
-      </div>
-    </main>
+      <Lightbox
+        index={index}
+        slides={slides}
+        open={index >= 0}
+        close={() => setIndex(-1)}
+        plugins={[Video, Fullscreen]}
+      />
+    </main >
   );
 };
 

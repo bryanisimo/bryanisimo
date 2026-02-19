@@ -1,3 +1,10 @@
+export interface MediaItem {
+    type: 'image' | 'video';
+    url: string;
+    thumbnail?: string;
+    title?: string;
+}
+
 export interface Experience {
     id: string;
     role: string;
@@ -6,6 +13,7 @@ export interface Experience {
     period: string;
     summary: string;
     highlights: string[];
+    media?: MediaItem[];
 }
 
 export interface Project {
@@ -29,9 +37,15 @@ export const experiences: Experience[] = [
         period: "May 2024 – Present",
         summary: "Architected a critical middleware layer connecting Shopify with custom ERP systems using Node.js and GraphQL.",
         highlights: [
+            "Architected a critical middleware layer connecting Shopify with custom ERP systems using Node.js and GraphQL.",
             "Orchestrated a full infrastructure migration from Azure to Digital Ocean, achieving a 70% reduction in monthly costs.",
             "Consulted directly with enterprise clients to translate complex business logic into scalable technical solutions using Shopify Polaris.",
             "Led the migration from legacy REST APIs to the modern GraphQL Admin API."
+        ],
+        media: [
+            { type: 'image', url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=2000' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=2000' },
+            { type: 'video', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' }
         ]
     },
     {
@@ -45,6 +59,10 @@ export const experiences: Experience[] = [
             "Launched the company's main Reward Points program in just 30 days.",
             "Mentored engineers, fostering career growth and technical excellence.",
             "Directed integrations with KYC/AML tools (MetaMap, Mifiel) and CRM platforms."
+        ],
+        media: [
+            { type: 'image', url: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=2000' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2000' }
         ]
     },
     {
@@ -58,6 +76,10 @@ export const experiences: Experience[] = [
             "Delivered a stable MVP within 2 months.",
             "Architected a cross-platform mobile solution using React Native with Expo.",
             "Managed the technical recruitment process to scale the engineering team."
+        ],
+        media: [
+            { type: 'image', url: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=2000' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&q=80&w=2000' }
         ]
     },
     {
@@ -70,6 +92,10 @@ export const experiences: Experience[] = [
         highlights: [
             "Developed custom Vue.js modules and theme features.",
             "Established the organization's first automated testing pipeline using Cypress."
+        ],
+        media: [
+            { type: 'image', url: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=2000' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=2000' }
         ]
     },
     {
@@ -83,6 +109,10 @@ export const experiences: Experience[] = [
             "Architected Trident Micro Macro, a live-event mobile game supporting 200+ concurrent players.",
             "Developed Fórmula Like, a real-time Facebook interactive stream controlling physical Hot Wheels cars.",
             "Built 'Rally Pringles', a geolocation bot driving high volumes of traffic to points of sale."
+        ],
+        media: [
+            { type: 'image', url: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=2000' },
+            { type: 'image', url: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&q=80&w=2000' }
         ]
     }
 ];

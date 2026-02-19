@@ -12,14 +12,14 @@
 	"dependencies": {
 		"@react-three/drei": "^10.0.4",
 		"@react-three/fiber": "^9.1.5",
-		"framer-motion": "^12.4.7",
+		"framer-motion": "^12.34.2",
 		"lenis": "^1.1.18",
-		"lucide-react": "^0.477.0",
+		"lucide-react": "^0.575.0",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
 		"react-router-dom": "^7.3.0",
 		"three": "^0.183.0",
-		"yet-another-react-lightbox": "^3.21.7"
+		"yet-another-react-lightbox": "^3.29.1"
 	},
 	"devDependencies": {
 		"@browserbasehq/stagehand": "^1.11.0",
