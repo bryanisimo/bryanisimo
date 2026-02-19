@@ -8,15 +8,22 @@ const Home = () => {
     return (
         <main>
             <Hero />
-
-            <section className="py-24 container-custom" id="works">
+            <section className="py-24 container-custom" id="about-me">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-                    <div className="max-w-xl">
-                        <h2 className="text-sm uppercase tracking-widest text-gray-500 mb-6">Who I am</h2>
-                        <h3 className="text-4xl md:text-6xl font-bold leading-tight">
+                    <div className="full-width md:max-w-3xl">
+                        <h2 className="text-sm uppercase tracking-widest text-gray-500 mb-6">This is Bryan</h2>
+                        <h3 className="text-2xl md:text-5xl font-bold leading-tight">
                             A full-stack developer with 20 years of experience in web development.
                         </h3>
-                        <p className='mt-6 text-gray-600 leading-relaxed'>I'm a full-stack developer with 20 years of experience in web development. I'm passionate about building high-quality, user-friendly websites and applications. I'm also a bit of a perfectionist, so I always strive to deliver the best possible results.</p>
+                        <p className='mt-6 text-gray-600 leading-relaxed'>
+                            Beeing involved in any kind of project, since Small landing pages to leading multidiciplinary teams.
+                        </p>
+                        <p className='mt-6 text-gray-600 leading-relaxed'>
+                            I do care to deliver something that aports something to the people that uses my work, so, I enjoy to be part of the deccisions that takes the whole product development life cycle, from the planning to the delivery and maintenance.
+                        </p>
+                        <p className='mt-6 text-gray-600 leading-relaxed'>
+                            Let's my work talk for me.
+                        </p>
                     </div>
                 </div>
 
