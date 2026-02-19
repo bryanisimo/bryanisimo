@@ -17,7 +17,7 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
       transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link to={`/experience/${experience.id}`}>
-        <div className="aspect-[4/3] bg-brand-gray overflow-hidden rounded-sm mb-6 relative group">
+        <div className="aspect-[4/3] bg-brand-gray overflow-hidden rounded-sm mb-6 relative group opacity-100 md:opacity-80 group-hover:opacity-100 transition-opacity duration-500">
           {experience.cardBgImage && (
             <img
               src={experience.cardBgImage}
@@ -26,13 +26,8 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
             />
           )}
           <div className={`absolute inset-0 transition-colors duration-500 ${experience.cardBgImage ? 'bg-black/40 group-hover:bg-black/20' : 'bg-black/5 group-hover:bg-transparent'}`} />
-          <div className="absolute inset-0 flex items-center justify-center p-4">
-            <span className={`font-bold text-2xl group-hover:scale-110 transition-all duration-700 text-center ${experience.cardBgImage ? 'text-white group-hover:text-gray-100 drop-shadow-md' : 'text-gray-300 group-hover:text-gray-400'}`}>
-              {experience.company}
-            </span>
-          </div>
 
-          {/* Subtle cursor-follow or hover effect could go here */}
+          {/* View Experience Label */}
           <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <span className="px-3 py-1 bg-white text-[10px] uppercase tracking-widest font-bold">View experience</span>
           </div>
