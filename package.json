@@ -12,6 +12,7 @@
 	"dependencies": {
 		"@react-three/drei": "^10.0.4",
 		"@react-three/fiber": "^9.1.5",
+		"@tabler/icons-react": "^3.36.1",
 		"framer-motion": "^12.34.2",
 		"lenis": "^1.1.18",
 		"lucide-react": "^0.575.0",

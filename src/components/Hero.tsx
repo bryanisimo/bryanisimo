@@ -5,13 +5,13 @@ import { ChevronRight } from 'lucide-react';
 const Hero = () => {
   const scrollToHome = () => {
     window.scrollTo({
-      top: document.getElementById('about-me')?.offsetTop,
+      top: document.getElementById('experience')?.offsetTop,
       behavior: 'smooth'
     });
   };
 
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
+    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden" id="home">
       <HeroBackground />
 
       <div className="relative z-10 text-center w-full px-6 md:px-12">

@@ -26,7 +26,7 @@ const AwardsSection = () => {
           >
             <div>
               <span className="text-xs uppercase tracking-widest text-gray-500 block mb-2">{award.year}</span>
-              <h4 className="text-3xl font-bold group-hover:italic transition-all duration-300">{award.title}</h4>
+              <h4 className="text-3xl font-bold group-hover:underline underline-offset-8 transition-all duration-300">{award.title}</h4>
             </div>
             <div className="text-right">
               <span className="text-lg text-gray-400">{award.project}</span>

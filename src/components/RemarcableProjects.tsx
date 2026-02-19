@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 const RemarcableProjects = () => {
   return (
-    <section className="my-24 container-custom">
+    <section className="my-24 container-custom" id="projects">
       <div className="flex justify-between items-center mb-16">
         <h2 className="text-4xl font-bold">Remarkable Projects</h2>
         <button className="text-sm font-bold uppercase tracking-widest hover:underline">view all</button>
