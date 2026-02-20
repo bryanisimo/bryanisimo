@@ -58,7 +58,7 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
           {/* Vanta Layer */}
           <div
             ref={vantaRef}
-            className="absolute inset-0 w-full h-full transition-all duration-700 grayscale blur-[2px] opacity-70 group-hover:grayscale-0 group-hover:blur-0 group-hover:opacity-100"
+            className="absolute inset-0 w-full h-full transition-all duration-700 grayscale blur-[2px] opacity-70 group-hover:grayscale-0 group-hover:blur-none group-hover:opacity-100"
           />
 
           {/* Logo Layer */}
@@ -66,7 +66,7 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
             <img
               src={experience.companyLogoCard || experience.companyLogo}
               alt={`${experience.company} background`}
-              className="absolute m-auto inset-0 w-[60%] h-[60%] object-contain transition-all duration-700 ease-out grayscale opacity-60 group-hover:scale-110 group-hover:grayscale-0 group-hover:opacity-100 z-10"
+              className="absolute m-auto inset-0 w-[60%] h-[60%] object-contain transition-all duration-700 ease-out grayscale group-hover:scale-110 group-hover:grayscale-0 z-10"
             />
           )}
 
