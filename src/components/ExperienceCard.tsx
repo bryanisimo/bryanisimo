@@ -1,6 +1,10 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Experience } from '../data/experience';
+import { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
+// @ts-ignore
+import NET from 'vanta/dist/vanta.net.min';
 
 interface ExperienceCardProps {
   experience: Experience;
@@ -8,6 +12,38 @@ interface ExperienceCardProps {
 }
 
 const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
+  const [vantaEffect, setVantaEffect] = useState<any>(null);
+  const vantaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!vantaEffect && vantaRef.current) {
+      const effect = NET({
+        el: vantaRef.current,
+        THREE: THREE,
+        color: experience.cardColor ?? 0x9ca3af,
+        backgroundColor: experience.cardBackgroundColor ?? 0xffffff,
+        points: 10,
+        maxDistance: 20,
+        spacing: 16,
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+      });
+
+      // FIX: Vanta sets blending to `null` for dark colors on light backgrounds,
+      // which breaks lines in modern THREE.js. Force NormalBlending.
+      if (effect && effect.linesMesh && effect.linesMesh.material) {
+        effect.linesMesh.material.blending = THREE.NormalBlending;
+        effect.linesMesh.material.transparent = true;
+      }
+
+      setVantaEffect(effect);
+    }
+    return () => {
+      if (vantaEffect) vantaEffect.destroy();
+    };
+  }, [vantaEffect]);
+
   return (
     <motion.div
       className="group"
@@ -17,12 +53,15 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
       transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link to={`/experience/${experience.id}`}>
-        <div className="aspect-[4/3] bg-white overflow-hidden rounded-sm mb-6 relative group transition-all duration-500">
+        <div
+          ref={vantaRef}
+          className="aspect-[4/3] bg-white overflow-hidden rounded-sm mb-6 relative group transition-all duration-500 grayscale-0 md:grayscale group-hover:grayscale-0"
+        >
           {experience.companyLogo && (
             <img
               src={experience.companyLogo}
               alt={`${experience.company} background`}
-              className="absolute inset-0 w-full h-full object-cover grayscale-0 md:grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+              className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
             />
           )}
 

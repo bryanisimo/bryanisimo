@@ -99,11 +99,14 @@ const Navbar = () => {
             className="fixed inset-0 z-[90] bg-brand-black flex flex-col items-center justify-center p-6"
           >
             <div className="flex flex-col items-center gap-8 mb-12 text-center">
-              {navLinks.map((link, idx) => (
-                <button className="text-white text-2xl md:text-4xl font-bold hover:underline underline-offset-8 transition-all cursor-pointer">
+              {navLinks.map((link) => (
+                <button
+                  key={link.label}
+                  onClick={() => handleNavClick(link.href)}
+                  className="text-white text-2xl md:text-4xl font-bold hover:underline underline-offset-8 transition-all cursor-pointer"
+                >
                   {link.label}
                 </button>
-
               ))}
             </div>
             <motion.div

@@ -16,6 +16,8 @@ export interface Experience {
   media?: MediaItem[];
   website?: string;
   companyLogo?: string;
+  cardColor?: number;
+  cardBackgroundColor?: number;
 }
 
 export interface Project {
@@ -49,7 +51,9 @@ export const experiences: Experience[] = [
       { type: 'image', url: '/assets/images/jobs/vpv/system-diagram.webp' },
       { type: 'video', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', thumbnail: '/assets/images/jobs/vpv/paul-fredrick-android.webp' }
     ],
-    companyLogo: '/assets/images/jobs/vpv/verval-plus-visual-logo.webp'
+    companyLogo: '/assets/images/jobs/vpv/verval-plus-visual-logo.webp',
+    cardColor: 0x2E19DF,
+    cardBackgroundColor: 0x2E19DF,
   },
   {
     id: "clara",
@@ -67,7 +71,9 @@ export const experiences: Experience[] = [
       { type: 'image', url: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=2000' },
       { type: 'image', url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2000' }
     ],
-    companyLogo: '/assets/images/jobs/clara/clara-logo.webp'
+    companyLogo: '/assets/images/jobs/clara/clara-logo.webp',
+    cardColor: 0xff0000,
+    cardBackgroundColor: 0xffffff,
   },
   {
     id: "trivu",
@@ -86,7 +92,9 @@ export const experiences: Experience[] = [
       { type: 'image', url: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=2000' },
       { type: 'image', url: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&q=80&w=2000' }
     ],
-    companyLogo: '/assets/images/jobs/trivu/trivu-logo.webp'
+    companyLogo: '/assets/images/jobs/trivu/trivu-logo.webp',
+    cardColor: 0x5837F1,
+    cardBackgroundColor: 0x000000,
   },
   {
     id: "half-helix",
@@ -103,7 +111,9 @@ export const experiences: Experience[] = [
       { type: 'image', url: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=2000' },
       { type: 'image', url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=2000' }
     ],
-    companyLogo: '/assets/images/jobs/half-helix/half-helix-logo.webp'
+    companyLogo: '/assets/images/jobs/half-helix/half-helix-logo.webp',
+    cardColor: 0x9ca3af,
+    cardBackgroundColor: 0xffffff,
   },
   {
     id: "ktbo",
@@ -121,7 +131,9 @@ export const experiences: Experience[] = [
       { type: 'image', url: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=2000' },
       { type: 'image', url: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&q=80&w=2000' }
     ],
-    companyLogo: '/assets/images/jobs/ktbo/ktbo-logo.webp'
+    companyLogo: '/assets/images/jobs/ktbo/ktbo-logo.webp',
+    cardColor: 0x9ca3af,
+    cardBackgroundColor: 0xffffff,
   },
   {
     id: "ktc",
@@ -137,7 +149,9 @@ export const experiences: Experience[] = [
     media: [
       { type: 'image', url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=2000' }
     ],
-    companyLogo: '/assets/images/jobs/ktc/ktc-logo.webp'
+    companyLogo: '/assets/images/jobs/ktc/ktc-logo.webp',
+    cardColor: 0xffffff,
+    cardBackgroundColor: 0xDE6237,
   },
   {
     id: "el-recreo",
@@ -152,7 +166,9 @@ export const experiences: Experience[] = [
     media: [
       { type: 'image', url: 'https://images.unsplash.com/photo-1550439062-609e1531270e?auto=format&fit=crop&q=80&w=2000' }
     ],
-    companyLogo: '/assets/images/jobs/recreo/recreo-logo.webp'
+    companyLogo: '/assets/images/jobs/recreo/recreo-logo.webp',
+    cardColor: 0xffffff,
+    cardBackgroundColor: 0x000000,
   },
   {
     id: "changolos",
@@ -168,7 +184,9 @@ export const experiences: Experience[] = [
     media: [
       { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=2000' }
     ],
-    companyLogo: '/assets/images/jobs/changolos/changolos-logo.webp'
+    companyLogo: '/assets/images/jobs/changolos/changolos-logo.webp',
+    cardColor: 0xAECC4E,
+    cardBackgroundColor: 0xFFFFFF,
   }
 ];
 
