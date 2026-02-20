@@ -97,7 +97,7 @@ export const experiences: Experience[] = [
     ],
     companyLogo: '/assets/images/jobs/trivu/trivu-logo.webp',
     companyLogoCard: '/assets/images/jobs/trivu/trivu-logo-card.webp',
-    cardColor: 0x5837F1,
+    cardColor: 0x5938E5,
     cardBackgroundColor: 0x000000,
   },
   {

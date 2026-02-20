@@ -30,11 +30,12 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
         gyroControls: false,
       });
 
-      // FIX: Vanta sets blending to `null` for dark colors on light backgrounds,
-      // which breaks lines in modern THREE.js. Force NormalBlending.
+      // FIX: Vanta NET in modern Three.js uses undefined THREE.VertexColors, so lines default to white.
       if (effect && effect.linesMesh && effect.linesMesh.material) {
+        effect.linesMesh.material.vertexColors = true;
+        // Also force NormalBlending to prevent disappearing lines on white backgrounds
         effect.linesMesh.material.blending = THREE.NormalBlending;
-        effect.linesMesh.material.transparent = true;
+        effect.linesMesh.material.needsUpdate = true;
       }
 
       setVantaEffect(effect);
@@ -42,7 +43,7 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
     return () => {
       if (vantaEffect) vantaEffect.destroy();
     };
-  }, [vantaEffect]);
+  }, [vantaEffect, experience]);
 
   return (
     <motion.div
@@ -53,21 +54,25 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
       transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link to={`/experience/${experience.id}`}>
-        <div
-          ref={vantaRef}
-          className="aspect-[4/3] bg-white overflow-hidden rounded-sm mb-6 relative group transition-all duration-500 grayscale-0 md:grayscale group-hover:grayscale-0"
-        >
-          {experience.companyLogoCard && (
+        <div className="aspect-[4/3] bg-white overflow-hidden rounded-sm mb-6 relative group border border-gray-100">
+          {/* Vanta Layer */}
+          <div
+            ref={vantaRef}
+            className="absolute inset-0 w-full h-full transition-all duration-700 grayscale blur-[2px] opacity-70 group-hover:grayscale-0 group-hover:blur-0 group-hover:opacity-100"
+          />
+
+          {/* Logo Layer */}
+          {(experience.companyLogoCard || experience.companyLogo) && (
             <img
-              src={experience.companyLogoCard}
+              src={experience.companyLogoCard || experience.companyLogo}
               alt={`${experience.company} background`}
-              className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+              className="absolute m-auto inset-0 w-[60%] h-[60%] object-contain transition-all duration-700 ease-out grayscale opacity-60 group-hover:scale-110 group-hover:grayscale-0 group-hover:opacity-100 z-10"
             />
           )}
 
           {/* View Experience Label */}
-          <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <span className="px-3 py-1 bg-black text-white text-[10px] uppercase tracking-widest font-bold">View experience</span>
+          <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+            <span className="px-3 py-1 bg-black text-white text-[10px] uppercase tracking-widest font-bold shadow-sm">View experience</span>
           </div>
         </div>
 
