@@ -54,7 +54,7 @@ export const experiences: Experience[] = [
     ],
     companyLogo: '/assets/images/jobs/vpv/verval-plus-visual-logo.webp',
     companyLogoCard: '/assets/images/jobs/vpv/verval-plus-visual-logo-card.webp',
-    cardColor: 0x2E19DF,
+    cardColor: 0xFFFFFF,
     cardBackgroundColor: 0x2E19DF,
   },
   {
@@ -75,7 +75,7 @@ export const experiences: Experience[] = [
     ],
     companyLogo: '/assets/images/jobs/clara/clara-logo.webp',
     companyLogoCard: '/assets/images/jobs/clara/clara-logo-card.webp',
-    cardColor: 0xff0000,
+    cardColor: 0x5938E5,
     cardBackgroundColor: 0xffffff,
   },
   {

@@ -33,10 +33,22 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
       // FIX: Vanta NET in modern Three.js uses undefined THREE.VertexColors, so lines default to white.
       if (effect && effect.linesMesh && effect.linesMesh.material) {
         effect.linesMesh.material.vertexColors = true;
-        // Also force NormalBlending to prevent disappearing lines on white backgrounds
         effect.linesMesh.material.blending = THREE.NormalBlending;
         effect.linesMesh.material.needsUpdate = true;
       }
+
+      // PERFORMANCE OPTIMIZATION: Stop Vanta WebGL loop when not hovered
+      effect.isHovered = false;
+      let framesRendered = 0;
+      const originalIsOnScreen = effect.isOnScreen.bind(effect);
+      effect.isOnScreen = () => {
+        // Allow 2 initial frames to render the starting state
+        if (framesRendered < 2) {
+          framesRendered++;
+          return true;
+        }
+        return effect.isHovered && originalIsOnScreen();
+      };
 
       setVantaEffect(effect);
     }
@@ -54,7 +66,11 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
       transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link to={`/experience/${experience.id}`}>
-        <div className="aspect-[4/3] bg-white overflow-hidden rounded-sm mb-6 relative group border border-gray-100">
+        <div
+          className="aspect-[4/3] bg-white overflow-hidden rounded-sm mb-6 relative group border border-gray-100"
+          onMouseEnter={() => { if (vantaEffect) vantaEffect.isHovered = true; }}
+          onMouseLeave={() => { if (vantaEffect) vantaEffect.isHovered = false; }}
+        >
           {/* Vanta Layer */}
           <div
             ref={vantaRef}
