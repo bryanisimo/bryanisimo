@@ -107,12 +107,31 @@ const JobDetail = () => {
                 Back
               </Link>
 
-              <h2 className="text-sm uppercase tracking-widest text-gray-400 mb-4 font-bold">
-                {experience.company}
-              </h2>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
-                {experience.role}
-              </h1>
+              <div className="flex items-start gap-6 mb-8 mt-4 md:mt-0">
+
+
+                {/* Text Content */}
+                <div>
+                  <div className='flex flex-row gap-4 items-center mb-4'>
+                    {/* Logo Box */}
+                    {experience.companyLogo && (
+                      <div className="w-10 h-10 rounded-lg overflow-hidden border border-gray-100 shadow-sm bg-white flex items-center justify-center p-0">
+                        <img
+                          src={experience.companyLogo}
+                          alt={`${experience.company} logo`}
+                          className="w-full h-full object-cover p-0"
+                        />
+                      </div>
+                    )}
+                    <h2 className="text-sm uppercase tracking-widest text-gray-400 font-bold ">
+                      {experience.company}
+                    </h2>
+                  </div>
+                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+                    {experience.role}
+                  </h1>
+                </div>
+              </div>
 
               <div className="h-px bg-black/10 w-full mb-8" />
 

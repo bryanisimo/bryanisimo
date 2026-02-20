@@ -57,9 +57,9 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
           ref={vantaRef}
           className="aspect-[4/3] bg-white overflow-hidden rounded-sm mb-6 relative group transition-all duration-500 grayscale-0 md:grayscale group-hover:grayscale-0"
         >
-          {experience.companyLogo && (
+          {experience.companyLogoCard && (
             <img
-              src={experience.companyLogo}
+              src={experience.companyLogoCard}
               alt={`${experience.company} background`}
               className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
             />
