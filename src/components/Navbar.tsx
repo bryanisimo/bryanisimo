@@ -106,29 +106,12 @@ const Navbar = () => {
 
               ))}
             </div>
-            {/*
-                  <motion.button
-                  key={link.label}
-                  onClick={() => handleNavClick(link.href)}
-                  className="text-white text-2xl md:text-4xl font-bold hover:underline underline-offset-8 transition-all"
-                  initial={{ x: 50 + idx * 50 }}
-                  animate={{ x: 0 }}
-                  transition={{
-                    duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1]
-                  }}
-                >
-
-                </motion.button>
-
-                  */}
             <motion.div
               className="w-24 h-px bg-white/20 mb-12"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ delay: 0.7 }}
             />
-
             <div className="flex gap-10">
               {socialLinks.map((social, idx) => (
                 <motion.a
