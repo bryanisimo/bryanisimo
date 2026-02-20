@@ -18,9 +18,9 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
     >
       <Link to={`/experience/${experience.id}`}>
         <div className="aspect-[4/3] bg-white overflow-hidden rounded-sm mb-6 relative group transition-all duration-500">
-          {experience.cardBgImage && (
+          {experience.companyLogo && (
             <img
-              src={experience.cardBgImage}
+              src={experience.companyLogo}
               alt={`${experience.company} background`}
               className="absolute inset-0 w-full h-full object-cover grayscale-0 md:grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
             />

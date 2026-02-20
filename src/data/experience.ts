@@ -14,7 +14,8 @@ export interface Experience {
   summary: string;
   highlights: string[];
   media?: MediaItem[];
-  cardBgImage?: string;
+  website?: string;
+  companyLogo?: string;
 }
 
 export interface Project {
@@ -37,6 +38,7 @@ export const experiences: Experience[] = [
     location: "Remote, CA, USA",
     period: "May 2024 – Present",
     summary: "Architected a critical middleware layer connecting Shopify with custom ERP systems using Node.js and GraphQL.",
+    website: 'https://www.vpv.co/',
     highlights: [
       "Architected a critical middleware layer connecting Shopify with custom ERP systems using Node.js and GraphQL.",
       "Orchestrated a full infrastructure migration from Azure to Digital Ocean, achieving a 70% reduction in monthly costs.",
@@ -47,7 +49,7 @@ export const experiences: Experience[] = [
       { type: 'image', url: '/assets/images/jobs/vpv/system-diagram.webp' },
       { type: 'video', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', thumbnail: '/assets/images/jobs/vpv/paul-fredrick-android.webp' }
     ],
-    cardBgImage: '/assets/images/jobs/vpv/verval-plus-visual-logo.webp'
+    companyLogo: '/assets/images/jobs/vpv/verval-plus-visual-logo.webp'
   },
   {
     id: "clara",
@@ -64,7 +66,8 @@ export const experiences: Experience[] = [
     media: [
       { type: 'image', url: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=2000' },
       { type: 'image', url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2000' }
-    ]
+    ],
+    companyLogo: '/assets/images/jobs/clara/clara-logo.webp'
   },
   {
     id: "trivu",
@@ -73,6 +76,7 @@ export const experiences: Experience[] = [
     location: "CDMX, Mexico",
     period: "March 2020 – May 2021",
     summary: "Managed the complete project lifecycle for Smattcom, a digital solution for the largest scale marketplace for perishable goods in México.",
+    website: 'https://www.trivu.mx/',
     highlights: [
       "Delivered a stable MVP within 2 months.",
       "Architected a cross-platform mobile solution using React Native with Expo.",
@@ -81,7 +85,8 @@ export const experiences: Experience[] = [
     media: [
       { type: 'image', url: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=2000' },
       { type: 'image', url: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&q=80&w=2000' }
-    ]
+    ],
+    companyLogo: '/assets/images/jobs/trivu/trivu-logo.webp'
   },
   {
     id: "half-helix",
@@ -97,7 +102,8 @@ export const experiences: Experience[] = [
     media: [
       { type: 'image', url: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=2000' },
       { type: 'image', url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=2000' }
-    ]
+    ],
+    companyLogo: '/assets/images/jobs/half-helix/half-helix-logo.webp'
   },
   {
     id: "ktbo",
@@ -114,7 +120,8 @@ export const experiences: Experience[] = [
     media: [
       { type: 'image', url: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=2000' },
       { type: 'image', url: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&q=80&w=2000' }
-    ]
+    ],
+    companyLogo: '/assets/images/jobs/ktbo/ktbo-logo.webp'
   }
 ];
 
