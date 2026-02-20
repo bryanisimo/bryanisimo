@@ -17,19 +17,18 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
       transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link to={`/experience/${experience.id}`}>
-        <div className="aspect-[4/3] bg-brand-gray overflow-hidden rounded-sm mb-6 relative group opacity-100 md:opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+        <div className="aspect-[4/3] bg-white overflow-hidden rounded-sm mb-6 relative group transition-all duration-500">
           {experience.cardBgImage && (
             <img
               src={experience.cardBgImage}
               alt={`${experience.company} background`}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="absolute inset-0 w-full h-full object-cover grayscale-0 md:grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
             />
           )}
-          <div className={`absolute inset-0 transition-colors duration-500 ${experience.cardBgImage ? 'bg-black/40 group-hover:bg-black/20' : 'bg-black/5 group-hover:bg-transparent'}`} />
 
           {/* View Experience Label */}
           <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <span className="px-3 py-1 bg-white text-[10px] uppercase tracking-widest font-bold">View experience</span>
+            <span className="px-3 py-1 bg-black text-white text-[10px] uppercase tracking-widest font-bold">View experience</span>
           </div>
         </div>
 

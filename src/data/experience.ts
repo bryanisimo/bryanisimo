@@ -47,7 +47,7 @@ export const experiences: Experience[] = [
       { type: 'image', url: '/assets/images/jobs/vpv/system-diagram.webp' },
       { type: 'video', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', thumbnail: '/assets/images/jobs/vpv/paul-fredrick-android.webp' }
     ],
-    cardBgImage: '/assets/images/jobs/vpv/verval-plus-visual-logo.png'
+    cardBgImage: '/assets/images/jobs/vpv/verval-plus-visual-logo.webp'
   },
   {
     id: "clara",
