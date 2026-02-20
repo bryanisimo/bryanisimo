@@ -122,6 +122,53 @@ export const experiences: Experience[] = [
       { type: 'image', url: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&q=80&w=2000' }
     ],
     companyLogo: '/assets/images/jobs/ktbo/ktbo-logo.webp'
+  },
+  {
+    id: "ktc",
+    role: "Lead Software Developer",
+    company: "KTC",
+    location: "CDMX, Mexico",
+    period: "September 2010 – October 2014",
+    summary: "Led my first engineering team, bridging the gap between creative ambition and technical feasibility.",
+    highlights: [
+      "Colaborated on Listos Click, a first-of-its-kind project in Mexico allowing users to remotely control a physical vehicle via keyboard.",
+      "Developed a variety of promotional websites for Profuturo GNP, Absolute Vodka, Suzuki, Jameson Whiskey."
+    ],
+    media: [
+      { type: 'image', url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=2000' }
+    ],
+    companyLogo: '/assets/images/jobs/ktc/ktc-logo.webp'
+  },
+  {
+    id: "el-recreo",
+    role: "Jr Developer",
+    company: "El Recreo",
+    location: "CDMX, Mexico",
+    period: "March 2009 – August 2010",
+    summary: "Developed interactive microsites and minigames for Burger King and Lemon Films using Flash and ActionScript.",
+    highlights: [
+      "Developed interactive microsites and minigames for Burger King and Lemon Films using Flash and ActionScript."
+    ],
+    media: [
+      { type: 'image', url: 'https://images.unsplash.com/photo-1550439062-609e1531270e?auto=format&fit=crop&q=80&w=2000' }
+    ],
+    companyLogo: '/assets/images/jobs/recreo/recreo-logo.webp'
+  },
+  {
+    id: "changolos",
+    role: "Webmaster",
+    company: "Chángolos",
+    location: "CDMX, Mexico",
+    period: "May 2006 – January 2008",
+    summary: "Mastered full-stack workflows early by connecting Flash animations to PHP/MySQL backends.",
+    highlights: [
+      "Mastered full-stack workflows early by connecting Flash animations to PHP/MySQL backends.",
+      "Built a library of over 20 interactive minigames and a real-time chat application."
+    ],
+    media: [
+      { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=2000' }
+    ],
+    companyLogo: '/assets/images/jobs/changolos/changolos-logo.webp'
   }
 ];
 
