@@ -54,7 +54,7 @@ export const experiences: Experience[] = [
     ],
     companyLogo: '/assets/images/jobs/vpv/verval-plus-visual-logo.webp',
     companyLogoCard: '/assets/images/jobs/vpv/verval-plus-visual-logo-card.webp',
-    cardColor: 0xFFFFFF,
+    cardColor: 0x080143,
     cardBackgroundColor: 0x2E19DF,
   },
   {
@@ -103,7 +103,7 @@ export const experiences: Experience[] = [
   {
     id: "half-helix",
     role: "Senior Front End Developer",
-    company: "Half Helix",
+    company: "Half Helix (Now Domaine)",
     location: "Remote, NY, USA",
     period: "June 2019 – February 2020",
     summary: "Optimized high-traffic Shopify Plus stores for global brands including Rothy's, Soludos, and the HBO Shop.",
@@ -148,6 +148,7 @@ export const experiences: Experience[] = [
     location: "CDMX, Mexico",
     period: "September 2010 – October 2014",
     summary: "Led my first engineering team, bridging the gap between creative ambition and technical feasibility.",
+    website: "https://www.ktc.agency/",
     highlights: [
       "Colaborated on Listos Click, a first-of-its-kind project in Mexico allowing users to remotely control a physical vehicle via keyboard.",
       "Developed a variety of promotional websites for Profuturo GNP, Absolute Vodka, Suzuki, Jameson Whiskey."
@@ -157,26 +158,8 @@ export const experiences: Experience[] = [
     ],
     companyLogo: '/assets/images/jobs/ktc/ktc-logo.webp',
     companyLogoCard: '/assets/images/jobs/ktc/ktc-logo-card.webp',
-    cardColor: 0xffffff,
-    cardBackgroundColor: 0xDE6237,
-  },
-  {
-    id: "autofin",
-    role: "Web Developer",
-    company: "Autofin",
-    location: "CDMX, Mexico",
-    period: "August 2008 – March 2009",
-    summary: "Developed corporate portals and internal tools.",
-    highlights: [
-      "Developed corporate portals and internal tools."
-    ],
-    media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=2000' }
-    ],
-    companyLogo: '/assets/images/jobs/autofin/autofin-logo.webp',
-    companyLogoCard: '/assets/images/jobs/autofin/autofin-logo-card.webp',
-    cardColor: 0x9ca3af,
-    cardBackgroundColor: 0xffffff,
+    cardColor: 0xdf6435,
+    cardBackgroundColor: 0xde6237,
   },
   {
     id: "el-recreo",
@@ -193,8 +176,26 @@ export const experiences: Experience[] = [
     ],
     companyLogo: '/assets/images/jobs/recreo/recreo-logo.webp',
     companyLogoCard: '/assets/images/jobs/recreo/recreo-logo-card.webp',
-    cardColor: 0xffffff,
-    cardBackgroundColor: 0x000000,
+    cardColor: 0x4da887,
+    cardBackgroundColor: 0xBACEC2,
+  },
+  {
+    id: "autofin",
+    role: "Web Developer",
+    company: "Autofin",
+    location: "CDMX, Mexico",
+    period: "August 2008 – March 2009",
+    summary: "Developed corporate portals and internal tools.",
+    highlights: [
+      "Developed corporate portals and internal tools."
+    ],
+    media: [
+      { type: 'image', url: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=2000' }
+    ],
+    companyLogo: '/assets/images/jobs/autofin/autofin-logo.webp',
+    companyLogoCard: '/assets/images/jobs/autofin/autofin-logo-card.webp',
+    cardColor: 0xFDEE21,
+    cardBackgroundColor: 0x280046,
   },
   {
     id: "changolos",
@@ -212,8 +213,8 @@ export const experiences: Experience[] = [
     ],
     companyLogo: '/assets/images/jobs/changolos/changolos-logo.webp',
     companyLogoCard: '/assets/images/jobs/changolos/changolos-logo-card.webp',
-    cardColor: 0xAECC4E,
-    cardBackgroundColor: 0xFFFFFF,
+    cardColor: 0x009BD5,
+    cardBackgroundColor: 0xA2D8EA,
   }
 ];
 
