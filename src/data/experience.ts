@@ -216,6 +216,25 @@ export const experiences: Experience[] = [
     companyLogoCard: '/assets/images/jobs/changolos/changolos-logo-card.webp',
     cardColor: 0x009BD5,
     cardBackgroundColor: 0xA2D8EA,
+  },
+  {
+    id: "freelancer",
+    role: "Freelancer",
+    company: "Freelancer",
+    location: "CDMX, Mexico",
+    period: "Occasional",
+    summary: "Time to time I have the opportunity to work on freelance projects for different clients.",
+    highlights: [
+      "Mastered full-stack workflows early by connecting Flash animations to PHP/MySQL backends.",
+      "Built a library of over 20 interactive minigames and a real-time chat application."
+    ],
+    media: [
+      { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=2000' }
+    ],
+    companyLogo: '/assets/images/jobs/freelancer/freelancer-logo.webp',
+    companyLogoCard: '/assets/images/jobs/freelancer/freelancer-logo-card.webp',
+    cardColor: 0x44889B,
+    cardBackgroundColor: 0xDCF6F3,
   }
 ];
 

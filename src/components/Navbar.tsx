@@ -52,14 +52,14 @@ const Navbar = () => {
   return (
     <>
       <motion.nav
-        className="fixed top-0 left-0 w-full z-[100] py-8 px-6 md:px-12 flex justify-between items-center mix-blend-difference pointer-events-none"
+        className="fixed top-0 left-0 w-full z-[100] py-8 px-6 md:px-12 flex justify-between items-center pointer-events-none"
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="pointer-events-auto">
-          <Link to="/" className="text-xl font-bold tracking-tighter text-white">
-            Bryanisimo.
+          <Link to="/" className="font-bold">
+            <img src="/assets/images/jobs/freelancer/logo-min-svg.svg" alt="Bryan" className="h-8 w-auto" />
           </Link>
         </div>
 
@@ -75,12 +75,12 @@ const Navbar = () => {
               transition={{ duration: 0.5, ease: "easeInOut" }}
             >
               <motion.div
-                className="w-8 h-[2px] bg-white absolute"
+                className="w-8 h-[2px] bg-slate-950 absolute"
                 animate={isOpen ? { rotate: 45, y: 0 } : { rotate: 0, y: -4 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               />
               <motion.div
-                className="w-8 h-[2px] bg-white absolute"
+                className="w-8 h-[2px] bg-slate-950 absolute"
                 animate={isOpen ? { rotate: -45, y: 0 } : { rotate: 0, y: 4 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               />
