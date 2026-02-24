@@ -8,7 +8,7 @@ const awards = [
 
 const AwardsSection = () => {
   return (
-    <section className="py-24 container-custom bg-black text-white">
+    <section className="py-24 container-custom bg-slate-950 text-white">
       <div className="mb-16">
         <h2 className="text-sm uppercase tracking-widest text-gray-500 mb-6">recognition</h2>
         <h3 className="text-4xl md:text-6xl font-bold">Award-Winning Projects</h3>

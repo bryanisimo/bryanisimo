@@ -37,7 +37,7 @@ const Hero = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          <button className="bg-brand-black text-white px-8 py-4 flex items-center gap-2 transition-all group hover:pr-10 hover:pl-10 mx-auto cursor-pointer" onClick={scrollToHome}>
+          <button className="bg-slate-950 text-white px-8 py-4 flex items-center gap-2 transition-all group hover:pr-10 hover:pl-10 mx-auto cursor-pointer" onClick={scrollToHome}>
             Tell me more
             <ChevronRight className='group-hover:translate-x-2 group-hover:rotate-90 transition-all' />
           </button>

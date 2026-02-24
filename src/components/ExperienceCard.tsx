@@ -88,7 +88,7 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
 
           {/* View Experience Label */}
           <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-            <span className="px-3 py-1 bg-black text-white text-[10px] uppercase tracking-widest font-bold shadow-sm">View experience</span>
+            <span className="px-3 py-1 bg-slate-950 text-white text-[10px] uppercase tracking-widest font-bold shadow-sm">View experience</span>
           </div>
         </div>
 

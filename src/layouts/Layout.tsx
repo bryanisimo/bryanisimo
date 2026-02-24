@@ -38,7 +38,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                             href={social.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-gray-400 hover:text-black transition-colors"
+                            className="text-gray-400 hover:text-slate-950 transition-colors"
                             aria-label={social.label}
                         >
                             {social.icon}

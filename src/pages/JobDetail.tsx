@@ -80,7 +80,7 @@ const JobDetail = () => {
                         className="w-full h-full object-cover"
                         alt="video thumbnail"
                       />
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+                      <div className="absolute inset-0 flex items-center justify-center bg-slate-950/20 group-hover:bg-slate-950/30 transition-colors">
                         <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/50 transition-transform group-hover:scale-110">
                           <Play className="text-white fill-white ml-1" size={32} />
                         </div>
@@ -133,7 +133,7 @@ const JobDetail = () => {
                 </div>
               </div>
 
-              <div className="h-px bg-black/10 w-full mb-8" />
+              <div className="h-px bg-slate-950/10 w-full mb-8" />
 
               <div className="flex flex-wrap gap-12 text-xs uppercase tracking-widest font-bold mb-12">
                 <div>
@@ -159,7 +159,7 @@ const JobDetail = () => {
                   <ul className="space-y-6">
                     {experience.highlights.map((highlight, idx) => (
                       <li key={idx} className="flex gap-4">
-                        <span className="shrink-0 w-6 h-6 border border-black rounded-full flex items-center justify-center text-[10px] font-bold">
+                        <span className="shrink-0 w-6 h-6 border border-slate-950 rounded-full flex items-center justify-center text-[10px] font-bold">
                           {idx + 1}
                         </span>
                         <p className="text-base text-gray-800 leading-relaxed font-medium">{highlight}</p>
@@ -188,7 +188,7 @@ const JobDetail = () => {
                   {prev ? (
                     <Link
                       to={`/experience/${prev.id}`}
-                      className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-black hover:gap-3 transition-all"
+                      className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-slate-950 hover:gap-3 transition-all"
                     >
                       <ArrowLeft size={16} />
                       Next job
@@ -198,7 +198,7 @@ const JobDetail = () => {
                   {next ? (
                     <Link
                       to={`/experience/${next.id}`}
-                      className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-black hover:gap-3 transition-all"
+                      className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-slate-950 hover:gap-3 transition-all"
                     >
                       Previous job
                       <ArrowLeft size={16} className="rotate-180" />
