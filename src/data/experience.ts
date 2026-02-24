@@ -49,8 +49,9 @@ export const experiences: Experience[] = [
       "Led the migration from legacy REST APIs to the modern GraphQL Admin API."
     ],
     media: [
+      { type: 'image', url: '/assets/images/jobs/vpv/pf-logo.webp' },
       { type: 'image', url: '/assets/images/jobs/vpv/system-diagram.webp' },
-      { type: 'video', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', thumbnail: '/assets/images/jobs/vpv/paul-fredrick-android.webp' }
+      { type: 'image', url: '/assets/images/jobs/vpv/paul-fredrick-android.webp' }
     ],
     companyLogo: '/assets/images/jobs/vpv/verval-plus-visual-logo.webp',
     companyLogoCard: '/assets/images/jobs/vpv/verval-plus-visual-logo-card.webp',
