@@ -248,11 +248,12 @@ export const experiences: Experience[] = [
     period: "Occasional",
     summary: "Time to time I have the opportunity to work on freelance projects for different clients.",
     highlights: [
-      "Mastered full-stack workflows early by connecting Flash animations to PHP/MySQL backends.",
-      "Built a library of over 20 interactive minigames and a real-time chat application."
+      "**Stranger Fest Mexico**: Due the vendors booking sistem crashed, within a week I developed a tailored Next.js scheduling system allowing the entrance by a QR code.",
+      "**Stranger Fest Mexico**: Successfully handled 10,000 users per minute with zero errors, managing total sell-outs in minutes.",
     ],
     media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=2000' }
+      { type: 'image', url: '/assets/images/jobs/freelancer/stranger-fest-1.webp' },
+      { type: 'image', url: '/assets/images/jobs/freelancer/stranger-fest-2.webp' },
     ],
     companyLogo: '/assets/images/jobs/freelancer/freelancer-logo.webp',
     companyLogoCard: '/assets/images/jobs/freelancer/freelancer-logo-card.webp',
