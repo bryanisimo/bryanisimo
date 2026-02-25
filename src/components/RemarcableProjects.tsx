@@ -5,7 +5,6 @@ const RemarcableProjects = () => {
     <section className="my-24 container-custom" id="projects">
       <div className="flex justify-between items-center mb-16">
         <h2 className="text-4xl font-bold">Remarkable Projects</h2>
-        <button className="text-sm font-bold uppercase tracking-widest hover:underline">view all</button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">

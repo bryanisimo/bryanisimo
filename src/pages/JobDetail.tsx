@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Play } from 'lucide-react';
@@ -149,9 +150,17 @@ const JobDetail = () => {
               <div className="space-y-12">
                 <div>
                   <h3 className="text-xl font-bold mb-4 italic">The Mission</h3>
-                  <p className="text-lg leading-relaxed text-gray-700">
-                    {experience.summary}
-                  </p>
+                  <div className="text-lg leading-relaxed text-gray-700">
+                    <ReactMarkdown
+                      components={{
+                        a: ({ node, ...props }) => <a className="underline hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer" {...props} />,
+                        strong: ({ node, ...props }) => <strong className="font-extrabold text-slate-950" {...props} />,
+                        em: ({ node, ...props }) => <em className="text-sm italic text-gray-500" {...props} />
+                      }}
+                    >
+                      {experience.summary}
+                    </ReactMarkdown>
+                  </div>
                 </div>
 
                 <div>
@@ -162,7 +171,17 @@ const JobDetail = () => {
                         <span className="shrink-0 w-6 h-6 border border-slate-950 rounded-full flex items-center justify-center text-[10px] font-bold">
                           {idx + 1}
                         </span>
-                        <p className="text-base text-gray-800 leading-relaxed font-medium">{highlight}</p>
+                        <div className="text-base text-gray-800 leading-relaxed font-medium">
+                          <ReactMarkdown
+                            components={{
+                              a: ({ node, ...props }) => <a className="underline hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer" {...props} />,
+                              strong: ({ node, ...props }) => <strong className="font-extrabold text-slate-950" {...props} />,
+                              em: ({ node, ...props }) => <em className="text-sm italic text-gray-500" {...props} />
+                            }}
+                          >
+                            {highlight}
+                          </ReactMarkdown>
+                        </div>
                       </li>
                     ))}
                   </ul>
@@ -191,7 +210,7 @@ const JobDetail = () => {
                       className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-slate-950 hover:gap-3 transition-all"
                     >
                       <ArrowLeft size={16} />
-                      Next job
+                      Newest job
                     </Link>
                   ) : <div />}
 
@@ -200,7 +219,7 @@ const JobDetail = () => {
                       to={`/experience/${next.id}`}
                       className="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-slate-950 hover:gap-3 transition-all"
                     >
-                      Previous job
+                      Older job
                       <ArrowLeft size={16} className="rotate-180" />
                     </Link>
                   ) : <div />}

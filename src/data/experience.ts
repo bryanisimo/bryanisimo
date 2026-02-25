@@ -87,7 +87,7 @@ export const experiences: Experience[] = [
     company: "TRIVU",
     location: "Mexico City, Mexico",
     period: "Mar 2020 - May 2021 (1y 3m)",
-    summary: "I led the development of Smattcom (https://www.smattcom.com), a React Native mobile app that simplified large-scale buying and selling of perishables within Mexico's largest market (Central de Abasto).",
+    summary: "I led the development of [Smattcom](https://www.smattcom.com), a React Native mobile app that simplified large-scale buying and selling of perishables within Mexico's largest market (Central de Abasto).",
     website: 'https://www.trivu.mx/',
     highlights: [
       "Led a team of up to 4 engineers, managing the complete project lifecycle, including technical architecture decisions, the hiring process, and final delivery. We launched the MVP within the first 2 months to speed up visibility",
@@ -133,9 +133,9 @@ export const experiences: Experience[] = [
     period: "Nov 2014 - May 2019 (4y 7m)",
     summary: "As the leader of an 8-engineer team, I directed the full development lifecycle for diverse client projects, from initial concept and pitch to final delivery. My responsibilities included defining project scopes, budgets, technical architectures, and strategies. This role was my first experience managing regional (Diageo) and international (Mondelez) projects, requiring strict adherence to corporate standards and complex legal regulations. Led the development of multiple award-winning, large-scale campaigns, enhancing brand visibility and client satisfaction.",
     highlights: [
-      "Award: IAB México - Trident Micro Macro: Architected a live-event mobile game that supported 200 concurrent players interacting from their phones with a cinema screen.",
-      "Award: Círculo de Oro - Fórmula Like: Interactive Facebook streaming, where user  reactions (votes) powered a real Hot Wheels car of your favorite country, and all happened fully live",
-      "Award: Facebook Casos de Éxito - Rally Pringles: A bot with geolocalization that guided users to the closest point of sale with the active promotion. It improved sales and generated a lot of participation. https://www.facebook.com/business/success/pringles",
+      "**Award** IAB México - Trident Micro Macro: Architected a live-event mobile game that supported 200 concurrent players interacting from their phones with a cinema screen.",
+      "**Award** Círculo de Oro - Fórmula Like: Interactive Facebook streaming, where user  reactions (votes) powered a real Hot Wheels car of your favorite country, and all happened fully live",
+      "**Award** Facebook Casos de Éxito - Rally Pringles: A bot with geolocalization that guided users to the closest point of sale with the active promotion. It improved sales and generated a lot of participation.",
       "Buchanan’s LatAm: Regional Site (LatAm), it provided information about the products, one of my first experiences coordinating with cooperative teams",
       "Ricolino influencer: Video platform where users could update as “influencers” to win some prizes, I acquired experience with AWS architecture to optimize resources",
       "Barbie Fashion Challenge Bot: It was a bot that allowed users to participate in a photo challenge, you were able to update some pictures of your participation and vote for others. What I learned here was a different way to generate interactions, measure it to give results",
@@ -164,7 +164,7 @@ export const experiences: Experience[] = [
     website: "https://www.ktc.agency/",
     highlights: [
       "Suzuki - Remote Test Drive: Due to the launching of the second generation in Mexico of the Suzuki Swift, we intervened in a Suzuki Swift to be controlled remotely, a first-of-its-kind project in Mexico. I led the technical solution that allowed users  to remotely control a physical Suzuki Swift via their keyboards, solving significant real-time streaming and control latency challenges",
-      "Suzuki - Autos México: I worked on the cars section of Suzuki Motors, improving website performance, SEO and many promotional landing pages https://www.suzuki.com.mx/autos/",
+      "Suzuki - Autos México: I worked on the cars section of Suzuki Motors, improving website performance, SEO and many promotional landing pages for [Suzuki Autos](https://www.suzuki.com.mx/autos/)",
       "Profuturo GNP - Web App Afore: Built a web app to simplify complex information about Mexican Afores (retirement funds). Designed a CMS with reusable content components, allowing easy updates and clear, visual communication for prospects and clients.",
       "Absolut - Absolut Glam: Developed the Absolut Glam Facebook Application, which utilized the Facebook API to allow users to personalize photos with branded filters and post them directly to their Facebook albums, driving social engagement.",
     ],
