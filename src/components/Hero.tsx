@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import HeroBackground from './HeroBackground';
 import { ChevronRight } from 'lucide-react';
 
 const Hero = () => {
@@ -12,7 +11,6 @@ const Hero = () => {
 
   return (
     <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-[#D5D5D5]" id="home">
-      <HeroBackground />
 
       <div className="relative z-10 text-center w-full px-6 md:px-12">
         <motion.h1
