@@ -21,15 +21,23 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
-          Nice to see you here 🤓
+          Nice to see you here 🎊
         </motion.h1>
+        <motion.p
+          className="text-2xl md:text-4xl font-bold leading-tight"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        >
+          Are you looking for a
+        </motion.p>
         <motion.h2
           className="text-2xl md:text-4xl font-bold leading-tight"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
-          Senior Engineer / Engineering Manager
+          Senior Engineer / Engineering Manager?
         </motion.h2>
         <motion.div
           className="mt-12"
@@ -38,7 +46,7 @@ const Hero = () => {
           transition={{ delay: 0.5, duration: 0.8 }}
         >
           <button className="bg-slate-950 text-white px-8 py-4 flex items-center gap-2 transition-all group hover:pr-10 hover:pl-10 mx-auto cursor-pointer" onClick={scrollToHome}>
-            Tell me more
+            Yes, tell me more
             <ChevronRight className='group-hover:translate-x-2 group-hover:rotate-90 transition-all' />
           </button>
         </motion.div>

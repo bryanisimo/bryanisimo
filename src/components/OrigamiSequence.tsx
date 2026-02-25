@@ -13,14 +13,14 @@ const MODELS = [
 ];
 
 const MODEL_CONFIGS = [
-  // 0: Crane - Center, default zoom
-  { position: [0.5, -0.5, 0], scale: [2.2, 2.2, 2.2], camPos: [0, 0, 8] },
-  // 1: Boat - Lower down, zoomed in, camera angled right
-  { position: [-0.5, -1.5, 0], scale: [2.8, 2.8, 2.8], camPos: [2, 1, 6] },
-  // 2: Airplane - Higher up, tilted camera view
-  { position: [0, 0.8, 0], scale: [2.5, 2.5, 2.5], camPos: [-2, -1, 7] },
-  // 3: Frog - Lower down, top-down angle zoom
-  { position: [0, -1.5, 0], scale: [3.2, 3.2, 3.2], camPos: [0, 3, 5] },
+  // 0: Crane - Zoomed in and moved up
+  { position: [0.5, 0.5, 0], scale: [3.2, 3.2, 3.2], camPos: [0, 0, 7] },
+  // 1: Boat - Moved up, zoomed in, camera angled right
+  { position: [-0.5, 0.0, 0], scale: [2.8, 2.8, 2.8], camPos: [2, 1, 6] },
+  // 2: Airplane - Heavily zoomed in (kept GREAT position)
+  { position: [0, 0.5, 0], scale: [4.5, 4.5, 4.5], camPos: [-1, -1, 6] },
+  // 3: Frog - Moved up, top-down angle zoom
+  { position: [0, -0.2, 0], scale: [3.2, 3.2, 3.2], camPos: [0, 3, 5] },
 ];
 
 // Preload to ensure smooth transitions
@@ -105,17 +105,19 @@ export const OrigamiSequence = ({ isActive = true }: { isActive?: boolean }) => 
 
     // Sequence Logic
     timer.current += delta;
-    const CYCLE_LENGTH = 12;
+    const CYCLE_LENGTH = 20; // Increased to allow double display time
+    const FADE_DUR = 0.66;   // 1/3 of the previous 2s
     const currentPhaseTime = timer.current % CYCLE_LENGTH;
 
     let targetOpacity = 0;
 
-    if (currentPhaseTime > 2 && currentPhaseTime <= 4) {
-      targetOpacity = (currentPhaseTime - 2) / 2; // Fade In
-    } else if (currentPhaseTime > 4 && currentPhaseTime <= 8) {
-      targetOpacity = 1; // Hold
-    } else if (currentPhaseTime > 8 && currentPhaseTime <= 10) {
-      targetOpacity = 1 - (currentPhaseTime - 8) / 2; // Fade Out
+    // Wait 1s invisible at start of new model
+    if (currentPhaseTime > 1 && currentPhaseTime <= 1 + FADE_DUR) {
+      targetOpacity = (currentPhaseTime - 1) / FADE_DUR; // Fade In
+    } else if (currentPhaseTime > 1 + FADE_DUR && currentPhaseTime <= 17 + FADE_DUR) {
+      targetOpacity = 1; // Hold (Visible for 16 seconds - double the previous 8s)
+    } else if (currentPhaseTime > 17 + FADE_DUR && currentPhaseTime <= 17 + FADE_DUR * 2) {
+      targetOpacity = 1 - (currentPhaseTime - (17 + FADE_DUR)) / FADE_DUR; // Fade Out
     } else {
       targetOpacity = 0; // Wait
     }
