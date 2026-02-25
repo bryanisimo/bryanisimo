@@ -90,19 +90,21 @@ const AwardsSection = () => {
         close={() => setIndex(-1)}
         plugins={[Video]}
         render={{
-          slide: ({ slide }) => {
+          slide: ({ slide, offset }) => {
             const customSlide = slide as any;
             if (customSlide.type === "youtube") {
               return (
                 <div className="w-full h-full flex items-center justify-center p-4">
-                  <iframe
-                    className="w-full max-w-5xl aspect-video rounded-lg shadow-2xl"
-                    src={customSlide.embedUrl}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  ></iframe>
+                  {offset === 0 && (
+                    <iframe
+                      className="w-full max-w-5xl aspect-video rounded-lg shadow-2xl bg-black"
+                      src={customSlide.embedUrl}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    ></iframe>
+                  )}
                 </div>
               );
             }

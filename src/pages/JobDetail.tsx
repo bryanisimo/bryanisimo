@@ -26,6 +26,27 @@ const JobDetail = () => {
   // Prepare slides for Lightbox
   const slides = experience.media?.map(m => {
     if (m.type === 'video') {
+      let embedUrl = m.url;
+      let isYouTube = false;
+
+      if (embedUrl.includes('youtube.com/watch?v=')) {
+        const videoId = embedUrl.split('v=')[1]?.split('&')[0];
+        embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        isYouTube = true;
+      } else if (embedUrl.includes('youtu.be/')) {
+        const videoId = embedUrl.split('youtu.be/')[1]?.split('?')[0];
+        embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        isYouTube = true;
+      }
+
+      if (isYouTube) {
+        return {
+          type: "youtube" as const,
+          embedUrl,
+          originalUrl: m.url
+        };
+      }
+
       return {
         type: "video" as const,
         sources: [
@@ -153,7 +174,7 @@ const JobDetail = () => {
                   <div className="text-lg leading-relaxed text-gray-700">
                     <ReactMarkdown
                       components={{
-                        a: ({ node, ...props }) => <a className="underline hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer" {...props} />,
+                        a: ({ node, ...props }) => <a className="underline hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer nofollow" {...props} />,
                         strong: ({ node, ...props }) => <strong className="font-extrabold text-slate-950" {...props} />,
                         em: ({ node, ...props }) => <em className="text-sm italic text-gray-500" {...props} />
                       }}
@@ -174,7 +195,7 @@ const JobDetail = () => {
                         <div className="text-base text-gray-800 leading-relaxed font-medium">
                           <ReactMarkdown
                             components={{
-                              a: ({ node, ...props }) => <a className="underline hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer" {...props} />,
+                              a: ({ node, ...props }) => <a className="underline hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer nofollow" {...props} />,
                               strong: ({ node, ...props }) => <strong className="font-extrabold text-slate-950" {...props} />,
                               em: ({ node, ...props }) => <em className="text-sm italic text-gray-500" {...props} />
                             }}
@@ -235,10 +256,32 @@ const JobDetail = () => {
 
       <Lightbox
         index={index}
-        slides={slides}
+        slides={slides as any}
         open={index >= 0}
         close={() => setIndex(-1)}
         plugins={[Video, Fullscreen]}
+        render={{
+          slide: ({ slide, offset }) => {
+            const customSlide = slide as any;
+            if (customSlide.type === "youtube") {
+              return (
+                <div className="w-full h-full flex items-center justify-center p-4">
+                  {offset === 0 && (
+                    <iframe
+                      className="w-full max-w-5xl aspect-video rounded-lg shadow-2xl bg-black"
+                      src={customSlide.embedUrl}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    ></iframe>
+                  )}
+                </div>
+              );
+            }
+            return undefined;
+          }
+        }}
       />
     </main >
   );

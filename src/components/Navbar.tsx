@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IconBrandLinkedin, IconBrandGithub, IconMail } from '@tabler/icons-react';
+import { IconBrandLinkedin, IconBrandGithub } from '@tabler/icons-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,9 +32,8 @@ const Navbar = () => {
   ];
 
   const socialLinks = [
-    { icon: <IconBrandLinkedin size={24} />, href: 'https://linkedin.com', label: 'Linkedin' },
-    { icon: <IconBrandGithub size={24} />, href: 'https://github.com', label: 'Github' },
-    { icon: <IconMail size={24} />, href: 'mailto:contact@example.com', label: 'Email' },
+    { icon: <IconBrandLinkedin size={24} />, href: 'https://www.linkedin.com/in/bryanisimo/', label: 'Linkedin' },
+    { icon: <IconBrandGithub size={24} />, href: 'https://github.com/bryanisimo', label: 'Github' },
   ];
 
   const handleNavClick = (href: string) => {
@@ -121,7 +120,7 @@ const Navbar = () => {
                   key={social.label}
                   href={social.href}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener noreferrer nofollow"
                   className="text-white hover:text-gray-400 transition-colors"
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
