@@ -21,17 +21,7 @@ export interface Experience {
   cardBackgroundColor?: number;
 }
 
-export interface Project {
-  id: string;
-  title: string;
-  company?: string;
-  period?: string;
-  situation?: string;
-  action?: string;
-  outcome?: string;
-  award?: string;
-  links?: { label: string; url: string }[];
-}
+
 
 export const experiences: Experience[] = [
   {
@@ -262,23 +252,3 @@ export const experiences: Experience[] = [
   }
 ];
 
-export const projects: Project[] = [
-  {
-    id: "clarapoints",
-    title: "Clarapoints",
-    company: "Clara",
-    period: "Fall 2023",
-    situation: "The company needed to reduce high cashback spending without affecting customer satisfaction.",
-    action: "Led technical planning and interdepartmental coordination within a 30-day deadline.",
-    outcome: "Achieved a 60% reduction in rewards spending with successful on-time delivery."
-  },
-  {
-    id: "stranger-fest",
-    title: "Stranger Fest Mexico",
-    company: "Netflix",
-    period: "Fall 2023",
-    situation: "Vendor's booking system crashed, requiring a contingency plan for Stranger Fest.",
-    action: "Developed a custom Next.js scheduling and QR-entry system within a week.",
-    outcome: "Handled 10,000 users per minute with zero errors and managed total sell-outs."
-  }
-];
