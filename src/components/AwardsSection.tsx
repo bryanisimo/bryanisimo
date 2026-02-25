@@ -6,8 +6,8 @@ import Video from "yet-another-react-lightbox/plugins/video";
 import "yet-another-react-lightbox/styles.css";
 
 const awards = [
-  { award: 'IAB México Award', project: 'Trident Micro Macro', year: '2019', videoUrl: 'https://www.youtube.com/watch?v=-OumcWiPpgI' },
-  { award: 'Círculo de Oro Award', project: 'Fórmula Like', year: '2018', videoUrl: 'https://youtube.com/shorts/kiX7Xk60jgI' },
+  { award: 'IAB México Award', project: 'Trident Micro Macro', year: '2019', videoUrl: 'https://www.youtube.com/watch?v=ZIWDXutRBEw' },
+  { award: 'Círculo de Oro Award', project: 'Fórmula Like', year: '2018', videoUrl: 'https://www.youtube.com/watch?v=kiX7Xk60jgI' },
 ];
 
 const AwardsSection = () => {
