@@ -38,20 +38,19 @@ export const experiences: Experience[] = [
     id: "verbal-visual",
     role: "Senior Full Stack Developer",
     company: "Verbal+Visual",
-    location: "Remote, CA, USA",
-    period: "May 2024 – Present",
-    summary: "Architected a critical middleware layer connecting Shopify with custom ERP systems using Node.js and GraphQL.",
+    location: "CA, USA (Remote)",
+    period: "May 2024 - Present",
+    summary: "As a Senior Engineer, I led the development of a critical middleware solution connecting Shopify's platform with a custom client ERP. This involved creating a custom Shopify App using the GraphQL API to ensure seamless, two-way data synchronization. A key part of my role was consulting directly with the client to understand their business logic, provide technical guidance, and deliver solutions that directly improved their operational efficiency.",
     website: 'https://www.vpv.co/',
     highlights: [
-      "Architected a critical middleware layer connecting Shopify with custom ERP systems using Node.js and GraphQL.",
-      "Orchestrated a full infrastructure migration from Azure to Digital Ocean, achieving a 70% reduction in monthly costs.",
-      "Consulted directly with enterprise clients to translate complex business logic into scalable technical solutions using Shopify Polaris.",
-      "Led the migration from legacy REST APIs to the modern GraphQL Admin API."
+      "Engineered and executed a full infrastructure migration from Azure to Digital Ocean, achieving a 60% reduction in monthly operational costs while automating key processes and enhancing system performance and security",
+      "Led the successful migration from Shopify's deprecated REST API to the modern GraphQL Admin API. This action enhanced data management capabilities and significantly streamlined the integration with the client's custom ERP",
+      "Implemented Shopify Polaris to align with Shopify’s UI guidelines, accelerating development and ensuring a consistent user experience across all app sections",
     ],
     media: [
       { type: 'image', url: '/assets/images/jobs/vpv/pf-logo.webp' },
+      { type: 'image', url: '/assets/images/jobs/vpv/paul-fredrick-android.webp' },
       { type: 'image', url: '/assets/images/jobs/vpv/system-diagram.webp' },
-      { type: 'image', url: '/assets/images/jobs/vpv/paul-fredrick-android.webp' }
     ],
     companyLogo: '/assets/images/jobs/vpv/verval-plus-visual-logo.webp',
     companyLogoCard: '/assets/images/jobs/vpv/verval-plus-visual-logo-card.webp',
@@ -62,17 +61,20 @@ export const experiences: Experience[] = [
     id: "clara",
     role: "Engineering Manager",
     company: "CLARA",
-    location: "CDMX, Mexico",
-    period: "June 2021 – April 2024",
-    summary: "Led different engineering squads (up to 6 engineers each) within the Marketing and Onboarding divisions.",
+    location: "Mexico City, Mexico",
+    period: "Jun 2021 - Apr 2024 (2y 11m)",
+    summary: "My focus was leading engineering teams within the marketing and onboarding divisions to drive customer acquisition and improve conversion rates across the web app and website. Despite it being my first Fintech experience, I quickly learned the business domain.",
     highlights: [
-      "Launched the company's main Reward Points program in just 30 days.",
-      "Mentored engineers, fostering career growth and technical excellence.",
-      "Directed integrations with KYC/AML tools (MetaMap, Mifiel) and CRM platforms."
+      "I mentored several teams (up to 6 engineers each) and served as the technical bridge coordinating efforts with other tech squads, internal departments (Legal, Collections, Marketing), and external partners",
+      "Integrated customer acquisition and retention tools such as Zendesk for onboarding follow-up and Customer.io for campaign automation/notifications",
+      "Implemented identity verification and compliance integrations including MetaMap (KYC/AML) and Mifiel (legal validation of Mexican businesses)",
+      "Launched the company’s main Reward Points program in just one month, achieving a 60% reduction in monthly costs compared to cashback incentives",
     ],
     media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=2000' },
-      { type: 'image', url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2000' }
+      { type: 'image', url: 'public/assets/images/jobs/clara/clara-puntos.webp' },
+      { type: 'image', url: 'public/assets/images/jobs/clara/clara-screen-1.webp' },
+      { type: 'image', url: 'public/assets/images/jobs/clara/clara-screen-2.webp' },
+      { type: 'image', url: 'public/assets/images/jobs/clara/clara-screen-3.webp' },
     ],
     companyLogo: '/assets/images/jobs/clara/clara-logo.webp',
     companyLogoCard: '/assets/images/jobs/clara/clara-logo-card.webp',
@@ -83,18 +85,19 @@ export const experiences: Experience[] = [
     id: "trivu",
     role: "Engineering Manager",
     company: "TRIVU",
-    location: "CDMX, Mexico",
-    period: "March 2020 – May 2021",
-    summary: "Managed the complete project lifecycle for Smattcom, a digital solution for the largest scale marketplace for perishable goods in México.",
+    location: "Mexico City, Mexico",
+    period: "Mar 2020 - May 2021 (1y 3m)",
+    summary: "I led the development of Smattcom (https://www.smattcom.com), a React Native mobile app that simplified large-scale buying and selling of perishables within Mexico's largest market (Central de Abasto).",
     website: 'https://www.trivu.mx/',
     highlights: [
-      "Delivered a stable MVP within 2 months.",
-      "Architected a cross-platform mobile solution using React Native with Expo.",
-      "Managed the technical recruitment process to scale the engineering team."
+      "Led a team of up to 4 engineers, managing the complete project lifecycle, including technical architecture decisions, the hiring process, and final delivery. We launched the MVP within the first 2 months to speed up visibility",
+      "Built a cross-platform mobile app using React Native for the frontend and NestJS to code the API, enabling users to browse with ease in an extensive and complex product catalog of a wide range of products of different sizes and qualities",
+      "Developed key features including product auctions and in-app purchase/sell transactions, improving efficiency for large-scale produce trading",
     ],
     media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=2000' },
-      { type: 'image', url: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&q=80&w=2000' }
+      { type: 'image', url: '/assets/images/jobs/trivu/clase-azul.webp' },
+      { type: 'image', url: '/assets/images/jobs/trivu/smattcom.webp' },
+      { type: 'image', url: '/assets/images/jobs/trivu/total-play.webp' },
     ],
     companyLogo: '/assets/images/jobs/trivu/trivu-logo.webp',
     companyLogoCard: '/assets/images/jobs/trivu/trivu-logo-card.webp',
@@ -105,16 +108,17 @@ export const experiences: Experience[] = [
     id: "half-helix",
     role: "Senior Front End Developer",
     company: "Half Helix (Now Domaine)",
-    location: "Remote, NY, USA",
-    period: "June 2019 – February 2020",
-    summary: "Optimized high-traffic Shopify Plus stores for global brands including Rothy's, Soludos, and the HBO Shop.",
+    location: "NY, USA (Remote)",
+    period: "Jun 2019 - Feb 2020 (9m)",
+    summary: "As a senior developer at this digital agency, my primary goal was to enhance the functionality of high-traffic Shopify stores. This involved custom theme modifications, integrating third-party modules (often using Vue.js), and optimizing the overall customer experience for major e-commerce clients.",
     highlights: [
-      "Developed custom Vue.js modules and theme features.",
-      "Established the organization's first automated testing pipeline using Cypress."
+      "Enhanced user experience and functionality for high-profile e-commerce clients, including Rothy's, Soludos, and the HBO Shop, by developing custom theme features and successfully integrating express checkout solutions.",
+      "Established a testing pipeline by integrating the Cypress framework to build and automate end-to-end (E2E) integration tests, ensuring higher code quality and reducing deployment-related bugs."
     ],
     media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=2000' },
-      { type: 'image', url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=2000' }
+      { type: 'image', url: 'public/assets/images/jobs/half-helix/rothys.webp' },
+      { type: 'image', url: 'public/assets/images/jobs/half-helix/soludos.webp' },
+      { type: 'image', url: 'public/assets/images/jobs/half-helix/hbo.webp' },
     ],
     companyLogo: '/assets/images/jobs/half-helix/half-helix-logo.webp',
     companyLogoCard: '/assets/images/jobs/half-helix/half-helix-logo-card.webp',
@@ -125,17 +129,25 @@ export const experiences: Experience[] = [
     id: "ktbo",
     role: "Engineering Manager",
     company: "KTBO",
-    location: "CDMX, Mexico",
-    period: "November 2014 – May 2019",
-    summary: "Directed an 8-engineer team to deliver award-winning interactive experiences for global brands like Diageo and Mondelez.",
+    location: "Mexico City, Mexico",
+    period: "Nov 2014 - May 2019 (4y 7m)",
+    summary: "As the leader of an 8-engineer team, I directed the full development lifecycle for diverse client projects, from initial concept and pitch to final delivery. My responsibilities included defining project scopes, budgets, technical architectures, and strategies. This role was my first experience managing regional (Diageo) and international (Mondelez) projects, requiring strict adherence to corporate standards and complex legal regulations. Led the development of multiple award-winning, large-scale campaigns, enhancing brand visibility and client satisfaction.",
     highlights: [
-      "Architected Trident Micro Macro, a live-event mobile game supporting 200+ concurrent players.",
-      "Developed Fórmula Like, a real-time Facebook interactive stream controlling physical Hot Wheels cars.",
-      "Built 'Rally Pringles', a geolocation bot driving high volumes of traffic to points of sale."
+      "Award: IAB México - Trident Micro Macro: Architected a live-event mobile game that supported 200 concurrent players interacting from their phones with a cinema screen.",
+      "Award: Círculo de Oro - Fórmula Like: Interactive Facebook streaming, where user  reactions (votes) powered a real Hot Wheels car of your favorite country, and all happened fully live",
+      "Award: Facebook Casos de Éxito - Rally Pringles: A bot with geolocalization that guided users to the closest point of sale with the active promotion. It improved sales and generated a lot of participation. https://www.facebook.com/business/success/pringles",
+      "Buchanan’s LatAm: Regional Site (LatAm), it provided information about the products, one of my first experiences coordinating with cooperative teams",
+      "Ricolino influencer: Video platform where users could update as “influencers” to win some prizes, I acquired experience with AWS architecture to optimize resources",
+      "Barbie Fashion Challenge Bot: It was a bot that allowed users to participate in a photo challenge, you were able to update some pictures of your participation and vote for others. What I learned here was a different way to generate interactions, measure it to give results",
     ],
     media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=2000' },
-      { type: 'image', url: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&q=80&w=2000' }
+      { type: 'image', url: '/assets/images/jobs/ktbo/mondelez.webp' },
+      { type: 'video', thumbnail: '/assets/images/jobs/ktbo/trident-micro-macro.webp', url: "https://www.youtube.com/watch?v=LFOW60sIdnM" },
+      { type: 'image', url: '/assets/images/jobs/ktbo/herencia-halls.webp' },
+      { type: 'image', url: '/assets/images/jobs/ktbo/realidad-panditas.webp' },
+      { type: 'image', url: '/assets/images/jobs/ktbo/diageo.webp' },
+      { type: 'image', url: '/assets/images/jobs/ktbo/the-bar.webp' },
+      { type: 'image', url: '/assets/images/jobs/ktbo/buchanans-mexico.webp' },
     ],
     companyLogo: '/assets/images/jobs/ktbo/ktbo-logo.webp',
     companyLogoCard: '/assets/images/jobs/ktbo/ktbo-logo-card.webp',
@@ -146,16 +158,19 @@ export const experiences: Experience[] = [
     id: "ktc",
     role: "Lead Software Developer",
     company: "KTC",
-    location: "CDMX, Mexico",
-    period: "September 2010 – October 2014",
-    summary: "Led my first engineering team, bridging the gap between creative ambition and technical feasibility.",
+    location: "Mexico City, Mexico",
+    period: "Sep 2010 - Oct 2014 (4y 2m)",
+    summary: "In this role, I took on my first team leadership position, guiding the development of numerous websites and high-engagement marketing campaigns for major consumer brands. My work involved complex API integrations (e.g., Facebook for image personalization, Twitter for hashtag campaigns) and delivering technically innovative solutions from concept to launch.",
     website: "https://www.ktc.agency/",
     highlights: [
-      "Colaborated on Listos Click, a first-of-its-kind project in Mexico allowing users to remotely control a physical vehicle via keyboard.",
-      "Developed a variety of promotional websites for Profuturo GNP, Absolute Vodka, Suzuki, Jameson Whiskey."
+      "Suzuki - Remote Test Drive: Due to the launching of the second generation in Mexico of the Suzuki Swift, we intervened in a Suzuki Swift to be controlled remotely, a first-of-its-kind project in Mexico. I led the technical solution that allowed users  to remotely control a physical Suzuki Swift via their keyboards, solving significant real-time streaming and control latency challenges",
+      "Suzuki - Autos México: I worked on the cars section of Suzuki Motors, improving website performance, SEO and many promotional landing pages https://www.suzuki.com.mx/autos/",
+      "Profuturo GNP - Web App Afore: Built a web app to simplify complex information about Mexican Afores (retirement funds). Designed a CMS with reusable content components, allowing easy updates and clear, visual communication for prospects and clients.",
+      "Absolut - Absolut Glam: Developed the Absolut Glam Facebook Application, which utilized the Facebook API to allow users to personalize photos with branded filters and post them directly to their Facebook albums, driving social engagement.",
     ],
     media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=2000' }
+      { type: 'image', url: '/assets/images/jobs/ktc/absolut-glam.webp' },
+      { type: 'image', url: '/assets/images/jobs/ktc/listos-click.webp' }
     ],
     companyLogo: '/assets/images/jobs/ktc/ktc-logo.webp',
     companyLogoCard: '/assets/images/jobs/ktc/ktc-logo-card.webp',
@@ -166,14 +181,18 @@ export const experiences: Experience[] = [
     id: "el-recreo",
     role: "Jr Developer",
     company: "El Recreo",
-    location: "CDMX, Mexico",
-    period: "March 2009 – August 2010",
-    summary: "Developed interactive microsites and minigames for Burger King and Lemon Films using Flash and ActionScript.",
+    location: "Mexico City, Mexico",
+    period: "Mar 2009 – Aug 2010 (1y 6m)",
+    summary: "In this role, I specialized in developing promotional microsites for major brands, primarily using Flash to create rich, interactive, and animated web experiences. My work directly supported marketing campaigns for clients like Burger King and the film production company Lemon Films.",
     highlights: [
-      "Developed interactive microsites and minigames for Burger King and Lemon Films using Flash and ActionScript."
+      "Developed and maintained the primary burgerking.com.mx website in Flash, implementing complex animations (such as fire effects for spicy products) to graphically showcase the seasonal menu and drive product interest.",
+      "Created a suite of interactive Flash minigames and puzzles for the Burger King Kids section, designed to promote seasonal toys and increase brand engagement with younger audiences.",
+      "Built the official interactive website for Lemon Films, using Flash animations to create a dynamic portfolio showcasing their past, current, and upcoming movie projects."
     ],
     media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1550439062-609e1531270e?auto=format&fit=crop&q=80&w=2000' }
+      { type: 'image', url: '/assets/images/jobs/recreo/bk-kids.webp' },
+      { type: 'image', url: '/assets/images/jobs/recreo/bk.webp' },
+      { type: 'image', url: '/assets/images/jobs/recreo/lemon-films.webp' }
     ],
     companyLogo: '/assets/images/jobs/recreo/recreo-logo.webp',
     companyLogoCard: '/assets/images/jobs/recreo/recreo-logo-card.webp',
@@ -184,14 +203,14 @@ export const experiences: Experience[] = [
     id: "autofin",
     role: "Web Developer",
     company: "Autofin",
-    location: "CDMX, Mexico",
-    period: "August 2008 – March 2009",
-    summary: "Developed corporate portals and internal tools.",
+    location: "Mexico City, Mexico",
+    period: "Aug 2008 – Feb 2009 (7m)",
+    summary: "Joined on a temporary contract, my responsibility was to accelerate the development of their magazine online portal. Focused on building customizable and user-friendly web components.",
     highlights: [
-      "Developed corporate portals and internal tools."
+      "Developed multiple customizable widgets, including features like 'Hoy No Circula' information and user profile preferences, which improved user engagement and satisfaction on the platform"
     ],
     media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=2000' }
+      { type: 'image', url: '/assets/images/jobs/autofin/auto-explora.webp' }
     ],
     companyLogo: '/assets/images/jobs/autofin/autofin-logo.webp',
     companyLogoCard: '/assets/images/jobs/autofin/autofin-logo-card.webp',
@@ -202,15 +221,19 @@ export const experiences: Experience[] = [
     id: "changolos",
     role: "Webmaster",
     company: "Chángolos",
-    location: "CDMX, Mexico",
-    period: "May 2006 – January 2008",
-    summary: "Mastered full-stack workflows early by connecting Flash animations to PHP/MySQL backends.",
+    location: "Mexico City, Mexico",
+    period: "May 2006 – Jul 2008 (2y 3m)",
+    summary: "This was my first opportunity in the tech industry, I was responsible for building engaging, interactive web experiences from the ground up, which ignited my passion for development. I quickly mastered a full-stack workflow, learning to connect Flash animations and games to PHP backends and databases.",
     highlights: [
-      "Mastered full-stack workflows early by connecting Flash animations to PHP/MySQL backends.",
-      "Built a library of over 20 interactive minigames and a real-time chat application."
+      "Created a real-time Flash chat application with customizable avatars, allowing users to interact and enhance their experience on the platform",
+      "Developed a library of 15 interactive minigames using Flash,  driving user engagement on the company's portal",
+      "First steps on security, performance, user experience and all marketing concepts that are essential on all my different positions",
     ],
     media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=2000' }
+      { type: 'image', url: '/assets/images/jobs/changolos/changolos-1.webp' },
+      { type: 'image', url: '/assets/images/jobs/changolos/changolos-2.webp' },
+      { type: 'image', url: '/assets/images/jobs/changolos/changolos-3.webp' },
+      { type: 'video', thumbnail: '/assets/images/jobs/changolos/changolos.webp', url: '/assets/videos/jobs/changolos-videogames.mp4', title: 'Changolos' },
     ],
     companyLogo: '/assets/images/jobs/changolos/changolos-logo.webp',
     companyLogoCard: '/assets/images/jobs/changolos/changolos-logo-card.webp',
@@ -221,7 +244,7 @@ export const experiences: Experience[] = [
     id: "freelancer",
     role: "Freelancer",
     company: "Freelancer",
-    location: "CDMX, Mexico",
+    location: "Mexico City, Mexico",
     period: "Occasional",
     summary: "Time to time I have the opportunity to work on freelance projects for different clients.",
     highlights: [
