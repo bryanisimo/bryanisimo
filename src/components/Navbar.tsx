@@ -5,6 +5,7 @@ import { IconBrandLinkedin, IconBrandGithub } from '@tabler/icons-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -24,6 +25,16 @@ const Navbar = () => {
       document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navLinks = [
     { label: 'hi!', href: 'home' },
@@ -51,40 +62,43 @@ const Navbar = () => {
   return (
     <>
       <motion.nav
-        className="fixed top-0 left-0 w-full z-[100] py-8 px-6 md:px-12 flex justify-between items-center pointer-events-none"
+        className={`fixed top-0 left-0 w-full z-[100] pointer-events-none transition-all duration-300 ${isScrolled ? 'py-4 bg-white/70 backdrop-blur-lg border-b border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]' : 'py-8 bg-transparent'
+          }`}
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="pointer-events-auto">
-          <Link to="/" className="font-bold">
-            <img src="/assets/images/jobs/freelancer/logo-min-svg.svg" alt="Bryan" className="h-8 w-auto" />
-          </Link>
-        </div>
+        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-center">
+          <div className="pointer-events-auto">
+            <Link to="/" className="font-bold">
+              <img src="/assets/images/jobs/freelancer/logo-min-svg.svg" alt="Bryan" className="h-8 w-auto" />
+            </Link>
+          </div>
 
-        <div className="pointer-events-auto">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="p-2 focus:outline-none group relative w-12 h-12 flex items-center justify-center cursor-pointer"
-            aria-label="Toggle Menu"
-          >
-            <motion.div
-              className="relative w-8 h-8 flex items-center justify-center"
-              animate={isOpen ? { rotate: 180 } : { rotate: 0 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
+          <div className="pointer-events-auto">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 focus:outline-none group relative w-12 h-12 flex items-center justify-center cursor-pointer"
+              aria-label="Toggle Menu"
             >
               <motion.div
-                className="w-8 h-[2px] bg-slate-950 absolute"
-                animate={isOpen ? { rotate: 45, y: 0 } : { rotate: 0, y: -4 }}
+                className="relative w-8 h-8 flex items-center justify-center"
+                animate={isOpen ? { rotate: 180 } : { rotate: 0 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-              />
-              <motion.div
-                className="w-8 h-[2px] bg-slate-950 absolute"
-                animate={isOpen ? { rotate: -45, y: 0 } : { rotate: 0, y: 4 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-              />
-            </motion.div>
-          </button>
+              >
+                <motion.div
+                  className="w-8 h-[2px] bg-slate-950 absolute"
+                  animate={isOpen ? { rotate: 45, y: 0 } : { rotate: 0, y: -4 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                />
+                <motion.div
+                  className="w-8 h-[2px] bg-slate-950 absolute"
+                  animate={isOpen ? { rotate: -45, y: 0 } : { rotate: 0, y: 4 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                />
+              </motion.div>
+            </button>
+          </div>
         </div>
       </motion.nav>
 
