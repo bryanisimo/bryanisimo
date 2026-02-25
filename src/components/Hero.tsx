@@ -4,14 +4,14 @@ import { ChevronRight } from 'lucide-react';
 
 const Hero = () => {
   const scrollToHome = () => {
-    window.scrollTo({
-      top: document.getElementById('about-me')?.offsetTop,
-      behavior: 'smooth'
-    });
+    const element = document.getElementById('about-me');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden" id="home">
+    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-[#D5D5D5]" id="home">
       <HeroBackground />
 
       <div className="relative z-10 text-center w-full px-6 md:px-12">
@@ -24,7 +24,7 @@ const Hero = () => {
           Nice to see you here 🎊
         </motion.h1>
         <motion.p
-          className="text-2xl md:text-4xl font-bold leading-tight"
+          className="text-xl md:text-2xl font-bold mb-4"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
@@ -32,7 +32,7 @@ const Hero = () => {
           Are you looking for a
         </motion.p>
         <motion.h2
-          className="text-2xl md:text-4xl font-bold leading-tight"
+          className="text-2xl md:text-4xl font-bold"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
@@ -55,7 +55,7 @@ const Hero = () => {
       {/* Smooth 80px gradient transition into the next section */}
       <div
         className="absolute bottom-0 left-0 w-full h-[80px] z-10 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, rgba(218,218,218,0) 0%, rgba(218,218,218,1) 100%)' }}
+        style={{ background: 'linear-gradient(to bottom, rgba(213,213,213,0) 0%, rgba(213,213,213,1) 100%)' }}
       />
     </section>
   );

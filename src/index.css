@@ -16,7 +16,7 @@
   }
 
   body {
-    @apply bg-[#DADADA] text-slate-950;
+    @apply bg-brand-white text-slate-950;
     font-family: var(--font-inter);
   }
 
@@ -27,6 +27,10 @@
   h5,
   h6 {
     @apply font-bold tracking-tight;
+  }
+
+  section[id] {
+    scroll-margin-top: 100px;
   }
 }
 

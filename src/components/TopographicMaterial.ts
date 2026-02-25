@@ -63,7 +63,7 @@ const TopographicMaterial = shaderMaterial(
     uOpacity: 0,
     uColor1: new THREE.Color('#00f0ff'), // Cyan
     uColor2: new THREE.Color('#ff0055'), // Magenta
-    uBgColor: new THREE.Color('#DADADA'), // Base background match
+    uBgColor: new THREE.Color('#D5D5D5'), // Base background match
   },
   // vertex shader
   `
