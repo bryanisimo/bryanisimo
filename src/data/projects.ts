@@ -20,10 +20,10 @@ export const projects: Project[] = [
       " I led the technical planning and interdepartmental coordination (Mobile, DevOps, Marketing), thanks to which we were able to deliver successfully and with quality on time and without burnout.",
     ],
     media: [
-      { type: 'image', url: 'public/assets/images/jobs/clara/clara-puntos.webp' },
-      { type: 'image', url: 'public/assets/images/jobs/clara/clara-screen-1.webp' },
+      { type: 'image', url: 'assets/images/jobs/clara/clara-puntos.webp' },
+      { type: 'image', url: 'assets/images/jobs/clara/clara-screen-1.webp' },
     ],
-    companyLogo: '/assets/images/jobs/clara/clara-logo.webp',
+    companyLogo: 'assets/images/jobs/clara/clara-logo.webp',
   },
   {
     id: "stranger-fest",
@@ -35,9 +35,9 @@ export const projects: Project[] = [
       "Successfully handled 10,000 users per minute with zero errors, managing total sell-outs in minutes.",
     ],
     media: [
-      { type: 'image', url: '/assets/images/jobs/freelancer/stranger-fest-1.webp' },
-      { type: 'image', url: '/assets/images/jobs/freelancer/stranger-fest-2.webp' },
+      { type: 'image', url: 'assets/images/jobs/freelancer/stranger-fest-1.webp' },
+      { type: 'image', url: 'assets/images/jobs/freelancer/stranger-fest-2.webp' },
     ],
-    companyLogo: '/assets/images/jobs/freelancer/freelancer-logo.webp',
+    companyLogo: 'assets/images/jobs/freelancer/freelancer-logo.webp',
   }
 ];

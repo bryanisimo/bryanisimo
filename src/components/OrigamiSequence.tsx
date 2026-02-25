@@ -6,10 +6,10 @@ import { TopographicMaterial } from './TopographicMaterial'; // Registers `<topo
 
 
 const MODELS = [
-  '/assets/models/hero/crane.glb',
-  '/assets/models/hero/boat-2.glb',
-  '/assets/models/hero/airplane-2.glb',
-  '/assets/models/hero/frog.glb',
+  'assets/models/hero/crane.glb',
+  'assets/models/hero/boat-2.glb',
+  'assets/models/hero/airplane-2.glb',
+  'assets/models/hero/frog.glb',
 ];
 
 const MODEL_CONFIGS = [
