@@ -1,6 +1,6 @@
 import { Canvas } from '@react-three/fiber';
 import { OrigamiSequence } from './OrigamiSequence';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, Suspense } from 'react';
 
 const HeroBackground = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -34,8 +34,9 @@ const HeroBackground = () => {
         style={{ width: '100%', height: '100%' }}
       >
         <ambientLight intensity={1} />
-        {/* Only render sequence children if visible, or let Canvas pause automatically via frameloop */}
-        <OrigamiSequence isActive={isVisible} />
+        <Suspense fallback={null}>
+          <OrigamiSequence isActive={isVisible} />
+        </Suspense>
       </Canvas>
     </div>
   );
