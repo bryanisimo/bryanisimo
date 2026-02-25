@@ -107,8 +107,15 @@ const TopographicMaterial = shaderMaterial(
       float line = smoothstep(0.0, 0.1, v) - smoothstep(0.9, 1.0, v);
       float isLine = clamp(1.0 - line, 0.0, 1.0);
 
-      // Create chromatic gradient across the noise field
-      vec3 lineColor = mix(uColor1, uColor2, noiseVal);
+      // --- Cosine Color Palette Implementation ---
+      // color(t) = a + b * cos( 6.28318 * (c*t+d) )
+      vec3 a = vec3(0.5, 0.5, 0.5);
+      vec3 b = vec3(0.5, 0.5, 0.5);
+      vec3 c = vec3(2.0, 1.0, 0.0);
+      vec3 d = vec3(0.50, 0.20, 0.25);
+
+      // We use noiseVal as the 't' parameter to cycle colors across the topographic rings
+      vec3 lineColor = a + b * cos( 6.28318 * (c * noiseVal + d) );
 
       // Final mix between bg and glowing line gradient.
       // Apply opacity transition to hide the lines entirely when needed

@@ -16,29 +16,29 @@ const Hero = () => {
 
       <div className="relative z-10 text-center w-full px-6 md:px-12">
         <motion.h1
-          className="text-4xl md:text-6xl font-bold leading-tight mb-4"
+          className="text-4xl md:text-5xl font-bold leading-tight mb-4"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
-          Nice to see you here 🎊
+          Nice to see you here ⭐️
         </motion.h1>
         <motion.p
-          className="text-xl md:text-2xl font-bold mb-4"
+          className="text-xl md:text-3xl font-bold mb-4 text-slate-800"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
           Are you looking for a
         </motion.p>
-        <motion.h2
-          className="text-2xl md:text-4xl font-bold"
+        <motion.p
+          className="text-xl md:text-3xl font-bold text-slate-800"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
           Senior Engineer / Engineering Manager?
-        </motion.h2>
+        </motion.p>
         <motion.div
           className="mt-12"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -54,8 +54,8 @@ const Hero = () => {
 
       {/* Smooth 80px gradient transition into the next section */}
       <div
-        className="absolute bottom-0 left-0 w-full h-[80px] z-10 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, rgba(213,213,213,0) 0%, rgba(213,213,213,1) 100%)' }}
+        className="absolute bottom-0 left-0 w-full h-[80px] z-20 pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, rgba(213, 213, 213, 0) 0%, #D5D5D5 100%)' }}
       />
     </section>
   );
