@@ -1,0 +1,64 @@
+import { motion } from 'framer-motion';
+import HeroBackground from './HeroBackground';
+import { ChevronRight } from 'lucide-react';
+
+const Hero = () => {
+  const scrollToHome = () => {
+    const element = document.getElementById('about-me');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-[#D5D5D5]" id="home">
+      <HeroBackground />
+
+      <div className="relative z-10 text-center w-full px-6 md:px-12">
+        <motion.h1
+          className="text-4xl md:text-5xl font-bold leading-tight mb-4"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        >
+          Nice to see you here ⭐️
+        </motion.h1>
+        <motion.p
+          className="text-xl md:text-3xl font-bold mb-4 text-slate-800"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        >
+          Are you looking for a
+        </motion.p>
+        <motion.p
+          className="text-xl md:text-3xl font-bold text-slate-800"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        >
+          Senior Engineer / Engineering Manager?
+        </motion.p>
+        <motion.div
+          className="mt-12"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+        >
+          <button className="bg-slate-950 text-white px-8 py-4 flex items-center gap-2 transition-all group hover:pr-10 hover:pl-10 mx-auto cursor-pointer" onClick={scrollToHome}>
+            Yes, tell me more
+            <ChevronRight className='group-hover:translate-x-2 group-hover:rotate-90 transition-all' />
+          </button>
+        </motion.div>
+      </div>
+
+      {/* Smooth 80px gradient transition into the next section */}
+      <div
+        className="absolute bottom-0 left-0 w-full h-[80px] z-20 pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, rgba(213, 213, 213, 0) 0%, #D5D5D5 100%)' }}
+      />
+    </section>
+  );
+};
+
+export default Hero;

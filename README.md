@@ -1,6 +1,6 @@
 # Bryan González Alcíbar
 ### 🚀 Senior Full Stack Developer & Engineering Manager
-**México City** | [bryanisimo@gmail.com](mailto:bryanisimo@gmail.com) | [+52 55 3655 3309 🇲🇽](tel:+525536553309)
+**México City**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/bryanisimo) 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/bryanisimo)
