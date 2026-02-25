@@ -43,6 +43,12 @@ const Hero = () => {
           </button>
         </motion.div>
       </div>
+
+      {/* Smooth 80px gradient transition into the next section */}
+      <div
+        className="absolute bottom-0 left-0 w-full h-[80px] z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, rgba(218,218,218,0) 0%, rgba(218,218,218,1) 100%)' }}
+      />
     </section>
   );
 };

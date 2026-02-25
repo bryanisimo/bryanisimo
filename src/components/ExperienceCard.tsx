@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Experience } from '../data/experience';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 // @ts-ignore
 import NET from 'vanta/dist/vanta.net.min';
@@ -12,11 +12,11 @@ interface ExperienceCardProps {
 }
 
 const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
-  const [vantaEffect, setVantaEffect] = useState<any>(null);
+  const vantaEffectRef = useRef<any>(null);
   const vantaRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!vantaEffect && vantaRef.current) {
+  const initVanta = () => {
+    if (!vantaEffectRef.current && vantaRef.current) {
       const effect = NET({
         el: vantaRef.current,
         THREE: THREE,
@@ -30,32 +30,28 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
         gyroControls: false,
       });
 
-      // FIX: Vanta NET in modern Three.js uses undefined THREE.VertexColors, so lines default to white.
       if (effect && effect.linesMesh && effect.linesMesh.material) {
         effect.linesMesh.material.vertexColors = true;
         effect.linesMesh.material.blending = THREE.NormalBlending;
         effect.linesMesh.material.needsUpdate = true;
       }
 
-      // PERFORMANCE OPTIMIZATION: Stop Vanta WebGL loop when not hovered
-      effect.isHovered = false;
-      let framesRendered = 0;
-      const originalIsOnScreen = effect.isOnScreen.bind(effect);
-      effect.isOnScreen = () => {
-        // Allow 2 initial frames to render the starting state
-        if (framesRendered < 2) {
-          framesRendered++;
-          return true;
-        }
-        return effect.isHovered && originalIsOnScreen();
-      };
-
-      setVantaEffect(effect);
+      vantaEffectRef.current = effect;
     }
+  };
+
+  const destroyVanta = () => {
+    if (vantaEffectRef.current) {
+      vantaEffectRef.current.destroy();
+      vantaEffectRef.current = null;
+    }
+  };
+
+  useEffect(() => {
     return () => {
-      if (vantaEffect) vantaEffect.destroy();
+      destroyVanta();
     };
-  }, [vantaEffect, experience]);
+  }, []);
 
   return (
     <motion.div
@@ -68,8 +64,8 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
       <Link to={`/experience/${experience.id}`}>
         <div
           className="aspect-[4/3] bg-white overflow-hidden rounded-sm mb-6 relative group border border-gray-100"
-          onMouseEnter={() => { if (vantaEffect) vantaEffect.isHovered = true; }}
-          onMouseLeave={() => { if (vantaEffect) vantaEffect.isHovered = false; }}
+          onMouseEnter={initVanta}
+          onMouseLeave={destroyVanta}
         >
           {/* Vanta Layer */}
           <div

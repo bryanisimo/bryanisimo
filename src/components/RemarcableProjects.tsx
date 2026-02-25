@@ -17,7 +17,6 @@ const RemarcableProjects = () => {
               whileHover={{ y: -10 }}
               transition={{ duration: 0.5 }}
             >
-              <h4 className="text-sm text-gray-500 mb-4 uppercase tracking-widest">{project.period}</h4>
               <h3 className="text-3xl font-bold mb-6 italic">{project.title} {project.company !== project.title && `(${project.company})`}</h3>
               <p className="text-gray-600 leading-relaxed text-sm">
                 {project.summary ? project.summary.slice(0, 120) + "..." : ""}
