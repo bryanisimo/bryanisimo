@@ -5,7 +5,7 @@ import { ChevronRight } from 'lucide-react';
 const Hero = () => {
   const scrollToHome = () => {
     window.scrollTo({
-      top: document.getElementById('experience')?.offsetTop,
+      top: document.getElementById('about-me')?.offsetTop,
       behavior: 'smooth'
     });
   };
