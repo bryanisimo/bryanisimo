@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconBrandLinkedin, IconBrandGithub } from '@tabler/icons-react';
+import { getAssetPath } from '../utils/paths';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -71,7 +72,7 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-center">
           <div className="pointer-events-auto">
             <Link to="/" className="font-bold">
-              <img src="assets/images/jobs/freelancer/logo-min-svg.svg" alt="Bryan" className="h-8 w-auto" />
+              <img src={getAssetPath('assets/images/jobs/freelancer/logo-min-svg.svg')} alt="Bryan" className="h-8 w-auto" />
             </Link>
           </div>
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Experience } from '../data/experience';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { getAssetPath } from '../utils/paths';
 // @ts-ignore
 import NET from 'vanta/dist/vanta.net.min';
 
@@ -76,7 +77,7 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
           {/* Logo Layer */}
           {(experience.companyLogoCard || experience.companyLogo) && (
             <img
-              src={experience.companyLogoCard || experience.companyLogo}
+              src={getAssetPath(experience.companyLogoCard || experience.companyLogo || '')}
               alt={`${experience.company} background`}
               className="absolute m-auto inset-0 w-[60%] h-[60%] object-contain transition-all duration-700 ease-out grayscale group-hover:scale-110 group-hover:grayscale-0 z-10"
             />

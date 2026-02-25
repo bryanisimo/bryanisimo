@@ -1,15 +1,16 @@
-import { useRef, useState, useMemo } from 'react';
+import { useRef, useMemo, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
+import { getAssetPath } from '../utils/paths';
 import { TopographicMaterial } from './TopographicMaterial'; // Registers `<topographicMaterial>`
 
 
 const MODELS = [
-  'assets/models/hero/crane.glb',
-  'assets/models/hero/boat-2.glb',
-  'assets/models/hero/airplane-2.glb',
-  'assets/models/hero/frog.glb',
+  getAssetPath('assets/models/hero/crane.glb'),
+  getAssetPath('assets/models/hero/boat-2.glb'),
+  getAssetPath('assets/models/hero/airplane-2.glb'),
+  getAssetPath('assets/models/hero/frog.glb'),
 ];
 
 const MODEL_CONFIGS = [

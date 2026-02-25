@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Play } from 'lucide-react';
 import { projects } from '../data/projects';
+import { getAssetPath } from '../utils/paths';
 import Lightbox from "yet-another-react-lightbox";
 import Video from "yet-another-react-lightbox/plugins/video";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
@@ -66,10 +67,10 @@ const ProjectDetail = () => {
             type: "video/mp4",
           },
         ],
-        poster: m.thumbnail,
+        poster: m.thumbnail ? getAssetPath(m.thumbnail) : undefined,
       };
     }
-    return { src: m.url };
+    return { src: getAssetPath(m.url) };
   }) || [];
 
   return (
@@ -103,14 +104,14 @@ const ProjectDetail = () => {
                 >
                   {item.type === 'image' ? (
                     <img
-                      src={item.url}
+                      src={getAssetPath(item.url)}
                       alt={project.company}
                       className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                     />
                   ) : (
                     <div className="w-full h-full relative group">
                       <img
-                        src={item.thumbnail || "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=2000"}
+                        src={item.thumbnail ? getAssetPath(item.thumbnail) : "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=2000"}
                         className="w-full h-full object-cover"
                         alt="video thumbnail"
                       />
@@ -152,7 +153,7 @@ const ProjectDetail = () => {
                     {project.companyLogo && (
                       <div className="w-10 h-10 rounded-lg overflow-hidden border border-gray-100 shadow-sm bg-white flex items-center justify-center p-0">
                         <img
-                          src={project.companyLogo}
+                          src={getAssetPath(project.companyLogo)}
                           alt={`${project.company} logo`}
                           className="w-full h-full object-cover p-0"
                         />
