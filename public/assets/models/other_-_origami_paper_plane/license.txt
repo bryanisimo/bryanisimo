@@ -1,0 +1,11 @@
+Model Information:
+* title:	#Other - Origami Paper Plane
+* source:	https://sketchfab.com/3d-models/other-origami-paper-plane-129daabbb4b741b99e2eb8ac4fddc70d
+* author:	SH3D | KUB (https://sketchfab.com/itskub)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "#Other - Origami Paper Plane" (https://sketchfab.com/3d-models/other-origami-paper-plane-129daabbb4b741b99e2eb8ac4fddc70d) by SH3D | KUB (https://sketchfab.com/itskub) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
