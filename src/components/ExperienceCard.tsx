@@ -123,21 +123,28 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
     }
   };
 
+  const pauseVanta = () => {
+    if (vantaEffectRef.current) {
+      vantaEffectRef.current.destroy();
+      vantaEffectRef.current = null;
+    }
+  };
+
   const handleMouseLeave = () => {
     if (!isMobile) {
-      destroyVanta();
+      pauseVanta();
     }
   };
 
   return (
     <motion.div
-      className="group relative"
+      className="group relative ¡"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
-      <Link to={`/experience/${experience.id}`}>
+      <Link to={`/experience/${experience.id}`} className="flex flex-col md:flex-col-reverse group">
 
         {/* Title and Role (Moved to the top) */}
         <h4 className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2 font-bold">
@@ -146,20 +153,24 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
         <h5 className="text-2xl md:text-3xl font-bold group-hover:underline decoration-1 underline-offset-8 transition-all mb-6">
           {experience.role}
         </h5>
-
-        <div
-          ref={cardRef}
-          className="aspect-[4/3] bg-white overflow-hidden rounded-sm relative group border border-gray-100 transition-all duration-700
+        {/*
                      [&.mobile-hover-active_.vanta-bg]:grayscale-0 [&.mobile-hover-active_.vanta-bg]:blur-none [&.mobile-hover-active_.vanta-bg]:opacity-100
                      [&.mobile-hover-active_.logo-img]:scale-110 [&.mobile-hover-active_.logo-img]:grayscale-0
-                     [&.mobile-hover-active_.view-label]:opacity-100"
+                     [&.mobile-hover-active_.view-label]:opacity-100
+
+                     transition-all duration-700 grayscale blur-[2px] opacity-70 md:group-hover:grayscale-0 md:group-hover:blur-none md:group-hover:opacity-100
+
+                     */}
+        <div
+          ref={cardRef}
+          className="aspect-[4/3] bg-white overflow-hidden relative transition-all duration-700"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
           {/* Vanta Layer */}
           <div
             ref={vantaRef}
-            className="vanta-bg absolute inset-0 w-full h-full transition-all duration-700 grayscale blur-[2px] opacity-70 md:group-hover:grayscale-0 md:group-hover:blur-none md:group-hover:opacity-100"
+            className="vanta-bg absolute inset-0 w-full h-full"
           />
 
           {/* Logo Layer */}
@@ -173,7 +184,7 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
 
           {/* View Experience Label */}
           <div className="view-label absolute bottom-6 left-6 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 z-20">
-            <span className="px-3 py-1 bg-slate-950 text-white text-[10px] uppercase tracking-widest font-bold shadow-sm">View experience</span>
+            <span className="px-3 py-1 bg-slate-950 text-white text-[10px] uppercase tracking-widest font-bold shadow-sm">View Job</span>
           </div>
         </div>
       </Link>

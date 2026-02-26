@@ -10,32 +10,26 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-[#D5D5D5]" id="home">
+    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-cover bg-center " style={{ backgroundImage: 'url(assets/images/template/main-bg.jpg)' }} id="home">
 
-      <div className="relative z-10 text-center w-full px-6 md:px-12">
+      <div className="relative z-10 w-full px-6 md:px-12 mx-auto md:max-w-7xl mix-blend-difference">
         <motion.h1
-          className="text-4xl md:text-5xl font-bold leading-tight mb-4"
+          className="text-2xl md:text-4xl font-bold leading-tight mb-4 text-slate-100"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
-          Nice to see you here ⭐️
+          Nice to see you here!
         </motion.h1>
         <motion.p
-          className="text-xl md:text-3xl font-bold mb-4 text-slate-800"
+          className="text-xl md:text-2xl font-bold mb-2 text-slate-100"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
-          Are you looking for a
-        </motion.p>
-        <motion.p
-          className="text-xl md:text-3xl font-bold text-slate-800"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-        >
-          Senior Engineer / Engineering Manager?
+          Looking for a<br />
+          Senior Engineer / Engineering Manager?<br />
+          You are in the right place.
         </motion.p>
         <motion.div
           className="mt-12"
@@ -43,7 +37,7 @@ const Hero = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          <button className="bg-slate-950 text-white px-8 py-4 flex items-center gap-2 transition-all group hover:pr-10 hover:pl-10 mx-auto cursor-pointer" onClick={scrollToHome}>
+          <button className="bg-slate-950 text-white px-8 py-4 flex items-center gap-2 transition-all group hover:pr-10 hover:pl-10 hover:bg-slate-800 cursor-pointer" onClick={scrollToHome}>
             Yes, tell me more
             <ChevronRight className='group-hover:translate-x-2 group-hover:rotate-90 transition-all' />
           </button>
@@ -52,8 +46,8 @@ const Hero = () => {
 
       {/* Smooth 80px gradient transition into the next section */}
       <div
-        className="absolute bottom-0 left-0 w-full h-[80px] z-20 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, rgba(213, 213, 213, 0) 0%, #D5D5D5 100%)' }}
+        className="absolute bottom-0 left-0 w-full h-[120px] z-20 pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%)' }}
       />
     </section>
   );

@@ -59,11 +59,10 @@ const Navbar = () => {
     }
     setIsOpen(false);
   };
-
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 w-full z-[100] pointer-events-none transition-all duration-300 ${isScrolled ? 'py-4 bg-white/70 backdrop-blur-lg border-b border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]' : 'py-8 bg-transparent'
+        className={`fixed top-0 left-0 w-full z-[100] pointer-events-none transition-all duration-300 ease-in-out py-4 ${isScrolled && !isOpen ? 'bg-white/60 backdrop-blur-lg drop-shadow-lg' : 'bg-white/0 backdrop-blur-none drop-shadow-none'
           }`}
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -88,12 +87,12 @@ const Navbar = () => {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 <motion.div
-                  className="w-8 h-[2px] bg-slate-950 absolute"
+                  className={`w-8 h-[2px] absolute ${isOpen ? 'bg-white' : 'bg-slate-950'} transition-all duration-500 ease-in-out`}
                   animate={isOpen ? { rotate: 45, y: 0 } : { rotate: 0, y: -4 }}
                   transition={{ duration: 0.5, ease: "easeInOut" }}
                 />
                 <motion.div
-                  className="w-8 h-[2px] bg-slate-950 absolute"
+                  className={`w-8 h-[2px] absolute ${isOpen ? 'bg-white' : 'bg-slate-950'} transition-all duration-500 ease-in-out`}
                   animate={isOpen ? { rotate: -45, y: 0 } : { rotate: 0, y: 4 }}
                   transition={{ duration: 0.5, ease: "easeInOut" }}
                 />
