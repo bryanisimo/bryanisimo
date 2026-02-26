@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
+import HeroBackground3D from './HeroBackground3D';
 
 const Hero = () => {
   const scrollToHome = () => {
@@ -10,7 +11,8 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-cover bg-center " style={{ backgroundImage: 'url(assets/images/template/main-bg.jpg)' }} id="home">
+    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-[#D5D5D5]" id="home">
+      <HeroBackground3D />
 
       <div className="relative z-10 w-full px-6 md:px-12 mx-auto md:max-w-7xl mix-blend-difference">
         <motion.h1
