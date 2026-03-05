@@ -23,6 +23,13 @@ uniform vec2 uMouse;
 
 varying vec2 vUv;
 
+// Utility for creating procedural true hexagons
+float hexDist(vec2 p) {
+    p = abs(p);
+    float c = dot(p, normalize(vec2(1.0, 1.7320508))); // sqrt(3)
+    return max(c, p.x);
+}
+
 // RGB to HSV conversion
 vec3 rgb2hsv(vec3 c) {
     vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
@@ -79,6 +86,30 @@ void main() {
     pixelHsv.y *= match;
 
     vec3 finalColor = hsv2rgb(pixelHsv);
+
+    // --- Procedural True Honeycomb Filter ---
+    // Create a 2D coordinate system scaled by screen pixels
+    // Adjust 0.15 to change the size of the hexagons
+    vec2 gridUv = vUv * uResolution * 0.145;
+
+    // Core hex math setup
+    vec2 r = vec2(1.0, 1.7320508); // hex ratio
+    vec2 h = r * 0.5;
+    vec2 a = mod(gridUv, r) - h;
+    vec2 b = mod(gridUv - h, r) - h;
+    vec2 gv = dot(a, a) < dot(b, b) ? a : b;
+
+    // Distance field for hexagon
+    float d = hexDist(gv);
+
+    // We want a line on the edge. The edge is at d = 0.5.
+    // We use smoothstep to draw a line around 0.5
+    float hexLine = smoothstep(0.40, 0.48, d) - smoothstep(0.48, 0.51, d);
+
+    // Mix the grid line with white, using 0.2 opacity so it is subtle
+    finalColor = mix(finalColor, vec3(1.0), hexLine * 0.1);
+    // --------------------------------------------------
+
     gl_FragColor = vec4(finalColor, texColor.a);
 }
 `;
