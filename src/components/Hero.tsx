@@ -45,7 +45,7 @@ const Hero = () => {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12">
         <div className="bg-white/40 backdrop-blur-md shadow-2xl border border-white/50 inline-block text-left px-8 py-8 md:px-12 md:py-10">
           <motion.h1
-            className="text-2xl md:text-4xl font-bold leading-tight mb-4 text-slate-950"
+            className="text-2xl md:text-4xl font-bold leading-tight mb-2 text-slate-950"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
@@ -69,7 +69,7 @@ const Hero = () => {
             <TypewriterText />
           </motion.p>
           <motion.div
-            className="mt-10"
+            className="mt-4"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
@@ -80,7 +80,7 @@ const Hero = () => {
               animate={{ backgroundColor: activeColorConfig.bg }}
               transition={{ duration: 0.8, ease: "linear" }}
             >
-              Yes, tell me more
+              Tell me more
               <ChevronRight className='transition-transform duration-300 group-hover:translate-x-2 group-hover:rotate-90' />
             </motion.button>
           </motion.div>
