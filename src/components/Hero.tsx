@@ -17,11 +17,9 @@ const colorOptions = [
 
 const Hero = () => {
   const [activeColorConfig, setActiveColorConfig] = useState(colorOptions[0]);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [timerKey, setTimerKey] = useState(0);
 
   useEffect(() => {
-    if (!isAutoPlaying) return;
-
     const interval = setInterval(() => {
       setActiveColorConfig((prev) => {
         const currentIndex = colorOptions.findIndex(c => c.bg === prev.bg);
@@ -30,7 +28,7 @@ const Hero = () => {
     }, 7500);
 
     return () => clearInterval(interval);
-  }, [isAutoPlaying]);
+  }, [timerKey]);
 
   const scrollToHome = () => {
     const element = document.getElementById('about-me');
@@ -99,7 +97,7 @@ const Hero = () => {
                 <button
                   onClick={() => {
                     setActiveColorConfig(config);
-                    setIsAutoPlaying(false);
+                    setTimerKey(prev => prev + 1);
                   }}
                   className="w-[1rem] h-[1rem] rounded-[2px] shadow-sm cursor-pointer"
                   style={{ backgroundColor: config.bg }}
