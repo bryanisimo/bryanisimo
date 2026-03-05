@@ -43,7 +43,7 @@ const Hero = () => {
       <HeroBg3D targetHue={activeColorConfig.bg} />
 
       <div className="relative z-10 w-full md:max-w-7xl mx-auto px-6 md:px-12">
-        <div className="bg-white/40 backdrop-blur-md shadow-2xl border border-white/50 inline-block text-left px-8 py-8 md:px-12 md:py-10">
+        <div className="bg-white/40 backdrop-blur-md shadow-2xl border border-white/50 inline-block text-left px-5 py-8 md:px-12 md:py-10">
           <motion.h1
             className="text-2xl md:text-4xl font-bold leading-tight mb-2 text-slate-950 flex"
             initial={{ opacity: 0, y: 50 }}
@@ -119,8 +119,8 @@ const Hero = () => {
 
       {/* Smooth 80px gradient transition into the next section */}
       <div
-        className="absolute bottom-0 left-0 w-full h-[120px] z-20 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%)' }}
+        className="absolute bottom-[-10px] left-0 w-full h-[60px] z-20 pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 90%)' }}
       />
     </section>
   );
