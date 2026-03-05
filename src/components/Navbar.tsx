@@ -60,26 +60,32 @@ const Navbar = () => {
     setIsOpen(false);
   };
 
+  const isAtTopHome = location.pathname === '/' && !isScrolled;
+
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 w-full z-[100] pointer-events-none transition-all duration-300 ${isScrolled ? 'py-4 bg-white/70 backdrop-blur-lg border-b border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]' : 'py-8 bg-transparent'
-          }`}
+        className={`fixed top-0 left-0 w-full z-[100] pointer-events-none transition-all duration-300 ease-in-out py-4 ${isScrolled && !isOpen ? 'bg-white/60 backdrop-blur-lg drop-shadow-lg' : 'bg-white/0 backdrop-blur-none drop-shadow-none'
+          } ${isAtTopHome && !isOpen ? 'mix-blend-difference' : ''}`}
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-center">
-          <div className="pointer-events-auto">
+          <div className={`pointer-events-auto transition-all ${isAtTopHome && !isOpen ? 'invert' : ''}`}>
             <Link to="/" className="font-bold">
-              <img src={getAssetPath('assets/images/jobs/freelancer/logo-min-svg.svg')} alt="Bryan" className="h-8 w-auto" />
+              <img
+                src={getAssetPath(isAtTopHome && !isOpen ? 'assets/images/jobs/freelancer/logo-flat.svg' : 'assets/images/jobs/freelancer/logo-min-svg.svg')}
+                alt="Bryan"
+                className="h-8 w-auto"
+              />
             </Link>
           </div>
 
           <div className="pointer-events-auto">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 focus:outline-none group relative w-12 h-12 flex items-center justify-center cursor-pointer"
+              className="p-2 focus:outline-none group relative w-12 h-12 flex items-center justify-center cursor-pointer transition-all"
               aria-label="Toggle Menu"
             >
               <motion.div
@@ -88,12 +94,12 @@ const Navbar = () => {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 <motion.div
-                  className="w-8 h-[2px] bg-slate-950 absolute"
+                  className={`w-8 h-[2px] absolute ${isOpen || isAtTopHome ? 'bg-white' : 'bg-slate-950'} transition-all duration-500 ease-in-out`}
                   animate={isOpen ? { rotate: 45, y: 0 } : { rotate: 0, y: -4 }}
                   transition={{ duration: 0.5, ease: "easeInOut" }}
                 />
                 <motion.div
-                  className="w-8 h-[2px] bg-slate-950 absolute"
+                  className={`w-8 h-[2px] absolute ${isOpen || isAtTopHome ? 'bg-white' : 'bg-slate-950'} transition-all duration-500 ease-in-out`}
                   animate={isOpen ? { rotate: -45, y: 0 } : { rotate: 0, y: 4 }}
                   transition={{ duration: 0.5, ease: "easeInOut" }}
                 />
