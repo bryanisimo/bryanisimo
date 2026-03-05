@@ -40,7 +40,7 @@ export const TypewriterText = () => {
   }, [currentText, isDeleting, currentTitleIndex]);
 
   return (
-    <span className="inline-block min-w-[320px] flex items-center">
+    <span className="inline-block min-w-[260px] flex items-center">
       {currentText}
       <span
         className="inline-block w-[3px] h-[1em] bg-slate-950 ml-1 translate-y-[6px]"

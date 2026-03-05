@@ -42,10 +42,10 @@ const Hero = () => {
 
       <HeroBg3D targetHue={activeColorConfig.bg} />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12">
+      <div className="relative z-10 w-full md:max-w-7xl mx-auto px-6 md:px-12">
         <div className="bg-white/40 backdrop-blur-md shadow-2xl border border-white/50 inline-block text-left px-8 py-8 md:px-12 md:py-10">
           <motion.h1
-            className="text-2xl md:text-4xl font-bold leading-tight mb-2 text-slate-950"
+            className="text-2xl md:text-4xl font-bold leading-tight mb-2 text-slate-950 flex"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
@@ -53,7 +53,7 @@ const Hero = () => {
             Nice to see you here!
           </motion.h1>
           <motion.p
-            className="text-xl md:text-2xl font-bold mb-2 text-slate-950"
+            className="text-xl md:text-2xl font-bold mb-2 text-slate-950 flex"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
@@ -61,7 +61,7 @@ const Hero = () => {
             Bryan González Alcíbar
           </motion.p>
           <motion.p
-            className="text-xl md:text-2xl font-bold mb-2 text-slate-950"
+            className="text-xl md:text-2xl font-bold mb-2 text-slate-950 flex"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
@@ -69,7 +69,7 @@ const Hero = () => {
             <TypewriterText />
           </motion.p>
           <motion.div
-            className="mt-4"
+            className="mt-4 flex"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
