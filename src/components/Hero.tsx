@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { TypewriterText } from './TypewriterText';
-import { HeroBG } from './HeroBG';
+import { HeroBg3D, targetColors } from './HeroBg3D';
 
 const Hero = () => {
+  const [btnColor, setBtnColor] = useState(targetColors[0]);
   const scrollToHome = () => {
     const element = document.getElementById('about-me');
     if (element) {
@@ -14,7 +16,7 @@ const Hero = () => {
   return (
     <section className="relative h-screen w-full flex items-center justify-start overflow-hidden bg-[#D5D5D5]" id="home">
 
-      <HeroBG />
+      <HeroBg3D onColorChange={setBtnColor} />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12">
         <div className="bg-white/40 backdrop-blur-md shadow-2xl border border-white/50 inline-block text-left px-8 py-8 md:px-12 md:py-10">
@@ -48,10 +50,15 @@ const Hero = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <button className="bg-slate-950 hover:bg-slate-800 text-white px-8 py-4 flex items-center gap-2 transition-all group hover:pr-10 hover:pl-10 cursor-pointer" onClick={scrollToHome}>
+            <motion.button
+              className="text-white px-8 py-4 flex items-center gap-2 transition-[padding] duration-300 group hover:pr-10 hover:pl-10 cursor-pointer"
+              onClick={scrollToHome}
+              animate={{ backgroundColor: btnColor }}
+              transition={{ duration: 1.5, ease: "linear" }}
+            >
               Yes, tell me more
-              <ChevronRight className='group-hover:translate-x-2 group-hover:rotate-90 transition-all' />
-            </button>
+              <ChevronRight className='transition-transform duration-300 group-hover:translate-x-2 group-hover:rotate-90' />
+            </motion.button>
           </motion.div>
         </div>
       </div>
