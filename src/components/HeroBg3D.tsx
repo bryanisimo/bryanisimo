@@ -6,9 +6,9 @@ import * as THREE from 'three';
 import { getAssetPath } from '../utils/paths';
 
 const videos = [
-    getAssetPath('/assets/videos/video-1.mp4'),
-    getAssetPath('/assets/videos/video-2.mp4'),
-    getAssetPath('/assets/videos/video-3.mp4')
+  getAssetPath('/assets/videos/video-1.mp4'),
+  getAssetPath('/assets/videos/video-2.mp4'),
+  getAssetPath('/assets/videos/video-3.mp4')
 ];
 
 // No static color array needed here anymore, the Hero component will provide it.
@@ -19,6 +19,7 @@ uniform vec3 uTargetColor;
 uniform float uTime;
 uniform vec2 uResolution;
 uniform vec2 uMediaResolution;
+uniform vec2 uMouse;
 
 varying vec2 vUv;
 
@@ -46,10 +47,22 @@ void main() {
         min((uResolution.x / uResolution.y) / (uMediaResolution.x / uMediaResolution.y), 1.0),
         min((uResolution.y / uResolution.x) / (uMediaResolution.y / uMediaResolution.x), 1.0)
     );
-    vec2 uv = vec2(
+
+    // Scale up slightly (e.g. 1.10) to push edges out, and shift slightly to hide bottom right watermark
+    float scale = 1.10;
+    vec2 offset = vec2(0.04, 0.04); // shift right/up slightly in UV space
+
+    // Calculate base object-cover UVs
+    vec2 baseUv = vec2(
         vUv.x * ratio.x + (1.0 - ratio.x) * 0.5,
         vUv.y * ratio.y + (1.0 - ratio.y) * 0.5
     );
+
+    // Apply zoom and offset to mask corners
+    vec2 uv = (baseUv - 0.5) / scale + 0.5 - offset;
+
+    // Add subtle parallax offset based on uMouse
+    uv += uMouse * 0.015;
 
     vec4 texColor = texture2D(uTexture, uv);
 
@@ -79,162 +92,179 @@ void main() {
 `;
 
 function SceneObj({ isVisible, targetHue, setIsTransitioning }: { isVisible: boolean, targetHue: string, setIsTransitioning: (val: boolean) => void }) {
-    const { size } = useThree();
+  const { size } = useThree();
 
-    const [video] = useState(() => {
-        const vid = document.createElement('video');
-        vid.src = videos[0];
-        vid.crossOrigin = 'Anonymous';
-        vid.loop = false;
-        vid.muted = true;
-        vid.playsInline = true;
-        vid.autoplay = true;
-        vid.play().catch(() => console.log("Autoplay blocked initially"));
-        return vid;
-    });
+  const [video] = useState(() => {
+    const vid = document.createElement('video');
+    vid.src = videos[0];
+    vid.crossOrigin = 'Anonymous';
+    vid.loop = false;
+    vid.muted = true;
+    vid.playsInline = true;
+    vid.autoplay = true;
+    vid.play().catch(() => console.log("Autoplay blocked initially"));
+    return vid;
+  });
 
-    const textureRef = useRef<THREE.VideoTexture | null>(null);
-    if (!textureRef.current) {
-        textureRef.current = new THREE.VideoTexture(video);
-        textureRef.current.minFilter = THREE.LinearFilter;
-        textureRef.current.magFilter = THREE.LinearFilter;
-        textureRef.current.colorSpace = THREE.SRGBColorSpace;
+  const textureRef = useRef<THREE.VideoTexture | null>(null);
+  if (!textureRef.current) {
+    textureRef.current = new THREE.VideoTexture(video);
+    textureRef.current.minFilter = THREE.LinearFilter;
+    textureRef.current.magFilter = THREE.LinearFilter;
+    textureRef.current.colorSpace = THREE.SRGBColorSpace;
+  }
+
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
+  const currentColorObj = useMemo(() => new THREE.Color(targetHue), []);
+  const targetColorObj = useMemo(() => new THREE.Color(targetHue), []);
+  const mediaRes = useMemo(() => new THREE.Vector2(1920, 1080), []);
+  const screenRes = useMemo(() => new THREE.Vector2(), []);
+  const mousePos = useMemo(() => new THREE.Vector2(), []);
+  const targetMousePos = useMemo(() => new THREE.Vector2(), []);
+
+  useEffect(() => {
+    let currentVidIndex = 0;
+    let isFading = false;
+
+    const handleTimeUpdate = () => {
+      // Trigger fade 0.6s before video ends
+      if (video.duration > 0 && video.duration - video.currentTime < 0.6 && !isFading) {
+        isFading = true;
+        setIsTransitioning(true);
+
+        // Swap video after fade completes
+        setTimeout(() => {
+          currentVidIndex = (currentVidIndex + 1) % videos.length;
+          video.src = videos[currentVidIndex];
+          video.play().catch(() => { });
+        }, 500);
+      }
+    };
+    const handleLoadedData = () => {
+      if (video.videoWidth && video.videoHeight) {
+        mediaRes.set(video.videoWidth, video.videoHeight);
+      }
+      if (isFading) {
+        isFading = false;
+        setIsTransitioning(false);
+      }
+    }
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('loadeddata', handleLoadedData);
+    return () => {
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('loadeddata', handleLoadedData);
+      video.pause();
+      video.src = '';
+      video.load();
+    };
+  }, [video, mediaRes, setIsTransitioning]);
+
+  useEffect(() => {
+    if (isVisible) {
+      video.play().catch(() => { });
+    } else {
+      video.pause();
+    }
+  }, [isVisible, video]);
+
+  useFrame((state, delta) => {
+    if (!isVisible) return;
+
+    screenRes.set(size.width, size.height);
+
+    // Parallax mouse target easing
+    targetMousePos.set(state.pointer.x, state.pointer.y);
+    mousePos.lerp(targetMousePos, delta * 2.0);
+
+    const time = state.clock.getElapsedTime();
+
+    // Update the target color based on the React prop
+    targetColorObj.set(targetHue);
+
+    // Smoothly transition our target hue using standard lerp
+    currentColorObj.lerp(targetColorObj, delta * 1.5);
+
+    if (materialRef.current) {
+      materialRef.current.uniforms.uTargetColor.value.copy(currentColorObj);
+      materialRef.current.uniforms.uTime.value = time;
+      materialRef.current.uniforms.uResolution.value.copy(screenRes);
+      materialRef.current.uniforms.uMediaResolution.value.copy(mediaRes);
+      materialRef.current.uniforms.uMouse.value.copy(mousePos);
     }
 
-    const materialRef = useRef<THREE.ShaderMaterial>(null);
-    const currentColorObj = useMemo(() => new THREE.Color(targetHue), []);
-    const targetColorObj = useMemo(() => new THREE.Color(targetHue), []);
-    const mediaRes = useMemo(() => new THREE.Vector2(1920, 1080), []);
-    const screenRes = useMemo(() => new THREE.Vector2(), []);
+    // Gentle 3D perspective shift on the mesh itself
+    if (meshRef.current) {
+      // Invert the rotation on X to lean away from mouse
+      meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, mousePos.y * -0.05, delta * 2.5);
+      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, mousePos.x * 0.05, delta * 2.5);
+    }
+  });
 
-    useEffect(() => {
-        let currentVidIndex = 0;
-        let isFading = false;
+  const uniforms = useMemo(() => ({
+    uTexture: { value: textureRef.current },
+    uTargetColor: { value: new THREE.Color(targetHue) },
+    uTime: { value: 0 },
+    uResolution: { value: new THREE.Vector2() },
+    uMediaResolution: { value: new THREE.Vector2(1920, 1080) },
+    uMouse: { value: new THREE.Vector2() }
+  }), []);
 
-        const handleTimeUpdate = () => {
-            // Trigger fade 0.6s before video ends
-            if (video.duration > 0 && video.duration - video.currentTime < 0.6 && !isFading) {
-                isFading = true;
-                setIsTransitioning(true);
-
-                // Swap video after fade completes
-                setTimeout(() => {
-                    currentVidIndex = (currentVidIndex + 1) % videos.length;
-                    video.src = videos[currentVidIndex];
-                    video.play().catch(() => { });
-                }, 500);
-            }
-        };
-        const handleLoadedData = () => {
-            if (video.videoWidth && video.videoHeight) {
-                mediaRes.set(video.videoWidth, video.videoHeight);
-            }
-            if (isFading) {
-                isFading = false;
-                setIsTransitioning(false);
-            }
-        }
-        video.addEventListener('timeupdate', handleTimeUpdate);
-        video.addEventListener('loadeddata', handleLoadedData);
-        return () => {
-            video.removeEventListener('timeupdate', handleTimeUpdate);
-            video.removeEventListener('loadeddata', handleLoadedData);
-            video.pause();
-            video.src = '';
-            video.load();
-        };
-    }, [video, mediaRes, setIsTransitioning]);
-
-    useEffect(() => {
-        if (isVisible) {
-            video.play().catch(() => { });
-        } else {
-            video.pause();
-        }
-    }, [isVisible, video]);
-
-    useFrame((state, delta) => {
-        if (!isVisible) return;
-
-        screenRes.set(size.width, size.height);
-        const time = state.clock.getElapsedTime();
-
-        // Update the target color based on the React prop
-        targetColorObj.set(targetHue);
-
-        // Smoothly transition our target hue using standard lerp
-        currentColorObj.lerp(targetColorObj, delta * 1.5);
-
-        if (materialRef.current) {
-            materialRef.current.uniforms.uTargetColor.value.copy(currentColorObj);
-            materialRef.current.uniforms.uTime.value = time;
-            materialRef.current.uniforms.uResolution.value.copy(screenRes);
-            materialRef.current.uniforms.uMediaResolution.value.copy(mediaRes);
-        }
-    });
-
-    const uniforms = useMemo(() => ({
-        uTexture: { value: textureRef.current },
-        uTargetColor: { value: new THREE.Color(targetHue) },
-        uTime: { value: 0 },
-        uResolution: { value: new THREE.Vector2() },
-        uMediaResolution: { value: new THREE.Vector2(1920, 1080) }
-    }), []);
-
-    return (
-        <mesh>
-            <planeGeometry args={[2, 2]} />
-            <shaderMaterial
-                ref={materialRef}
-                vertexShader={vertexShader}
-                fragmentShader={fragmentShader}
-                uniforms={uniforms}
-                depthWrite={false}
-                depthTest={false}
-            />
-        </mesh>
-    );
+  return (
+    <mesh ref={meshRef}>
+      <planeGeometry args={[2, 2]} />
+      <shaderMaterial
+        ref={materialRef}
+        vertexShader={vertexShader}
+        fragmentShader={fragmentShader}
+        uniforms={uniforms}
+        depthWrite={false}
+        depthTest={false}
+      />
+    </mesh>
+  );
 }
 
 export const HeroBg3D = ({ targetHue }: { targetHue: string }) => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [isVisible, setIsVisible] = useState(true);
-    const [isTransitioning, setIsTransitioning] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                setIsVisible(entry.isIntersecting);
-            },
-            { threshold: 0 }
-        );
-        if (containerRef.current) {
-            observer.observe(containerRef.current);
-        }
-        return () => observer.disconnect();
-    }, []);
-
-    return (
-        <div ref={containerRef} className="absolute inset-0 w-full h-full z-0 overflow-hidden bg-[#D5D5D5]">
-            <Canvas
-                frameloop={isVisible ? 'always' : 'never'}
-                className="w-full h-full"
-            >
-                <OrthographicCamera makeDefault position={[0, 0, 1]} left={-1} right={1} top={1} bottom={-1} near={0.1} far={10} />
-                <SceneObj isVisible={isVisible} targetHue={targetHue} setIsTransitioning={setIsTransitioning} />
-            </Canvas>
-
-            <AnimatePresence>
-                {isTransitioning && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="absolute inset-0 bg-[#D5D5D5] z-10"
-                    />
-                )}
-            </AnimatePresence>
-        </div>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0 }
     );
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={containerRef} className="absolute inset-0 w-full h-full z-0 overflow-hidden bg-[#D5D5D5]">
+      <Canvas
+        frameloop={isVisible ? 'always' : 'never'}
+        className="w-full h-full"
+      >
+        <OrthographicCamera makeDefault position={[0, 0, 1]} left={-1} right={1} top={1} bottom={-1} near={0.1} far={10} />
+        <SceneObj isVisible={isVisible} targetHue={targetHue} setIsTransitioning={setIsTransitioning} />
+      </Canvas>
+
+      <AnimatePresence>
+        {isTransitioning && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 bg-[#D5D5D5] z-10"
+          />
+        )}
+      </AnimatePresence>
+    </div>
+  );
 };
