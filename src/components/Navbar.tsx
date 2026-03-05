@@ -74,7 +74,11 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-center">
           <div className={`pointer-events-auto transition-all ${isAtTopHome && !isOpen ? 'invert' : ''}`}>
             <Link to="/" className="font-bold">
-              <img src={getAssetPath('assets/images/jobs/freelancer/logo-min-svg.svg')} alt="Bryan" className="h-8 w-auto" />
+              <img
+                src={getAssetPath(isAtTopHome && !isOpen ? 'assets/images/jobs/freelancer/logo-flat.svg' : 'assets/images/jobs/freelancer/logo-min-svg.svg')}
+                alt="Bryan"
+                className="h-8 w-auto"
+              />
             </Link>
           </div>
 
