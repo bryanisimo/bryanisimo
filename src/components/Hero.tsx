@@ -1,19 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { TypewriterText } from './TypewriterText';
 import { HeroBg3D } from './HeroBg3D';
 
 const colorOptions = [
-  { bg: '#FFBE0B', text: 'slate-950' },
-  { bg: '#FB5607', text: 'white' },
-  { bg: '#4ecdc4', text: 'slate-950' },
-  { bg: '#8e7dbe', text: 'white' },
-  { bg: '#3A86FF', text: 'white' },
+  { bg: '#3da5d9', text: 'white' },
+  { bg: '#0C101A', text: 'white' },
+
+  { bg: '#4A6E91', text: 'white' },
+  { bg: '#668073', text: 'white' },
+
+  { bg: '#97724F', text: 'white' },
+  { bg: '#606F82', text: 'white' },
 ];
 
 const Hero = () => {
   const [activeColorConfig, setActiveColorConfig] = useState(colorOptions[0]);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+
+    const interval = setInterval(() => {
+      setActiveColorConfig((prev) => {
+        const currentIndex = colorOptions.findIndex(c => c.bg === prev.bg);
+        return colorOptions[(currentIndex + 1) % colorOptions.length];
+      });
+    }, 7500);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying]);
+
   const scrollToHome = () => {
     const element = document.getElementById('about-me');
     if (element) {
@@ -71,19 +89,31 @@ const Hero = () => {
 
           {/* Color Picker UI */}
           <motion.div
-            className="mt-8 flex gap-3"
+            className="mt-4 flex gap-[0.6rem]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.5 }}
           >
             {colorOptions.map((config) => (
-              <button
-                key={config.bg}
-                onClick={() => setActiveColorConfig(config)}
-                className={`w-8 h-8 rounded-full shadow-sm cursor-pointer transition-transform duration-200 hover:scale-110 ${activeColorConfig.bg === config.bg ? 'ring-2 ring-slate-950 ring-offset-2 ring-offset-white/40 scale-110' : ''}`}
-                style={{ backgroundColor: config.bg }}
-                aria-label={`Select color ${config.bg}`}
-              />
+              <div key={config.bg} className="relative flex flex-col items-center">
+                <button
+                  onClick={() => {
+                    setActiveColorConfig(config);
+                    setIsAutoPlaying(false);
+                  }}
+                  className="w-[1rem] h-[1rem] rounded-[2px] shadow-sm cursor-pointer"
+                  style={{ backgroundColor: config.bg }}
+                  aria-label={`Select color ${config.bg}`}
+                />
+                {activeColorConfig.bg === config.bg && (
+                  <motion.div
+                    layoutId="activeColorUnderline"
+                    className="absolute -bottom-[8px] w-full h-[2px] rounded-full"
+                    style={{ backgroundColor: config.bg }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                  />
+                )}
+              </div>
             ))}
           </motion.div>
         </div>
