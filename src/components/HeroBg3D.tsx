@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { motion, AnimatePresence } from 'framer-motion';
 import { OrthographicCamera } from '@react-three/drei';
 import * as THREE from 'three';
 import { getAssetPath } from '../utils/paths';
@@ -10,17 +11,7 @@ const videos = [
     getAssetPath('/assets/videos/video-3.mp4')
 ];
 
-// Target hues to cycle through. Using a vibrant palette.
-export const targetColors = [
-    '#0033FF', // Blue
-    '#00E5FF', // Turquoise
-    '#9D00FF', // Purple
-    '#000080', // Navy
-    '#00FF00', // Green
-    '#FFEA00', // Yellow
-    '#FF6600', // Orange
-    '#FF0000'  // Red
-];
+// No static color array needed here anymore, the Hero component will provide it.
 
 const fragmentShader = `
 uniform sampler2D uTexture;
@@ -87,7 +78,7 @@ void main() {
 }
 `;
 
-function SceneObj({ isVisible, onColorChange }: { isVisible: boolean, onColorChange: (color: string) => void }) {
+function SceneObj({ isVisible, targetHue, setIsTransitioning }: { isVisible: boolean, targetHue: string, setIsTransitioning: (val: boolean) => void }) {
     const { size } = useThree();
 
     const [video] = useState(() => {
@@ -111,24 +102,36 @@ function SceneObj({ isVisible, onColorChange }: { isVisible: boolean, onColorCha
     }
 
     const materialRef = useRef<THREE.ShaderMaterial>(null);
-    const currentColorObj = useMemo(() => new THREE.Color(targetColors[0]), []);
-    const targetColorObj = useMemo(() => new THREE.Color(), []);
+    const currentColorObj = useMemo(() => new THREE.Color(targetHue), []);
+    const targetColorObj = useMemo(() => new THREE.Color(targetHue), []);
     const mediaRes = useMemo(() => new THREE.Vector2(1920, 1080), []);
     const screenRes = useMemo(() => new THREE.Vector2(), []);
-    const prevColorIndex = useRef(0);
 
     useEffect(() => {
         let currentVidIndex = 0;
+        let isFading = false;
+
         const handleTimeUpdate = () => {
-            if (video.duration > 0 && video.duration - video.currentTime < 0.2) {
-                currentVidIndex = (currentVidIndex + 1) % videos.length;
-                video.src = videos[currentVidIndex];
-                video.play().catch(() => { });
+            // Trigger fade 0.6s before video ends
+            if (video.duration > 0 && video.duration - video.currentTime < 0.6 && !isFading) {
+                isFading = true;
+                setIsTransitioning(true);
+
+                // Swap video after fade completes
+                setTimeout(() => {
+                    currentVidIndex = (currentVidIndex + 1) % videos.length;
+                    video.src = videos[currentVidIndex];
+                    video.play().catch(() => { });
+                }, 500);
             }
         };
         const handleLoadedData = () => {
             if (video.videoWidth && video.videoHeight) {
                 mediaRes.set(video.videoWidth, video.videoHeight);
+            }
+            if (isFading) {
+                isFading = false;
+                setIsTransitioning(false);
             }
         }
         video.addEventListener('timeupdate', handleTimeUpdate);
@@ -140,7 +143,7 @@ function SceneObj({ isVisible, onColorChange }: { isVisible: boolean, onColorCha
             video.src = '';
             video.load();
         };
-    }, [video, mediaRes]);
+    }, [video, mediaRes, setIsTransitioning]);
 
     useEffect(() => {
         if (isVisible) {
@@ -154,16 +157,10 @@ function SceneObj({ isVisible, onColorChange }: { isVisible: boolean, onColorCha
         if (!isVisible) return;
 
         screenRes.set(size.width, size.height);
-
         const time = state.clock.getElapsedTime();
-        // Change color every 5 seconds
-        const colorIndex = Math.floor(time / 5) % targetColors.length;
-        targetColorObj.set(targetColors[colorIndex]);
 
-        if (colorIndex !== prevColorIndex.current) {
-            prevColorIndex.current = colorIndex;
-            onColorChange(targetColors[colorIndex]);
-        }
+        // Update the target color based on the React prop
+        targetColorObj.set(targetHue);
 
         // Smoothly transition our target hue using standard lerp
         currentColorObj.lerp(targetColorObj, delta * 1.5);
@@ -178,7 +175,7 @@ function SceneObj({ isVisible, onColorChange }: { isVisible: boolean, onColorCha
 
     const uniforms = useMemo(() => ({
         uTexture: { value: textureRef.current },
-        uTargetColor: { value: new THREE.Color(targetColors[0]) },
+        uTargetColor: { value: new THREE.Color(targetHue) },
         uTime: { value: 0 },
         uResolution: { value: new THREE.Vector2() },
         uMediaResolution: { value: new THREE.Vector2(1920, 1080) }
@@ -199,9 +196,10 @@ function SceneObj({ isVisible, onColorChange }: { isVisible: boolean, onColorCha
     );
 }
 
-export const HeroBg3D = ({ onColorChange }: { onColorChange: (color: string) => void }) => {
+export const HeroBg3D = ({ targetHue }: { targetHue: string }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(true);
+    const [isTransitioning, setIsTransitioning] = useState(false);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -223,8 +221,20 @@ export const HeroBg3D = ({ onColorChange }: { onColorChange: (color: string) => 
                 className="w-full h-full"
             >
                 <OrthographicCamera makeDefault position={[0, 0, 1]} left={-1} right={1} top={1} bottom={-1} near={0.1} far={10} />
-                <SceneObj isVisible={isVisible} onColorChange={onColorChange} />
+                <SceneObj isVisible={isVisible} targetHue={targetHue} setIsTransitioning={setIsTransitioning} />
             </Canvas>
+
+            <AnimatePresence>
+                {isTransitioning && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="absolute inset-0 bg-[#D5D5D5] z-10"
+                    />
+                )}
+            </AnimatePresence>
         </div>
     );
 };
