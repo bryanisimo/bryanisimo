@@ -42,7 +42,7 @@ export const TypewriterText = () => {
     return (
         <span className="inline-block min-w-[320px]">
             {currentText}
-            <span className="animate-pulse border-r-[3px] border-white ml-1 h-full inline-block align-middle pb-1" style={{ animationDuration: '0.9s' }}></span>
+            <span className="animate-pulse border-r-[3px] border-slate-950 ml-1 h-full inline-block align-middle pb-1" style={{ animationDuration: '0.9s' }}></span>
         </span>
     );
 };

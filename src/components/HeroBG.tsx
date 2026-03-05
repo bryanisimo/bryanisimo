@@ -37,14 +37,10 @@ export const HeroBG = () => {
 
     return (
         <div className="absolute inset-0 w-full h-full z-0 overflow-hidden bg-white">
-            {/*
-        Space to add a black and white filter on them (e.g. className="grayscale").
-        Currently omitted as requested.
-      */}
             <video
                 ref={videoRef}
                 src={videos[currentIndex]}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover grayscale"
                 autoPlay
                 muted
                 playsInline
