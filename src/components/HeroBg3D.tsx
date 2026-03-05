@@ -200,14 +200,16 @@ function SceneObj({ isVisible, targetHue, setIsTransitioning }: { isVisible: boo
     }
   }, [isVisible, video]);
 
-  useFrame((state, delta) => {
+  useFrame((state, delta) => {        // Clamp delta to prevent massive jumps when the browser tab returns from background idle state
     if (!isVisible) return;
+
+    const safeDelta = Math.min(delta, 0.1);
 
     screenRes.set(size.width, size.height);
 
     // Parallax mouse target easing
     targetMousePos.set(state.pointer.x, state.pointer.y);
-    mousePos.lerp(targetMousePos, delta * 2.0);
+    mousePos.lerp(targetMousePos, safeDelta * 2.0);
 
     const time = state.clock.getElapsedTime();
 
@@ -215,7 +217,7 @@ function SceneObj({ isVisible, targetHue, setIsTransitioning }: { isVisible: boo
     targetColorObj.set(targetHue);
 
     // Smoothly transition our target hue using standard lerp
-    currentColorObj.lerp(targetColorObj, delta * 1.5);
+    currentColorObj.lerp(targetColorObj, safeDelta * 1.5);
 
     if (materialRef.current) {
       materialRef.current.uniforms.uTargetColor.value.copy(currentColorObj);
@@ -228,8 +230,8 @@ function SceneObj({ isVisible, targetHue, setIsTransitioning }: { isVisible: boo
     // Gentle 3D perspective shift on the mesh itself
     if (meshRef.current) {
       // Invert the rotation on X to lean away from mouse
-      meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, mousePos.y * -0.05, delta * 2.5);
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, mousePos.x * 0.05, delta * 2.5);
+      meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, mousePos.y * -0.05, safeDelta * 2.5);
+      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, mousePos.x * 0.05, safeDelta * 2.5);
     }
   });
 

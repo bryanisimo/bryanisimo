@@ -21,9 +21,9 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
   // Scroll logic for Mobile
   const { scrollYProgress } = useScroll({
     target: cardRef,
-    // Start tracking when the top of the card enters 60% of the viewport.
-    // End tracking when the bottom of the card exits the top 40% of the viewport.
-    offset: ["start 60%", "end 40%"]
+    // Start tracking as soon as the top of the card enters the viewport (100%).
+    // End tracking when the bottom of the card leaves the top of the viewport (0%).
+    offset: ["start 100%", "end 0%"]
   });
 
   // Map the scroll progress (0 to 1) to a fake mouseX coordinate
