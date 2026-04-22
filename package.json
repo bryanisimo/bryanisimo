@@ -16,6 +16,7 @@
     "@react-three/postprocessing": "^3.0.4",
     "@tabler/icons-react": "^3.36.1",
     "framer-motion": "^12.34.2",
+    "gsap": "^3.15.0",
     "lenis": "^1.1.18",
     "leva": "^0.10.1",
     "lucide-react": "^0.575.0",
