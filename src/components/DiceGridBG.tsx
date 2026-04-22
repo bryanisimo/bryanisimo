@@ -11,8 +11,8 @@ const BG_COLOR = "#ffffff";
 
 const WAVE_FIRST_DELAY = 1_500; // ms before first auto-wave
 const WAVE_INTERVAL    = 6_000; // ms between auto-waves
-const WAVE_SPREAD      = 0.6;   // seconds for wave to cross entire grid
-const FLIP_DURATION    = 0.8;   // seconds per flip
+const WAVE_SPREAD      = 1.6;   // seconds for wave to cross entire grid
+const FLIP_DURATION    = 0.5;   // seconds per flip
 const Z_WOBBLE         = 0.18;  // radians peak Z wobble
 
 // Color pairs: each pair represents [primary, secondary] for patterns

@@ -20,15 +20,6 @@
   --color-yellow-green: #9bc53d;
   --color-ink-black: #001021;
 
-  /*/
-  const FACE_COLORS = [
-    "#4fc6e3", "#1985a1",
-    "#e71d36", "#fe4a49",
-    "#ffae03", "#ffbe33",
-    "#4da852", "#9bc53d",
-  ];
-
-  /*/
 }
 
 @layer base {
