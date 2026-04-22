@@ -6,12 +6,12 @@ const AboutMe = () => {
       <div className="flex flex-col xl:flex-row-reverse justify-between items-center mb-16 gap-8">
         <div className="flex w-full mx-auto xl:h-max xl:w-auto justify-center relative">
           <div className="absolute -inset-8 flex items-center justify-center">
-            <AvatarGridBG className="opacity-60" />
+            <AvatarGridBG className="opacity-65" />
           </div>
           <img
             src="/bryanisimo/assets/images/profile/bryanisimo.jpg"
             alt="Bryan Isimo"
-            className="w-48 h-48 rounded-full object-cover border-4 border-white relative z-10"
+            className="w-48 h-48 rounded-full object-cover border-4 border-white relative z-10 pointer-events-none"
           />
         </div>
         <div className="full-width max-w-xl mx-auto xl:max-w-3xl xl:mx-0">

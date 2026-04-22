@@ -53,7 +53,7 @@ interface BlockProps {
 }
 
 export interface BlockHandle {
-  triggerAnimation: () => void;
+  triggerAnimation: (delay?: number) => void;
 }
 
 const Block = forwardRef<BlockHandle, BlockProps>(({ index, size, x, y }, ref) => {
@@ -61,7 +61,7 @@ const Block = forwardRef<BlockHandle, BlockProps>(({ index, size, x, y }, ref) =
   const stateRef = useRef<BlockState>(generateBlockState());
   const pathRef = useRef<SVGPathElement>(null);
   const bgRef = useRef<SVGRectElement>(null);
-
+  let interval: number | undefined;
   const renderShape = () => {
     const state = stateRef.current;
     const [primary, secondary] = state.colorPair;
@@ -127,48 +127,47 @@ const Block = forwardRef<BlockHandle, BlockProps>(({ index, size, x, y }, ref) =
       pathRef.current!.setAttribute("d", "M 0 0");
       pathRef.current!.setAttribute("fill", "none");
     }
+    if (interval) {
+      clearInterval(interval);
+    }
+    interval = setInterval(() => {
+      animateBlock(index * 0.25);
+    }, 6000);
   };
 
-  const animateBlock = () => {
-    if (!pathRef.current || !bgRef.current) return;
+  const animateBlock = (customDelay = 0) => {
+    if (!svgRef.current || !pathRef.current || !bgRef.current) return;
 
-    stateRef.current = generateBlockState();
+    // Kill any existing animations to prevent glitches on rapid clicks
+    gsap.killTweensOf(svgRef.current);
 
-    // GSAP animation for smooth transition
-    gsap.to(pathRef.current, {
-      opacity: 0,
-      duration: 0.4,
-      onComplete: () => {
-        renderShape();
-        gsap.to(pathRef.current, {
-          opacity: 1,
-          duration: 0.4,
-        });
-      },
-    });
-
-    // Animate background color
-    const [newPrimary] = stateRef.current.colorPair;
-    gsap.to(bgRef.current, {
-      attr: { fill: newPrimary },
-      duration: 0.8,
-    });
+    gsap.timeline({ delay: customDelay })
+      .to(svgRef.current, {
+        scale: 0.4,
+        duration: 0.3,
+        ease: "back.in",
+        transformOrigin: "50% 50%",
+        onComplete: () => {
+          // Change the color and shape with no fade
+          stateRef.current = generateBlockState();
+          renderShape();
+        }
+      })
+      .to(svgRef.current, {
+        scale: 1,
+        duration: 0.5,
+        ease: "bounce.out",
+        transformOrigin: "50% 50%"
+      });
   };
 
   useImperativeHandle(ref, () => ({
-    triggerAnimation: animateBlock,
+    triggerAnimation: (delay = 0) => animateBlock(delay),
   }));
 
   useEffect(() => {
     if (!svgRef.current || !pathRef.current || !bgRef.current) return;
-
     renderShape();
-
-    // Auto-animate every 6 seconds
-    const interval = setInterval(() => {
-      animateBlock();
-    }, 6000);
-
     return () => clearInterval(interval);
   }, [size]);
 
@@ -212,22 +211,22 @@ export const AvatarGridBG = ({ className }: AvatarGridBGProps) => {
 
     setIsAnimating(true);
 
-    // Trigger animation on all blocks
-    blockRefs.current.forEach((block) => {
-      block?.triggerAnimation();
+    // Trigger animation on all blocks with staggered delay
+    blockRefs.current.forEach((block, i) => {
+      block?.triggerAnimation(i * 0.15);
     });
 
-    // Block clicks for animation duration (0.8s max animation) + 0.5s buffer
+    // Block clicks for animation duration: max delay (0.75s) + animation (0.7s) + buffer (0.5s)
     setTimeout(() => {
       setIsAnimating(false);
-    }, 1300); // 0.8s animation + 0.5s buffer
+    }, 1800);
   };
 
   return (
     <div
       ref={containerRef}
       onClick={handleClick}
-      className={`relative bg-white overflow-hidden cursor-pointer ${className || ""}`}
+      className={`relative bg-white overflow-hidden ${className || ""}`}
       style={{
         width: blockSize * 2,
         height: blockSize * 2,
