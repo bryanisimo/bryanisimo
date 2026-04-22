@@ -1,12 +1,17 @@
+import AvatarGridBG from './AvatarGridBG';
+
 const AboutMe = () => {
   return (
     <section className="my-24 container-custom" id="about-me">
       <div className="flex flex-col xl:flex-row-reverse justify-between items-center mb-16 gap-8">
-        <div className="flex w-full mx-auto xl:h-max xl:w-auto justify-center">
+        <div className="flex w-full mx-auto xl:h-max xl:w-auto justify-center relative">
+          <div className="absolute -inset-8 flex items-center justify-center">
+            <AvatarGridBG className="opacity-60" />
+          </div>
           <img
             src="/bryanisimo/assets/images/profile/bryanisimo.jpg"
             alt="Bryan Isimo"
-            className="w-48 h-48 rounded-full object-cover border-4 border-gray-300"
+            className="w-48 h-48 rounded-full object-cover border-4 border-white relative z-10"
           />
         </div>
         <div className="full-width max-w-xl mx-auto xl:max-w-3xl xl:mx-0">
