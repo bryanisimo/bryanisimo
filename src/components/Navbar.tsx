@@ -65,7 +65,7 @@ const Navbar = () => {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 w-full z-[100] pointer-events-none transition-all duration-300 ease-in-out py-4 ${isScrolled && !isOpen ? 'bg-white/60 backdrop-blur-lg drop-shadow-lg' : 'bg-white/0 backdrop-blur-none drop-shadow-none'
+        className={`fixed top-0 left-0 w-full z-100 pointer-events-none transition-all duration-300 ease-in-out py-4 ${isScrolled && !isOpen ? 'bg-white/60 backdrop-blur-lg drop-shadow-lg' : 'bg-white/0 backdrop-blur-none drop-shadow-none'
           } ${isAtTopHome && !isOpen ? 'mix-blend-difference' : ''}`}
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
