@@ -37,8 +37,8 @@ const X_FACE_SLOTS = [4, 2, 5, 3];
 const Y_FACE_SLOTS = [4, 0, 5, 1];
 
 // Face label (number) drawn on each slot
-const SLOT_FACE_NUMS: (number | null)[] = [3, 5, 2, 4, null, 6];
-// slot 4 (+Z) starts as BG white (null). After cube has moved it becomes face 1.
+const SLOT_FACE_NUMS: (number | null)[] = [3, 5, 2, 4, 1, 6];
+// slot 4 (+Z) starts as BG white (only on initial load), then becomes face 1 with number.
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function easeBackOut(t: number): number {
@@ -240,12 +240,8 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
       }
     }
 
-    // ── Wave logic
-    let nextWaveTime = performance.now() + WAVE_FIRST_DELAY;
-
+    // ── Initialize slot 4 (front face) with the number "1" pattern
     function refreshSlot(cube: CubeData, slot: number) {
-      // slot 4 stays white only before the very first flip ever.
-      // hasEverFlipped is a one-way latch so it survives step counter resets.
       const rawNum = SLOT_FACE_NUMS[slot];
       const num: number | null = (slot === 4 && !cube.hasEverFlipped) ? null : (rawNum ?? 1);
       const oldTex = cube.materials[slot].map;
@@ -253,6 +249,112 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
       cube.materials[slot].map = makePatternTexture(num);
       cube.materials[slot].needsUpdate = true;
     }
+
+    for (let row = 0; row < ROWS; row++) {
+      for (let col = 0; col < COLS; col++) {
+        // Show the "1" on the initial front face (slot 4) by setting hasEverFlipped to true temporarily
+        cubes[row][col].hasEverFlipped = true;
+        refreshSlot(cubes[row][col], 4);
+        cubes[row][col].hasEverFlipped = false;
+      }
+    }
+
+    // ── Wave logic
+    let nextWaveTime = performance.now() + WAVE_FIRST_DELAY;
+
+    // ── Debug keyboard controls + visual display
+    let lastPressedFace: number | null = null;
+    let currentVisibleFace: number | null = null;
+
+    // Create debug display element
+    const debugDisplay = document.createElement("div");
+    debugDisplay.id = "dice-debug-display";
+    debugDisplay.style.cssText = `
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.8);
+      color: #00ff00;
+      padding: 12px 16px;
+      font-family: monospace;
+      font-size: 14px;
+      border: 2px solid #00ff00;
+      border-radius: 4px;
+      z-index: 10000;
+      line-height: 1.6;
+    `;
+    debugDisplay.innerHTML = "DICE DEBUG<br>Press 1-6 for faces<br>Last pressed: —<br>Current visible: —";
+    mount.appendChild(debugDisplay);
+
+    const updateDebugDisplay = () => {
+      debugDisplay.innerHTML = `
+        DICE DEBUG<br>
+        Press 1-6 for faces<br>
+        Last pressed: ${lastPressedFace || "—"}<br>
+        Current visible: ${currentVisibleFace || "—"}
+      `;
+    };
+
+    const handleDebugKey = (e: KeyboardEvent) => {
+      console.log(`Keydown detected: "${e.key}" (code: ${e.code})`);
+
+      const key = parseInt(e.key, 10);
+      if (isNaN(key) || key < 1 || key > 6) {
+        console.log(`  → Not a face number 1-6, ignoring`);
+        return;
+      }
+
+      e.preventDefault();
+      currentVisibleFace = key;
+      console.log(`✓ Face key pressed: ${key}. Last pressed: ${lastPressedFace}`);
+
+      if (lastPressedFace === key) {
+        // Same key pressed → rotate randomly
+        const rotations = [Math.PI / 2, Math.PI, -Math.PI / 2];
+        const randomRotation = rotations[Math.floor(Math.random() * rotations.length)];
+        console.log(`  → Rotating face ${key} by ${(randomRotation * 180) / Math.PI}°`);
+
+        // Apply rotation to all cubes
+        for (let row = 0; row < ROWS; row++) {
+          for (let col = 0; col < COLS; col++) {
+            const cube = cubes[row][col];
+            if (cube.animating) continue;
+
+            // Randomly choose X or Y axis
+            const axis = Math.random() < 0.5 ? "x" : "y";
+            cube.wobbleDir = Math.random() < 0.5 ? 1 : -1;
+
+            if (axis === "x") {
+              cube.animFromX = cube.mesh.rotation.x;
+              cube.animToX = cube.mesh.rotation.x + randomRotation;
+              cube.animFromY = cube.mesh.rotation.y;
+              cube.animToY = cube.mesh.rotation.y;
+            } else {
+              cube.animFromX = cube.mesh.rotation.x;
+              cube.animToX = cube.mesh.rotation.x;
+              cube.animFromY = cube.mesh.rotation.y;
+              cube.animToY = cube.mesh.rotation.y + randomRotation;
+            }
+
+            cube.animStart = performance.now();
+            cube.animating = true;
+          }
+        }
+      } else {
+        // Different key → show that face
+        console.log(`  → Showing face ${key}`);
+        lastPressedFace = key;
+        nextWaveTime = performance.now() + WAVE_INTERVAL; // Reset timer
+      }
+
+      lastPressedFace = key;
+      updateDebugDisplay();
+    };
+
+    window.addEventListener("keydown", handleDebugKey);
+    console.log("✓ DiceGridBG keyboard handler registered. Press 1-6 to debug.");
+
+    // ── Wave logic (original)
 
     function triggerWave() {
       const corner = Math.floor(Math.random() * 4);
@@ -368,10 +470,14 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
       cancelAnimationFrame(animFrameId);
       observer.disconnect();
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("keydown", handleDebugKey);
       renderer.dispose();
       geometry.dispose();
       if (mount && mount.contains(renderer.domElement)) {
         mount.removeChild(renderer.domElement);
+      }
+      if (mount && mount.contains(debugDisplay)) {
+        mount.removeChild(debugDisplay);
       }
     }
 
