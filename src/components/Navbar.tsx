@@ -3,6 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconBrandLinkedin, IconBrandGithub } from '@tabler/icons-react';
 import { getAssetPath } from '../utils/paths';
+import { twMerge } from 'tailwind-merge'
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,12 +32,13 @@ const Navbar = () => {
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const threshold = location.pathname === '/' ? window.innerHeight * 0.8 : 20;
+      setIsScrolled(window.scrollY > threshold);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   const navLinks = [
     { label: 'hi!', href: 'home' },
@@ -62,14 +65,19 @@ const Navbar = () => {
 
   const isAtTopHome = location.pathname === '/' && !isScrolled;
 
+  const menuClassses = twMerge(
+    `fixed top-0 left-0 w-full z-100 pointer-events-none transition-all duration-300 ease-in-out py-4`,
+
+    isScrolled && !isOpen ? 'bg-white/60 backdrop-blur-lg drop-shadow-lg' : 'bg-white/0 backdrop-blur-none drop-shadow-none',
+    isAtTopHome && !isOpen ? 'opacity-0' : ''
+  );
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 w-full z-100 pointer-events-none transition-all duration-300 ease-in-out py-4 ${isScrolled && !isOpen ? 'bg-white/60 backdrop-blur-lg drop-shadow-lg' : 'bg-white/0 backdrop-blur-none drop-shadow-none'
-          } ${isAtTopHome && !isOpen ? 'mix-blend-difference' : ''}`}
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className={menuClassses}
+        // initial={{ y: -20, opacity: 0 }}
+        // animate={{ y: 0, opacity: 1 }}
+        // transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-center">
           <div className={`pointer-events-auto transition-all ${isAtTopHome && !isOpen ? 'invert' : ''}`}>
