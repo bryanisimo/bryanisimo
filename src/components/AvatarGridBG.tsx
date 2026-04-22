@@ -15,9 +15,9 @@ type ShapeType = "quarter-circle" | "diagonal" | "square" | "split";
 interface BlockState {
   shape: ShapeType;
   colorPair: [string, string];
-  cornerIndex?: number; // For quarter circle: 0=top-left, 1=top-right, 2=bottom-right, 3=bottom-left
-  diagonalDir?: number; // For diagonal: 0-3
-  splitDir?: number; // For split: 0=horizontal-top, 1=horizontal-bottom, 2=vertical-left, 3=vertical-right
+  cornerIndex?: number; // For quarter circle: 0-3 (any corner, fully random)
+  diagonalDir?: number; // For diagonal: 0-3 (any direction, fully random)
+  splitDir?: number; // For split: 0-3 (any direction, fully random)
 }
 
 function pickColorPair(): [string, string] {
@@ -44,14 +44,6 @@ function generateBlockState(): BlockState {
     splitDir,
   };
 }
-
-// Generate different states for each corner (quarter circles point towards center)
-const CORNER_CONFIGS = {
-  0: { cornerIndex: 3, label: "top-left" },    // bottom-right corner of square
-  1: { cornerIndex: 2, label: "top-right" },   // bottom-left corner of square
-  2: { cornerIndex: 1, label: "bottom-left" }, // top-right corner of square
-  3: { cornerIndex: 0, label: "bottom-right" }, // top-left corner of square
-};
 
 interface BlockProps {
   index: number;
@@ -81,20 +73,20 @@ const Block = forwardRef<BlockHandle, BlockProps>(({ index, size, x, y }, ref) =
       const corner = state.cornerIndex || 0;
       const radius = size / 2;
 
-      // Quarter circles positioned at each corner, pointing toward center
+      // Quarter circles in any corner (fully randomized)
       let pathData = "";
 
       if (corner === 0) {
-        // Top-left: quarter circle in bottom-right corner
+        // Quarter circle in bottom-right corner
         pathData = `M ${size} ${size / 2} L ${size} ${size} L ${size / 2} ${size} A ${radius} ${radius} 0 0 1 ${size} ${size / 2} Z`;
       } else if (corner === 1) {
-        // Top-right: quarter circle in bottom-left corner
+        // Quarter circle in bottom-left corner
         pathData = `M 0 ${size / 2} L 0 ${size} L ${size / 2} ${size} A ${radius} ${radius} 0 0 1 0 ${size / 2} Z`;
       } else if (corner === 2) {
-        // Bottom-right: quarter circle in top-left corner
+        // Quarter circle in top-left corner
         pathData = `M 0 ${size / 2} L 0 0 L ${size / 2} 0 A ${radius} ${radius} 0 0 1 0 ${size / 2} Z`;
       } else {
-        // Bottom-left: quarter circle in top-right corner
+        // Quarter circle in top-right corner
         pathData = `M ${size} ${size / 2} L ${size} 0 L ${size / 2} 0 A ${radius} ${radius} 0 0 1 ${size} ${size / 2} Z`;
       }
 
