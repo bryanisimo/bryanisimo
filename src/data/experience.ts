@@ -10,7 +10,11 @@ export interface Experience {
   role: string;
   company: string;
   location?: string;
-  period: string;
+  period: {
+    start: string;
+    end: string;
+    duration: string;
+  }
   summary: string;
   highlights: string[];
   media?: MediaItem[];
@@ -21,15 +25,17 @@ export interface Experience {
   cardBackgroundColor?: number;
 }
 
-
-
 export const experiences: Experience[] = [
   {
     id: "verbal-visual",
     role: "Senior Full Stack Developer",
     company: "Verbal+Visual",
     location: "CA, USA (Remote)",
-    period: "May 2024 - Present",
+    period: {
+      start: "May 2024",
+      end: "Present",
+      duration: "2y"
+    },
     summary: "As a Senior Engineer, I led the development of a critical middleware solution connecting Shopify's platform with a custom client ERP. This involved creating a custom Shopify App using the GraphQL API to ensure seamless, two-way data synchronization. A key part of my role was consulting directly with the client to understand their business logic, provide technical guidance, and deliver solutions that directly improved their operational efficiency.",
     website: 'https://www.vpv.co/',
     highlights: [
@@ -44,15 +50,19 @@ export const experiences: Experience[] = [
     ],
     companyLogo: '/assets/images/jobs/vpv/verval-plus-visual-logo.webp',
     companyLogoCard: '/assets/images/jobs/vpv/verval-plus-visual-logo-card.webp',
-    cardColor: 0x080143,
-    cardBackgroundColor: 0x2E19DF,
+    cardColor: 0x2E19DF,
+    cardBackgroundColor: 0xFFFFFF,
   },
   {
     id: "clara",
     role: "Engineering Manager",
     company: "CLARA",
     location: "Mexico City, Mexico",
-    period: "Jun 2021 - Apr 2024 (2y 11m)",
+    period: {
+      start: "Jun 2021",
+      end: "Apr 2024",
+      duration: "2y 11m"
+    },
     summary: "My focus was leading engineering teams within the marketing and onboarding divisions to drive customer acquisition and improve conversion rates across the web app and website. Despite it being my first Fintech experience, I quickly learned the business domain.",
     highlights: [
       "I mentored several teams (up to 6 engineers each) and served as the technical bridge coordinating efforts with other tech squads, internal departments (Legal, Collections, Marketing), and external partners",
@@ -76,7 +86,11 @@ export const experiences: Experience[] = [
     role: "Engineering Manager",
     company: "TRIVU",
     location: "Mexico City, Mexico",
-    period: "Mar 2020 - May 2021 (1y 3m)",
+    period: {
+      start: "Mar 2020",
+      end: "May 2021",
+      duration: "1y 3m"
+    },
     summary: "I led the development of [Smattcom](https://www.smattcom.com), a React Native mobile app that simplified large-scale buying and selling of perishables within Mexico's largest market (Central de Abasto).",
     website: 'https://www.trivu.mx/',
     highlights: [
@@ -92,14 +106,18 @@ export const experiences: Experience[] = [
     companyLogo: '/assets/images/jobs/trivu/trivu-logo.webp',
     companyLogoCard: '/assets/images/jobs/trivu/trivu-logo-card.webp',
     cardColor: 0x5938E5,
-    cardBackgroundColor: 0x000000,
+    cardBackgroundColor: 0xFFFFFF,
   },
   {
     id: "half-helix",
     role: "Senior Front End Developer",
     company: "Half Helix (Now Domaine)",
     location: "NY, USA (Remote)",
-    period: "Jun 2019 - Feb 2020 (9m)",
+    period: {
+      start: "Jun 2019",
+      end: "Feb 2020",
+      duration: "9m"
+    },
     summary: "As a senior developer at this digital agency, my primary goal was to enhance the functionality of high-traffic Shopify stores. This involved custom theme modifications, integrating third-party modules (often using Vue.js), and optimizing the overall customer experience for major e-commerce clients.",
     highlights: [
       "Enhanced user experience and functionality for high-profile e-commerce clients, including Rothy's, Soludos, and the HBO Shop, by developing custom theme features and successfully integrating express checkout solutions.",
@@ -120,7 +138,11 @@ export const experiences: Experience[] = [
     role: "Engineering Manager",
     company: "KTBO",
     location: "Mexico City, Mexico",
-    period: "Nov 2014 - May 2019 (4y 7m)",
+    period: {
+      start: "Nov 2014",
+      end: "May 2019",
+      duration: "4y 7m"
+    },
     summary: "As the leader of an 8-engineer team, I directed the full development lifecycle for diverse client projects, from initial concept and pitch to final delivery. My responsibilities included defining project scopes, budgets, technical architectures, and strategies. This role was my first experience managing regional (Diageo) and international (Mondelez) projects, requiring strict adherence to corporate standards and complex legal regulations. Led the development of multiple award-winning, large-scale campaigns, enhancing brand visibility and client satisfaction.",
     highlights: [
       "**Award** IAB México - Trident Micro Macro: Architected a live-event mobile game that supported 200 concurrent players interacting from their phones with a cinema screen.",
@@ -149,7 +171,11 @@ export const experiences: Experience[] = [
     role: "Lead Software Developer",
     company: "KTC",
     location: "Mexico City, Mexico",
-    period: "Sep 2010 - Oct 2014 (4y 2m)",
+    period: {
+      start: "Sep 2010",
+      end: "Oct 2014",
+      duration: "4y 2m"
+    },
     summary: "In this role, I took on my first team leadership position, guiding the development of numerous websites and high-engagement marketing campaigns for major consumer brands. My work involved complex API integrations (e.g., Facebook for image personalization, Twitter for hashtag campaigns) and delivering technically innovative solutions from concept to launch.",
     website: "https://www.ktc.agency/",
     highlights: [
@@ -164,15 +190,19 @@ export const experiences: Experience[] = [
     ],
     companyLogo: '/assets/images/jobs/ktc/ktc-logo.webp',
     companyLogoCard: '/assets/images/jobs/ktc/ktc-logo-card.webp',
-    cardColor: 0xdf6435,
-    cardBackgroundColor: 0xde6237,
+    cardColor: 0xde6237,
+    cardBackgroundColor: 0xFFFFFF,
   },
   {
     id: "el-recreo",
     role: "Jr Developer",
     company: "El Recreo",
     location: "Mexico City, Mexico",
-    period: "Mar 2009 – Aug 2010 (1y 6m)",
+    period: {
+      start: "Mar 2009",
+      end: "Aug 2010",
+      duration: "1y 6m"
+    },
     summary: "In this role, I specialized in developing promotional microsites for major brands, primarily using Flash to create rich, interactive, and animated web experiences. My work directly supported marketing campaigns for clients like Burger King and the film production company Lemon Films.",
     highlights: [
       "Developed and maintained the primary burgerking.com.mx website in Flash, implementing complex animations (such as fire effects for spicy products) to graphically showcase the seasonal menu and drive product interest.",
@@ -187,14 +217,18 @@ export const experiences: Experience[] = [
     companyLogo: '/assets/images/jobs/recreo/recreo-logo.webp',
     companyLogoCard: '/assets/images/jobs/recreo/recreo-logo-card.webp',
     cardColor: 0x4da887,
-    cardBackgroundColor: 0xBACEC2,
+    cardBackgroundColor: 0xFFFFFF,
   },
   {
     id: "autofin",
     role: "Web Developer",
     company: "Autofin",
     location: "Mexico City, Mexico",
-    period: "Aug 2008 – Feb 2009 (7m)",
+    period: {
+      start: "Aug 2008",
+      end: "Feb 2009",
+      duration: "7m"
+    },
     summary: "Joined on a temporary contract, my responsibility was to accelerate the development of their magazine online portal. Focused on building customizable and user-friendly web components.",
     highlights: [
       "Developed multiple customizable widgets, including features like 'Hoy No Circula' information and user profile preferences, which improved user engagement and satisfaction on the platform"
@@ -204,15 +238,19 @@ export const experiences: Experience[] = [
     ],
     companyLogo: '/assets/images/jobs/autofin/autofin-logo.webp',
     companyLogoCard: '/assets/images/jobs/autofin/autofin-logo-card.webp',
-    cardColor: 0xFDEE21,
-    cardBackgroundColor: 0x280046,
+    cardColor: 0x280046,
+    cardBackgroundColor: 0xFFFFFF,
   },
   {
     id: "changolos",
     role: "Webmaster",
     company: "Chángolos",
     location: "Mexico City, Mexico",
-    period: "May 2006 – Jul 2008 (2y 3m)",
+    period: {
+      start: "May 2006",
+      end: "Jul 2008",
+      duration: "2y 3m"
+    },
     summary: "This was my first opportunity in the tech industry, I was responsible for building engaging, interactive web experiences from the ground up, which ignited my passion for development. I quickly mastered a full-stack workflow, learning to connect Flash animations and games to PHP backends and databases.",
     highlights: [
       "Created a real-time Flash chat application with customizable avatars, allowing users to interact and enhance their experience on the platform",
@@ -228,14 +266,18 @@ export const experiences: Experience[] = [
     companyLogo: '/assets/images/jobs/changolos/changolos-logo.webp',
     companyLogoCard: '/assets/images/jobs/changolos/changolos-logo-card.webp',
     cardColor: 0x009BD5,
-    cardBackgroundColor: 0xA2D8EA,
+    cardBackgroundColor: 0xFFFFFF,
   },
   {
     id: "freelancer",
     role: "Freelancer",
     company: "Freelancer",
     location: "Mexico City, Mexico",
-    period: "Occasional",
+    period: {
+      start: "Occasional",
+      end: "",
+      duration: ""
+    },
     summary: "Time to time I have the opportunity to work on freelance projects for different clients.",
     highlights: [
       "**Stranger Fest Mexico**: Due the vendors booking sistem crashed, within a week I developed a tailored Next.js scheduling system allowing the entrance by a QR code.",
@@ -248,7 +290,7 @@ export const experiences: Experience[] = [
     companyLogo: '/assets/images/jobs/freelancer/freelancer-logo.webp',
     companyLogoCard: '/assets/images/jobs/freelancer/freelancer-logo-card.webp',
     cardColor: 0x44889B,
-    cardBackgroundColor: 0xDCF6F3,
+    cardBackgroundColor: 0xFFFFFF,
   }
 ];
 
