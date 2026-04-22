@@ -8,22 +8,37 @@ const COLS_MOBILE = 8;
 const ROWS_MOBILE = 10;
 const BG_COLOR = "#ffffff";
 
-const WAVE_FIRST_DELAY = 1_500;   // ms before the very first wave
-const WAVE_INTERVAL = 3_000;      // ms between subsequent waves (set to 10_000–20_000 in production)
-const WAVE_TRIGGER_DURATION = 600; // ms to propagate trigger across the grid
-const FACE_FLIP_DURATION = 800; // ms each cube takes to flip
+const WAVE_FIRST_DELAY = 1_500;    // ms before first wave
+const WAVE_INTERVAL = 3_000;       // ms between subsequent waves
+const WAVE_TRIGGER_DURATION = 600; // ms to spread trigger across the grid
+const FACE_FLIP_DURATION = 800;    // ms per cube flip
+const Z_WOBBLE_AMOUNT = 0.18;      // radians of Z-axis wobble at peak (~10°)
 
-// Palette for faces 2-6 (random per cube, fixed at creation)
 const FACE_COLORS = [
-  "#3da5d9",
-  "#e84855",
-  "#f9c74f",
-  "#43aa8b",
-  "#9b5de5",
-  "#f77f00",
-  "#2d6a4f",
-  "#c77dff",
+  "#3da5d9", "#e84855", "#f9c74f", "#43aa8b",
+  "#9b5de5", "#f77f00", "#2d6a4f", "#c77dff",
 ];
+
+// ─── Face / slot mapping ──────────────────────────────────────────────────────
+// BoxGeometry material slots: [+X(0), -X(1), +Y(2), -Y(3), +Z(4), -Z(5)]
+//
+// Rotating on -X axis (forward roll), each step = -π/2:
+//   step 0 → slot 4 (+Z)  visible
+//   step 1 → slot 2 (+Y)  visible
+//   step 2 → slot 5 (-Z)  visible
+//   step 3 → slot 3 (-Y)  visible
+const X_FACE_SLOTS = [4, 2, 5, 3];
+
+// Rotating on -Y axis (rightward roll), each step = -π/2:
+//   step 0 → slot 4 (+Z)  visible
+//   step 1 → slot 0 (+X)  visible
+//   step 2 → slot 5 (-Z)  visible
+//   step 3 → slot 1 (-X)  visible
+const Y_FACE_SLOTS = [4, 0, 5, 1];
+
+// Face label (number) drawn on each slot
+const SLOT_FACE_NUMS: (number | null)[] = [3, 5, 2, 4, null, 6];
+// slot 4 (+Z) starts as BG white (null). After cube has moved it becomes face 1.
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function easeBackOut(t: number): number {
@@ -32,64 +47,114 @@ function easeBackOut(t: number): number {
   return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
 }
 
-function makeTextTexture(text: string, bgColor: string): THREE.CanvasTexture {
+function pickColor(): string {
+  return FACE_COLORS[Math.floor(Math.random() * FACE_COLORS.length)];
+}
+
+function pickDifferentColor(from: string): string {
+  let c = pickColor();
+  let tries = 0;
+  while (c === from && tries++ < 10) c = pickColor();
+  return c;
+}
+
+/**
+ * Generate a random pattern texture.
+ * faceNum = null  → plain BG white (the initial hidden face)
+ * faceNum = 1–6   → colored pattern with number label
+ */
+function makePatternTexture(faceNum: number | null): THREE.CanvasTexture {
   const size = 256;
   const canvas = document.createElement("canvas");
   canvas.width = size;
   canvas.height = size;
   const ctx = canvas.getContext("2d")!;
-  ctx.fillStyle = bgColor;
-  ctx.fillRect(0, 0, size, size);
-  ctx.fillStyle = "#000000";
-  ctx.font = `bold ${size * 0.55}px Arial, sans-serif`;
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText(text, size / 2, size / 2);
+
+  if (faceNum === null) {
+    ctx.fillStyle = BG_COLOR;
+    ctx.fillRect(0, 0, size, size);
+  } else {
+    const c1 = pickColor();
+    const c2 = pickDifferentColor(c1);
+    const family = Math.floor(Math.random() * 3); // 0=solid, 1=diagonal, 2=quarter-circle
+
+    if (family === 0) {
+      // ── Solid color
+      ctx.fillStyle = c1;
+      ctx.fillRect(0, 0, size, size);
+
+    } else if (family === 1) {
+      // ── Diagonal split — 4 triangle directions
+      ctx.fillStyle = c1;
+      ctx.fillRect(0, 0, size, size);
+      ctx.fillStyle = c2;
+      ctx.beginPath();
+      const dir = Math.floor(Math.random() * 4);
+      if (dir === 0) {
+        // c2 bottom-right triangle
+        ctx.moveTo(size, 0); ctx.lineTo(size, size); ctx.lineTo(0, size);
+      } else if (dir === 1) {
+        // c2 bottom-left triangle
+        ctx.moveTo(0, 0); ctx.lineTo(0, size); ctx.lineTo(size, size);
+      } else if (dir === 2) {
+        // c2 top-right triangle
+        ctx.moveTo(0, 0); ctx.lineTo(size, 0); ctx.lineTo(size, size);
+      } else {
+        // c2 top-left triangle
+        ctx.moveTo(0, 0); ctx.lineTo(size, 0); ctx.lineTo(0, size);
+      }
+      ctx.closePath();
+      ctx.fill();
+
+    } else {
+      // ── Quarter-circle sector from a corner
+      // radius = size so the arc exactly touches the two adjacent edges.
+      // moveTo(corner) + arc + closePath() makes a pie-sector, not a chord.
+      ctx.fillStyle = c1;
+      ctx.fillRect(0, 0, size, size);
+      ctx.fillStyle = c2;
+      const corner = Math.floor(Math.random() * 4); // 0=TL, 1=TR, 2=BL, 3=BR
+      const cx = corner === 1 || corner === 3 ? size : 0;
+      const cy = corner === 2 || corner === 3 ? size : 0;
+      // Each pair sweeps exactly π/2 so the arc touches both adjacent sides.
+      // Canvas angles: 0=right, π/2=down, π=left, 3π/2=up (Y-axis points down).
+      const quarterAngles: [number, number][] = [
+        [0,              Math.PI / 2],      // TL (0,0)    → arc right→down
+        [Math.PI / 2,    Math.PI],           // TR (W,0)    → arc down→left
+        [-Math.PI / 2,   0],                 // BL (0,H)    → arc up→right
+        [Math.PI,        3 * Math.PI / 2],   // BR (W,H)    → arc left→up
+      ];
+      const [startA, endA] = quarterAngles[corner];
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, size, startA, endA);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // ── Number label — white stroke + black fill for readability on any bg
+    ctx.save();
+    ctx.font = `bold ${size * 0.46}px Arial, sans-serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.lineWidth = size * 0.06;
+    ctx.strokeStyle = "rgba(255,255,255,0.65)";
+    ctx.strokeText(String(faceNum), size / 2, size / 2);
+    ctx.fillStyle = "#000000";
+    ctx.fillText(String(faceNum), size / 2, size / 2);
+    ctx.restore();
+  }
+
   const tex = new THREE.CanvasTexture(canvas);
   tex.needsUpdate = true;
   return tex;
 }
 
-function makePlainTexture(color: string): THREE.CanvasTexture {
-  const size = 4;
-  const canvas = document.createElement("canvas");
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext("2d")!;
-  ctx.fillStyle = color;
-  ctx.fillRect(0, 0, size, size);
-  const tex = new THREE.CanvasTexture(canvas);
-  tex.needsUpdate = true;
-  return tex;
-}
-
-// Returns 6 materials: face0=BG color (front), faces 1-5 = numbered colored faces
-// THREE.BoxGeometry face order: +X, -X, +Y, -Y, +Z (front), -Z (back)
-// We treat face index 4 (+Z) as "face 1" (BG) and the rest as numbered.
-// For the flip animation we rotate around X axis:
-//   rotation.x = 0   → face 1 (BG) visible  (front +Z)
-//   rotation.x = π/2 → face showing top (+Y) → "face 2"
-// We'll map:
-//   face1 = front (+Z), face2 = top (+Y), face3 = right (+X),
-//   face4 = bottom (-Y), face5 = left (-X), face6 = back (-Z)
-function buildMaterials(faceColor: string): THREE.MeshBasicMaterial[] {
-  // BoxGeometry slot order: [+X, -X, +Y, -Y, +Z, -Z]
-  const slots: THREE.MeshBasicMaterial[] = [];
-
-  // +X → face 3
-  slots.push(new THREE.MeshBasicMaterial({ map: makeTextTexture("3", faceColor) }));
-  // -X → face 5
-  slots.push(new THREE.MeshBasicMaterial({ map: makeTextTexture("5", faceColor) }));
-  // +Y → face 2
-  slots.push(new THREE.MeshBasicMaterial({ map: makeTextTexture("2", faceColor) }));
-  // -Y → face 4
-  slots.push(new THREE.MeshBasicMaterial({ map: makeTextTexture("4", faceColor) }));
-  // +Z → face 1 (BG color, no number)
-  slots.push(new THREE.MeshBasicMaterial({ map: makePlainTexture(BG_COLOR) }));
-  // -Z → face 6
-  slots.push(new THREE.MeshBasicMaterial({ map: makeTextTexture("6", faceColor) }));
-
-  return slots;
+/** All 6 faces start as BG white — only slot 4 (+Z front) is visible initially. */
+function buildInitialMaterials(): THREE.MeshBasicMaterial[] {
+  return Array.from({ length: 6 }, () =>
+    new THREE.MeshBasicMaterial({ map: makePatternTexture(null) })
+  );
 }
 
 // ─── Component ───────────────────────────────────────────────────────────────
@@ -117,11 +182,9 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
     renderer.setClearColor(BG_COLOR);
     mount.appendChild(renderer.domElement);
 
-    // ── Camera (orthographic, units = pixels)
+    // ── Orthographic camera — units = pixels
     const camera = new THREE.OrthographicCamera(
-      -W / 2, W / 2,
-      H / 2, -H / 2,
-      0.1, 1000
+      -W / 2, W / 2, H / 2, -H / 2, 0.1, 1000
     );
     camera.position.set(0, 0, 100);
     camera.lookAt(0, 0, 0);
@@ -130,118 +193,120 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(BG_COLOR);
 
-    // ── Cube size: "cover" logic — squares stay square, grid overflows canvas edges
-    // Take the larger of the two axes so the grid always covers the full canvas.
+    // ── Cover-fit: square cubes, grid covers the whole canvas
     const cubeSize = Math.max(W / COLS, H / ROWS);
-    const geoW = cubeSize;
-    const geoH = cubeSize;
-    const geoD = cubeSize;
+    const geometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
 
-    // ── Build grid
+    // ── Per-cube state
     type CubeData = {
       mesh: THREE.Mesh;
-      faceColor: string;
-      currentFace: number; // 1-6
-      targetFace: number;
+      materials: THREE.MeshBasicMaterial[];
+      stepX: number;       // completed X-axis flips mod 4
+      stepY: number;       // completed Y-axis flips mod 4
+      hasEverFlipped: boolean; // latches true on first flip, never resets
       animating: boolean;
       animStart: number;
-      animFrom: number; // rotation.x at anim start
-      animTo: number;   // rotation.x target
+      flipAxis: "x" | "y";
+      animFromX: number;
+      animToX: number;
+      animFromY: number;
+      animToY: number;
+      wobbleDir: number;   // ±1 for Z wobble direction
     };
 
     const cubes: CubeData[][] = [];
-
-    // Rotation.x values for each face index (0-based internally, face1=0..face6=5)
-    // Rotating around X: face1(front) at 0, face2(top) at -π/2, face4(bottom) at π/2
-    // face6(back) at π, face3(right)+face5(left) via Y axis
-    // We keep it simple: all rotations around X only → 4 distinct visible faces
-    // face1=0, face2=-π/2, face4=π/2, face6=π(=−π)
-    // For face3 and face5 we'd need Y rotation — but per the brief, all dice rotate
-    // in the same direction (X axis), so we'll use 4 meaningful faces on X:
-    const FACE_ROTATIONS = [
-      0,          // face 1 (BG)
-      -Math.PI / 2, // face 2 (top)
-      Math.PI,    // face 6 (back, repurposed as face 3)
-      Math.PI / 2,  // face 4 (bottom)
-    ];
-    // We'll cycle through these 4 steps
-    const FACE_STEPS = 4;
-
-    const geometry = new THREE.BoxGeometry(geoW, geoH, geoD);
+    const gridW = cubeSize * COLS;
+    const gridH = cubeSize * ROWS;
 
     for (let row = 0; row < ROWS; row++) {
       cubes[row] = [];
       for (let col = 0; col < COLS; col++) {
-        const faceColor = FACE_COLORS[Math.floor(Math.random() * FACE_COLORS.length)];
-        const materials = buildMaterials(faceColor);
+        const materials = buildInitialMaterials();
         const mesh = new THREE.Mesh(geometry, materials);
-
-        // Position: grid is centered so overflow is distributed evenly on all sides
-        const gridW = cubeSize * COLS;
-        const gridH = cubeSize * ROWS;
         const x = -gridW / 2 + cubeSize * col + cubeSize / 2;
         const y = gridH / 2 - cubeSize * row - cubeSize / 2;
         mesh.position.set(x, y, 0);
-
         scene.add(mesh);
         cubes[row][col] = {
-          mesh,
-          faceColor,
-          currentFace: 0,
-          targetFace: 0,
-          animating: false,
-          animStart: 0,
-          animFrom: 0,
-          animTo: 0,
+          mesh, materials,
+          stepX: 0, stepY: 0,
+          hasEverFlipped: false,
+          animating: false, animStart: 0,
+          flipAxis: "x",
+          animFromX: 0, animToX: 0,
+          animFromY: 0, animToY: 0,
+          wobbleDir: 1,
         };
       }
     }
 
-    // ── Wave trigger logic
+    // ── Wave logic
     let nextWaveTime = performance.now() + WAVE_FIRST_DELAY;
 
+    function refreshSlot(cube: CubeData, slot: number) {
+      // slot 4 stays white only before the very first flip ever.
+      // hasEverFlipped is a one-way latch so it survives step counter resets.
+      const rawNum = SLOT_FACE_NUMS[slot];
+      const num: number | null = (slot === 4 && !cube.hasEverFlipped) ? null : (rawNum ?? 1);
+      const oldTex = cube.materials[slot].map;
+      if (oldTex) oldTex.dispose();
+      cube.materials[slot].map = makePatternTexture(num);
+      cube.materials[slot].needsUpdate = true;
+    }
+
     function triggerWave() {
-      // Pick a random corner: 0=TL, 1=TR, 2=BL, 3=BR
       const corner = Math.floor(Math.random() * 4);
       const startRow = corner < 2 ? 0 : ROWS - 1;
       const startCol = corner % 2 === 0 ? 0 : COLS - 1;
       const endRow = ROWS - 1 - startRow;
       const endCol = COLS - 1 - startCol;
-
       const maxDist = Math.sqrt(
         Math.pow(endRow - startRow, 2) + Math.pow(endCol - startCol, 2)
       );
+
+      // All cubes in this wave share the same axis → organised movement.
+      // Alternates X / Y randomly each wave.
+      const waveAxis: "x" | "y" = Math.random() < 0.5 ? "x" : "y";
 
       for (let row = 0; row < ROWS; row++) {
         for (let col = 0; col < COLS; col++) {
           const dist = Math.sqrt(
             Math.pow(row - startRow, 2) + Math.pow(col - startCol, 2)
           );
-          const triggerDelay = (dist / (maxDist || 1)) * WAVE_TRIGGER_DURATION;
-
+          const delay = (dist / (maxDist || 1)) * WAVE_TRIGGER_DURATION;
           const cube = cubes[row][col];
-          const nextFaceStep = (cube.currentFace + 1) % FACE_STEPS;
 
-          // Schedule this cube's animation
           setTimeout(() => {
-            if (cube.animating) return; // skip if already mid-flip
-            const fromAngle = FACE_ROTATIONS[cube.currentFace];
-            const toAngle = FACE_ROTATIONS[nextFaceStep];
-            // Ensure we always rotate in the negative X direction (forward roll)
-            let delta = toAngle - fromAngle;
-            // Normalize to always go in -X direction
-            if (delta > 0) delta -= Math.PI * 2;
-            cube.animFrom = fromAngle;
-            cube.animTo = fromAngle + delta;
-            cube.animStart = performance.now();
-            cube.animating = true;
-            cube.targetFace = nextFaceStep;
-          }, triggerDelay);
+            if (cube.animating) return;
+
+            cube.hasEverFlipped = true;
+            cube.flipAxis = waveAxis;
+
+            if (waveAxis === "x") {
+              const nextStep = (cube.stepX + 1) % 4;
+              refreshSlot(cube, X_FACE_SLOTS[nextStep]);
+              cube.animFromX = cube.mesh.rotation.x;
+              cube.animToX   = cube.mesh.rotation.x - Math.PI / 2;
+              cube.animFromY = cube.mesh.rotation.y;
+              cube.animToY   = cube.mesh.rotation.y;
+            } else {
+              const nextStep = (cube.stepY + 1) % 4;
+              refreshSlot(cube, Y_FACE_SLOTS[nextStep]);
+              cube.animFromX = cube.mesh.rotation.x;
+              cube.animToX   = cube.mesh.rotation.x;
+              cube.animFromY = cube.mesh.rotation.y;
+              cube.animToY   = cube.mesh.rotation.y - Math.PI / 2;
+            }
+
+            cube.wobbleDir  = Math.random() < 0.5 ? 1 : -1;
+            cube.animStart  = performance.now();
+            cube.animating  = true;
+          }, delay);
         }
       }
     }
 
-    // ── Animation loop
+    // ── Render loop
     let animFrameId: number;
     let visible = true;
 
@@ -257,13 +322,11 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
 
       const now = performance.now();
 
-      // Check if it's time for a new wave
       if (now >= nextWaveTime) {
         triggerWave();
         nextWaveTime = now + WAVE_INTERVAL;
       }
 
-      // Update animations
       for (let row = 0; row < ROWS; row++) {
         for (let col = 0; col < COLS; col++) {
           const cube = cubes[row][col];
@@ -273,11 +336,20 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
           const t = Math.min(elapsed / FACE_FLIP_DURATION, 1);
           const eased = easeBackOut(t);
 
-          cube.mesh.rotation.x = cube.animFrom + (cube.animTo - cube.animFrom) * eased;
+          cube.mesh.rotation.x = cube.animFromX + (cube.animToX - cube.animFromX) * eased;
+          cube.mesh.rotation.y = cube.animFromY + (cube.animToY - cube.animFromY) * eased;
+          // Z wobble: bell curve — peaks at t=0.5, back to 0 at t=1
+          cube.mesh.rotation.z = Math.sin(t * Math.PI) * Z_WOBBLE_AMOUNT * cube.wobbleDir;
 
           if (t >= 1) {
-            cube.mesh.rotation.x = cube.animTo;
-            cube.currentFace = cube.targetFace;
+            cube.mesh.rotation.x = cube.animToX;
+            cube.mesh.rotation.y = cube.animToY;
+            cube.mesh.rotation.z = 0;
+            if (cube.flipAxis === "x") {
+              cube.stepX = (cube.stepX + 1) % 4;
+            } else {
+              cube.stepY = (cube.stepY + 1) % 4;
+            }
             cube.animating = false;
           }
         }
@@ -288,12 +360,8 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
 
     animate();
 
-    // ── Resize handler
-    const onResize = () => {
-      // Full teardown and re-setup on resize for simplicity
-      cleanup();
-      setupScene();
-    };
+    // ── Resize: tear down and rebuild
+    const onResize = () => { cleanup(); setupScene(); };
     window.addEventListener("resize", onResize);
 
     function cleanup() {
