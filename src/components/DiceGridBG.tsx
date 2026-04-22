@@ -3,8 +3,8 @@ import * as THREE from "three";
 import gsap from "gsap";
 
 // ─── Tunables ────────────────────────────────────────────────────────────────
-const COLS_DESKTOP = 20;
-const ROWS_DESKTOP = 16;
+const COLS_DESKTOP = 14;
+const ROWS_DESKTOP = 10;
 const COLS_MOBILE  = 8;
 const ROWS_MOBILE  = 10;
 const BG_COLOR = "#ffffff";
