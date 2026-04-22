@@ -190,6 +190,7 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
 
     // ── Auto-wave: all cubes step -π/2 on a shared axis, diagonal propagation
     function triggerWave() {
+      startAnimation();
       const corner   = Math.floor(Math.random() * 4);
       const startRow = corner < 2 ? 0 : ROWS - 1;
       const startCol = corner % 2 === 0 ? 0 : COLS - 1;
@@ -234,11 +235,25 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
     // ── Auto-wave timer
     let nextWaveTime = performance.now() + WAVE_FIRST_DELAY;
 
+    // ── Animation blocking: prevent input during transitions
+    let isAnimating = false;
+    let animationEndTime = 0;
+
+    function startAnimation() {
+      isAnimating = true;
+      const maxDelay = WAVE_SPREAD; // diagonal wave propagates over this duration
+      animationEndTime = performance.now() + maxDelay + (FLIP_DURATION * 1000); // convert to ms
+    }
+
     // ── Keyboard: press 1-6 to show that face on every cube
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Block input while animating
+      if (isAnimating) return;
+
       const key = parseInt(e.key, 10);
       if (isNaN(key) || key < 1 || key > 6) return;
       e.preventDefault();
+      startAnimation();
       showFace(key);
       nextWaveTime = performance.now() + WAVE_INTERVAL; // pause auto-wave
     };
@@ -257,6 +272,12 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
       animFrameId = requestAnimationFrame(animate);
       if (!visible) return;
       const now = performance.now();
+
+      // Check if animation is complete
+      if (isAnimating && now >= animationEndTime) {
+        isAnimating = false;
+      }
+
       if (now >= nextWaveTime) {
         triggerWave();
         nextWaveTime = now + WAVE_INTERVAL;
