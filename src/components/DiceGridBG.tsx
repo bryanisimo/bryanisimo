@@ -10,7 +10,7 @@ const ROWS_MOBILE  = 10;
 const BG_COLOR = "#ffffff";
 
 const WAVE_FIRST_DELAY = 1_500; // ms before first auto-wave
-const WAVE_INTERVAL    = 3_000; // ms between auto-waves
+const WAVE_INTERVAL    = 6_000; // ms between auto-waves
 const WAVE_SPREAD      = 0.6;   // seconds for wave to cross entire grid
 const FLIP_DURATION    = 0.8;   // seconds per flip
 const Z_WOBBLE         = 0.18;  // radians peak Z wobble
@@ -141,16 +141,20 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
 
     // Pre-bake ALL 6 face textures per cube — no lazy generation, no white faces
     const meshes: THREE.Mesh[][] = [];
+    const meshPositions: Map<THREE.Mesh, { x: number; y: number; z: number }> = new Map();
+    const animatedBoxes: Set<THREE.Mesh> = new Set();
+
     for (let row = 0; row < ROWS; row++) {
       meshes[row] = [];
       for (let col = 0; col < COLS; col++) {
         const materials = SLOT_FACE_NUMS.map(() =>
-          new THREE.MeshBasicMaterial({ map: makePatternTexture() })
+          new THREE.MeshBasicMaterial({ map: makePatternTexture(), transparent: true, opacity: 0 })
         );
         const mesh = new THREE.Mesh(geometry, materials);
         const x = -gridW / 2 + cubeSize * col + cubeSize / 2;
         const y =  gridH / 2 - cubeSize * row - cubeSize / 2;
         mesh.position.set(x, y, 0);
+        meshPositions.set(mesh, { x, y, z: 0 });
         scene.add(mesh);
         meshes[row][col] = mesh;
       }
@@ -162,7 +166,41 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
       targetX: number,
       targetY: number,
       delay: number,
+      fadeInOpacity: boolean = false,
     ) {
+      const isFirstAnimation = !animatedBoxes.has(mesh);
+      animatedBoxes.add(mesh);
+
+      // Fade in opacity on first wave
+      if (fadeInOpacity && mesh.material instanceof Array) {
+        mesh.material.forEach((mat: THREE.Material) => {
+          gsap.to(mat, {
+            opacity: 1,
+            duration: FLIP_DURATION,
+            delay,
+            ease: "power2.inOut",
+          });
+        });
+      }
+
+      // First animation: drop from above instead of rotating
+      if (isFirstAnimation && fadeInOpacity) {
+        const pos = meshPositions.get(mesh);
+        if (pos) {
+          // Set position to above the grid
+          mesh.position.y = H / 2 + 100;
+          // Animate drop to target position
+          gsap.to(mesh.position, {
+            y: pos.y,
+            duration: FLIP_DURATION,
+            delay,
+            ease: "back.out(1.7)",
+          });
+        }
+        return;
+      }
+
+      // Subsequent animations: normal rotation
       const wobbleDir = Math.random() < 0.5 ? 1 : -1;
 
       // Linear proxy drives Z wobble: sin(t*π) = bell curve peaking at t=0.5
@@ -191,6 +229,11 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
     // ── Auto-wave: all cubes step -π/2 on a shared axis, diagonal propagation
     function triggerWave() {
       startAnimation();
+      const isFirstWave = !firstWaveOccurred;
+      if (isFirstWave) {
+        firstWaveOccurred = true;
+      }
+
       const corner   = Math.floor(Math.random() * 4);
       const startRow = corner < 2 ? 0 : ROWS - 1;
       const startCol = corner % 2 === 0 ? 0 : COLS - 1;
@@ -204,7 +247,7 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
           const mesh  = meshes[row][col];
           const tx    = axis === "x" ? mesh.rotation.x - Math.PI / 2 : mesh.rotation.x;
           const ty    = axis === "y" ? mesh.rotation.y - Math.PI / 2 : mesh.rotation.y;
-          animateCube(mesh, tx, ty, delay);
+          animateCube(mesh, tx, ty, delay, isFirstWave);
         }
       }
     }
@@ -244,6 +287,9 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
       const maxDelay = WAVE_SPREAD; // diagonal wave propagates over this duration
       animationEndTime = performance.now() + maxDelay + (FLIP_DURATION * 1000); // convert to ms
     }
+
+    // ── First wave tracking: make boxes visible on first animation
+    let firstWaveOccurred = false;
 
     // ── Keyboard: press 1-6 to show that face on every cube
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -297,9 +343,16 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
       window.removeEventListener("keydown", handleKeyDown);
       for (let row = 0; row < ROWS; row++) {
         for (let col = 0; col < COLS; col++) {
-          gsap.killTweensOf(meshes[row][col].rotation);
+          const mesh = meshes[row][col];
+          gsap.killTweensOf(mesh.rotation);
+          gsap.killTweensOf(mesh.position);
+          if (mesh.material instanceof Array) {
+            mesh.material.forEach((mat) => gsap.killTweensOf(mat));
+          }
         }
       }
+      meshPositions.clear();
+      animatedBoxes.clear();
       renderer.dispose();
       geometry.dispose();
       if (mount && mount.contains(renderer.domElement)) {
