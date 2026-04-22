@@ -3,8 +3,8 @@ import * as THREE from "three";
 import gsap from "gsap";
 
 // ─── Tunables ────────────────────────────────────────────────────────────────
-const COLS_DESKTOP = 10;
-const ROWS_DESKTOP = 8;
+const COLS_DESKTOP = 20;
+const ROWS_DESKTOP = 16;
 const COLS_MOBILE  = 8;
 const ROWS_MOBILE  = 10;
 const BG_COLOR = "#ffffff";
@@ -15,9 +15,12 @@ const WAVE_SPREAD      = 0.6;   // seconds for wave to cross entire grid
 const FLIP_DURATION    = 0.8;   // seconds per flip
 const Z_WOBBLE         = 0.18;  // radians peak Z wobble
 
-const FACE_COLORS = [
-  "#3da5d9", "#e84855", "#f9c74f", "#43aa8b",
-  "#9b5de5", "#f77f00", "#2d6a4f", "#c77dff",
+// Color pairs: each pair represents [primary, secondary] for patterns
+const FACE_COLOR_PAIRS: Array<[string, string]> = [
+  ["#4fc6e3", "#1985a1"], // cyan pair
+  ["#e71d36", "#fe4a49"], // red pair
+  ["#ffae03", "#ffbe33"], // gold pair
+  ["#4da852", "#9bc53d"], // green pair
 ];
 
 // ─── Face / slot mapping ──────────────────────────────────────────────────────
@@ -39,26 +42,18 @@ const FACE_ROTATION: Record<number, { rx: number; ry: number }> = {
 };
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
-function pickColor(): string {
-  return FACE_COLORS[Math.floor(Math.random() * FACE_COLORS.length)];
+function pickColorPair(): [string, string] {
+  return FACE_COLOR_PAIRS[Math.floor(Math.random() * FACE_COLOR_PAIRS.length)];
 }
 
-function pickDifferentColor(from: string): string {
-  let c = pickColor();
-  let tries = 0;
-  while (c === from && tries++ < 10) c = pickColor();
-  return c;
-}
-
-function makePatternTexture(faceNum: number): THREE.CanvasTexture {
+function makePatternTexture(): THREE.CanvasTexture {
   const size = 256;
   const canvas = document.createElement("canvas");
   canvas.width  = size;
   canvas.height = size;
   const ctx = canvas.getContext("2d")!;
 
-  const c1 = pickColor();
-  const c2 = pickDifferentColor(c1);
+  const [c1, c2] = pickColorPair();
   const family = Math.floor(Math.random() * 3);
 
   if (family === 0) {
@@ -98,17 +93,6 @@ function makePatternTexture(faceNum: number): THREE.CanvasTexture {
     ctx.closePath();
     ctx.fill();
   }
-
-  ctx.save();
-  ctx.font         = `bold ${size * 0.46}px Arial, sans-serif`;
-  ctx.textAlign    = "center";
-  ctx.textBaseline = "middle";
-  ctx.lineWidth    = size * 0.06;
-  ctx.strokeStyle  = "rgba(255,255,255,0.65)";
-  ctx.strokeText(String(faceNum), size / 2, size / 2);
-  ctx.fillStyle    = "#000000";
-  ctx.fillText(String(faceNum), size / 2, size / 2);
-  ctx.restore();
 
   const tex = new THREE.CanvasTexture(canvas);
   tex.needsUpdate = true;
@@ -160,8 +144,8 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
     for (let row = 0; row < ROWS; row++) {
       meshes[row] = [];
       for (let col = 0; col < COLS; col++) {
-        const materials = SLOT_FACE_NUMS.map(n =>
-          new THREE.MeshBasicMaterial({ map: makePatternTexture(n) })
+        const materials = SLOT_FACE_NUMS.map(() =>
+          new THREE.MeshBasicMaterial({ map: makePatternTexture() })
         );
         const mesh = new THREE.Mesh(geometry, materials);
         const x = -gridW / 2 + cubeSize * col + cubeSize / 2;

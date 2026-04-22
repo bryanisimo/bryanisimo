@@ -9,7 +9,7 @@
   --color-brand-red: #FB0B3F;
 
   --spacing-section: 8rem;
-  /*/
+
   --color-sky-aqua: #4fc6e3;
   --color-bondi-blue: #1985a1;
   --color-strawberry-red: #e71d36;
@@ -19,6 +19,15 @@
   --color-medium-jungle: #4da852;
   --color-yellow-green: #9bc53d;
   --color-ink-black: #001021;
+
+  /*/
+  const FACE_COLORS = [
+    "#4fc6e3", "#1985a1",
+    "#e71d36", "#fe4a49",
+    "#ffae03", "#ffbe33",
+    "#4da852", "#9bc53d",
+  ];
+
   /*/
 }
 
