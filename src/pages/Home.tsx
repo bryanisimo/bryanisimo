@@ -10,8 +10,10 @@ const Home = () => {
       <Hero />
       <AboutMe />
       <Experience />
-      <RemarcableProjects />
-      <AwardsSection />
+      <div className='grid grid-cols-1 xl:grid-cols-2 xl:gap-12'>
+        <RemarcableProjects className='max-w-xl' />
+        <AwardsSection className='max-w-xl' />
+      </div>
     </main>
   );
 };

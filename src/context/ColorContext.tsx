@@ -22,7 +22,7 @@ const COLOR_SEQUENCE: LogoColorKey[] = [
 ];
 
 // Development mode: 2 seconds, Production mode: 10 seconds
-const COLOR_ROTATION_INTERVAL = import.meta.env.DEV ? 2000 : 10000;
+const COLOR_ROTATION_INTERVAL = import.meta.env.DEV ? 10000 : 10000;
 
 interface ColorContextType {
   currentColor: LogoColorKey;

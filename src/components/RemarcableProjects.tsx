@@ -1,15 +1,16 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { projects } from '../data/projects';
+import { twMerge } from 'tailwind-merge';
 
-const RemarcableProjects = () => {
+const RemarcableProjects = ({ className }: { className?: string }) => {
   return (
-    <section className="my-24 container-custom" id="projects">
+    <section className={twMerge(`my-12 bg-slate-950 py-12 px-8 text-white max-w-xl mx-auto xl:max-w-full`, className)} id="projects">
       <div className="flex justify-between items-center mb-16">
         <h2 className="text-4xl font-bold">Remarkable Projects</h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div className="flex flex-col gap-12">
         {projects.map((project) => (
           <Link to={`/project/${project.id}`} key={project.id}>
             <motion.div

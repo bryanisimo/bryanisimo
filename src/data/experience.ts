@@ -14,6 +14,7 @@ export interface Experience {
     start: string;
     end: string;
     duration: string;
+    short: string;
   }
   summary: string;
   highlights: string[];
@@ -32,6 +33,7 @@ export const experiences: Experience[] = [
     company: "Verbal+Visual",
     location: "CA, USA (Remote)",
     period: {
+      short: "2024 2y",
       start: "May 2024",
       end: "Present",
       duration: "2y"
@@ -59,6 +61,7 @@ export const experiences: Experience[] = [
     company: "CLARA",
     location: "Mexico City, Mexico",
     period: {
+      short: "2021 ~3y",
       start: "Jun 2021",
       end: "Apr 2024",
       duration: "2y 11m"
@@ -87,6 +90,7 @@ export const experiences: Experience[] = [
     company: "TRIVU",
     location: "Mexico City, Mexico",
     period: {
+      short: "2020 ~1y",
       start: "Mar 2020",
       end: "May 2021",
       duration: "1y 3m"
@@ -114,6 +118,7 @@ export const experiences: Experience[] = [
     company: "Half Helix (Now Domaine)",
     location: "NY, USA (Remote)",
     period: {
+      short: "2019 ~1y",
       start: "Jun 2019",
       end: "Feb 2020",
       duration: "9m"
@@ -139,6 +144,7 @@ export const experiences: Experience[] = [
     company: "KTBO",
     location: "Mexico City, Mexico",
     period: {
+      short: "2014 ~5y",
       start: "Nov 2014",
       end: "May 2019",
       duration: "4y 7m"
@@ -172,6 +178,7 @@ export const experiences: Experience[] = [
     company: "KTC",
     location: "Mexico City, Mexico",
     period: {
+      short: "2010 ~4y",
       start: "Sep 2010",
       end: "Oct 2014",
       duration: "4y 2m"
@@ -199,6 +206,7 @@ export const experiences: Experience[] = [
     company: "El Recreo",
     location: "Mexico City, Mexico",
     period: {
+      short: "2009 ~2y",
       start: "Mar 2009",
       end: "Aug 2010",
       duration: "1y 6m"
@@ -225,6 +233,7 @@ export const experiences: Experience[] = [
     company: "Autofin",
     location: "Mexico City, Mexico",
     period: {
+      short: "2008 ~½y",
       start: "Aug 2008",
       end: "Feb 2009",
       duration: "7m"
@@ -247,6 +256,7 @@ export const experiences: Experience[] = [
     company: "Chángolos",
     location: "Mexico City, Mexico",
     period: {
+      short: "2006 ~2y",
       start: "May 2006",
       end: "Jul 2008",
       duration: "2y 3m"
@@ -274,6 +284,7 @@ export const experiences: Experience[] = [
     company: "Freelancer",
     location: "Mexico City, Mexico",
     period: {
+      short: "Occasional",
       start: "Occasional",
       end: "",
       duration: ""

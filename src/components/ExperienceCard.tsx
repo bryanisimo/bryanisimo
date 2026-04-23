@@ -208,7 +208,7 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
           {experience.company}
         </h4>
         <h4 className="text-[10px] uppercase tracking-[0.2em] mb-0 font-bold text-gray-400">
-          {experience.period.start}{experience.period.duration ? `, ${experience.period.duration}` : ''}
+          {experience.period.short}
         </h4>
       </Link>
     </motion.div>
