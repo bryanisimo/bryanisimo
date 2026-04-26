@@ -29,11 +29,11 @@ export interface Experience {
 export const experiences: Experience[] = [
   {
     id: "verbal-visual",
-    role: "Senior Full Stack Developer",
+    role: "Sr. Full Stack Developer",
     company: "Verbal+Visual",
     location: "CA, USA (Remote)",
     period: {
-      short: "2024 2y",
+      short: "2024 ~2y",
       start: "May 2024",
       end: "Present",
       duration: "2y"
@@ -114,7 +114,7 @@ export const experiences: Experience[] = [
   },
   {
     id: "half-helix",
-    role: "Senior Front End Developer",
+    role: "Sr. Front End Developer",
     company: "Half Helix (Now Domaine)",
     location: "NY, USA (Remote)",
     period: {
@@ -202,7 +202,7 @@ export const experiences: Experience[] = [
   },
   {
     id: "el-recreo",
-    role: "Jr Developer",
+    role: "Jr. Developer",
     company: "El Recreo",
     location: "Mexico City, Mexico",
     period: {

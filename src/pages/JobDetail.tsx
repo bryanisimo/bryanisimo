@@ -76,47 +76,11 @@ const JobDetail = () => {
       </div>
 
       <div className="container-custom">
-        <div className="flex flex-col-reverse md:flex-row-reverse gap-8 lg:gap-16">
-          {/* Right Column: Scrollable Media */}
-          <div className="w-full md:w-1/2 lg:w-2/3">
-            <div className="flex flex-col gap-4 p-4 md:p-8 lg:p-12">
-              {experience.media?.map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  className="relative cursor-pointer overflow-hidden rounded-sm bg-brand-gray aspect-video"
-                  initial={{ opacity: 0.4, y: -50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                  onClick={() => setIndex(idx)}
-                >
-                  {item.type === 'image' ? (
-                    <img
-                      src={getAssetPath(item.url)}
-                      alt={experience.company}
-                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                    />
-                  ) : (
-                    <div className="w-full h-full relative group">
-                      <img
-                        src={item.thumbnail ? getAssetPath(item.thumbnail) : "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=2000"}
-                        className="w-full h-full object-cover"
-                        alt="video thumbnail"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center bg-slate-950/20 group-hover:bg-slate-950/30 transition-colors">
-                        <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/50 transition-transform group-hover:scale-110">
-                          <Play className="text-white fill-white ml-1" size={32} />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
-          </div>
+        <div className="flex flex-col gap-8 lg:gap-16">
+
 
           {/* Left Column: Fixed Content */}
-          <div className="w-full md:w-1/2 lg:w-1/3 md:sticky md:top-32 h-fit">
+          <div className="w-full mx-auto max-w-lg md:max-w-xl ">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -161,7 +125,7 @@ const JobDetail = () => {
               <div className="flex flex-wrap gap-12 text-xs uppercase tracking-widest font-bold mb-12">
                 <div>
                   <p className="text-gray-400 mb-2">Duration</p>
-                  <p>{experience.period}</p>
+                  <p>{experience.period.start} - {experience.period.end} <span className="font-normal text-gray-400">({experience.period.duration})</span></p>
                 </div>
                 <div>
                   <p className="text-gray-400 mb-2">Location</p>
@@ -210,6 +174,44 @@ const JobDetail = () => {
                 </div>
               </div>
             </motion.div>
+          </div>
+
+          {/* Right Column: Scrollable Media */}
+          <div className="w-full mx-auto max-w-lg md:max-w-xl ">
+            <div className="flex flex-col gap-4 p-4 md:p-8 lg:p-12">
+              {experience.media?.map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  className="relative cursor-pointer overflow-hidden rounded-sm bg-brand-gray aspect-video"
+                  initial={{ opacity: 0.4, y: -50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  onClick={() => setIndex(idx)}
+                >
+                  {item.type === 'image' ? (
+                    <img
+                      src={getAssetPath(item.url)}
+                      alt={experience.company}
+                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full relative group">
+                      <img
+                        src={item.thumbnail ? getAssetPath(item.thumbnail) : "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=2000"}
+                        className="w-full h-full object-cover"
+                        alt="video thumbnail"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-slate-950/20 group-hover:bg-slate-950/30 transition-colors">
+                        <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/50 transition-transform group-hover:scale-110">
+                          <Play className="text-white fill-white ml-1" size={32} />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
+              ))}
+            </div>
           </div>
 
 
