@@ -9,7 +9,7 @@ const COLS_MOBILE = 8;
 const ROWS_MOBILE = 10;
 const BG_COLOR = "#ffffff";
 
-const WAVE_FIRST_DELAY = 1_500; // ms before first auto-wave
+const WAVE_FIRST_DELAY = 600; // ms before first auto-wave
 const WAVE_INTERVAL = 6_000; // ms between auto-waves
 const WAVE_SPREAD = 1.6; // seconds for wave to cross entire grid
 const FLIP_DURATION = 0.5; // seconds per flip
@@ -328,7 +328,7 @@ export function DiceGridBG({ className }: DiceGridBGProps) {
     }
 
     // ── Auto-wave timer
-    let nextWaveTime = performance.now() + WAVE_FIRST_DELAY;
+    let nextWaveTime = performance.now() + 500;
 
     // ── Animation blocking: prevent input during transitions
     let isAnimating = false;
