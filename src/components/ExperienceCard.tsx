@@ -4,7 +4,7 @@ import { Experience } from '../data/experience';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { getAssetPath } from '../utils/paths';
-// @ts-ignore
+// @ts-expect-error - Vanta has no TypeScript declarations
 import NET from 'vanta/dist/vanta.net.min';
 
 interface ExperienceCardProps {
@@ -201,11 +201,14 @@ const ExperienceCard = ({ experience, index }: ExperienceCardProps) => {
             <span className="px-3 py-1 bg-slate-950 text-white text-[10px] uppercase tracking-widest font-bold shadow-sm">View Job</span>
           </div>
         </div>
-        <h5 className="text-2xl md:text-3xl font-bold group-hover:underline decoration-1 underline-offset-8 transition-all mb-1 mt-2">
+        <h5 className="text-xl md:text-2xl font-bold group-hover:underline decoration-1 underline-offset-8 transition-all mb-2 mt-2">
           {experience.role}
         </h5>
-        <h4 className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2 font-bold">
+        <h4 className="text-[10px] uppercase tracking-[0.2em] mb-2 font-bold">
           {experience.company}
+        </h4>
+        <h4 className="text-[10px] uppercase tracking-[0.2em] mb-0 font-bold text-gray-400">
+          {experience.period.short}
         </h4>
       </Link>
     </motion.div>

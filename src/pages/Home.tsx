@@ -10,8 +10,10 @@ const Home = () => {
       <Hero />
       <AboutMe />
       <Experience />
-      <RemarcableProjects />
-      <AwardsSection />
+      <div className='container-custom grid grid-cols-1 lg:grid-cols-2 gap-12 my-24'>
+        <RemarcableProjects />
+        <AwardsSection />
+      </div>
     </main>
   );
 };

@@ -1,32 +1,34 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
+import { awards } from "../data/awards";
+import { Play } from "lucide-react";
+import { twMerge } from "tailwind-merge";
+import { useState } from "react";
+
 import Lightbox from "yet-another-react-lightbox";
 import Video from "yet-another-react-lightbox/plugins/video";
-import "yet-another-react-lightbox/styles.css";
-import { awards } from '../data/awards';
 
-const AwardsSection = () => {
+import "yet-another-react-lightbox/styles.css";
+
+const AwardsSection = ({ className }: { className?: string }) => {
   const [index, setIndex] = useState(-1);
 
   // Prepare slides for Lightbox
   const slides = awards
-    .filter(award => award.videoUrl)
-    .map(award => {
+    .filter((award) => award.videoUrl)
+    .map((award) => {
       // Convert standard YouTube URL to embed URL
       let embedUrl = award.videoUrl!;
-      if (embedUrl.includes('youtube.com/watch?v=')) {
-        const videoId = embedUrl.split('v=')[1]?.split('&')[0];
+      if (embedUrl.includes("youtube.com/watch?v=")) {
+        const videoId = embedUrl.split("v=")[1]?.split("&")[0];
         embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-      } else if (embedUrl.includes('youtu.be/')) {
-        const videoId = embedUrl.split('youtu.be/')[1]?.split('?')[0];
+      } else if (embedUrl.includes("youtu.be/")) {
+        const videoId = embedUrl.split("youtu.be/")[1]?.split("?")[0];
         embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
       }
 
       return {
         type: "youtube" as const, // Custom type
         embedUrl,
-        originalUrl: award.videoUrl
+        originalUrl: award.videoUrl,
       };
     });
 
@@ -34,7 +36,9 @@ const AwardsSection = () => {
     // Find the correct index in the filtered slides array
     const award = awards[awardIndex];
     if (award.videoUrl) {
-      const slideIndex = slides.findIndex(s => s.originalUrl === award.videoUrl);
+      const slideIndex = slides.findIndex(
+        (s) => s.originalUrl === award.videoUrl,
+      );
       if (slideIndex !== -1) {
         setIndex(slideIndex);
       }
@@ -42,46 +46,50 @@ const AwardsSection = () => {
   };
 
   return (
-    <section className="my-24 container-custom ">
-      <div className='bg-slate-950 py-24 px-12 text-white'>
-
-        <div className="mb-16">
-          <h3 className="text-4xl md:text-6xl font-bold">Award-Winning Projects 🏆</h3>
-        </div>
-
-        <div className="space-y-0 -mx-4">
-          {awards.map((award, index) => (
-            <motion.button
-              key={award.award}
-              onClick={() => award.videoUrl && openLightbox(index)}
-              className={`w-full text-left group py-12 border-b border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 ${award.videoUrl ? 'cursor-pointer hover:bg-white/5' : 'cursor-default'} px-4 transition-colors`}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <div>
-                <span className="text-xs uppercase tracking-widest text-gray-500 block mb-2">{award.award}</span>
-                <div className="flex items-center gap-4">
-                  <h4 className="text-3xl font-bold group-hover:underline underline-offset-8 transition-all duration-300">{award.project}</h4>
-                  {award.videoUrl && (
-                    <div
-                      className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all group-hover:scale-110"
-                      aria-label={`Watch ${award.project} video`}
-                    >
-                      <Play className="fill-white w-4 h-4 ml-1" />
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="text-right">
-                <span className="text-lg text-gray-400">{award.year}</span>
-              </div>
-            </motion.button>
-          ))}
-        </div>
-
+    <section
+      className={twMerge(
+        `flex flex-col text-white bg-[#B583D9] p-8`,
+        className,
+      )}
+      id="awards"
+    >
+      <div className="mb-8">
+        <h2 className="text-4xl font-bold">Award-Winning Projects</h2>
       </div>
+
+      <div className="flex flex-col gap-6">
+        {awards.map((award, idx) => (
+          <div
+            key={award.award}
+            onClick={() => award.videoUrl && openLightbox(idx)}
+            className={twMerge(
+              `group w-full text-left p-8 border
+              flex items-center justify-between gap-6
+              bg-[#D5AFF0]/40  border-[#D5AFF0]/10
+              cursor-pointer transition-all`,
+              award.videoUrl ? "hover:bg-[#D5AFF0]/50" : "cursor-default",
+            )}
+          >
+            <div className="flex items-center gap-6">
+              <div className="w-16 h-16 bg-white/10 flex-shrink-0 flex items-center justify-center">
+                <img src={`/bryanisimo/${award.awardImg}`} alt={award.award} className="w-full h-full object-contain" />
+              </div>
+              <div>
+                <h4 className="text-xl font-bold mb-1">{award.project}</h4>
+                <span className="text-sm text-gray-400 block">
+                  {award.award}, {award.year}
+                </span>
+              </div>
+            </div>
+            {award.videoUrl && (
+              <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-white/20 transition-colors">
+                <Play className="fill-white w-4 h-4 ml-1" />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
       <Lightbox
         index={index}
         slides={slides as any}
@@ -108,7 +116,7 @@ const AwardsSection = () => {
               );
             }
             return undefined;
-          }
+          },
         }}
       />
     </section>
