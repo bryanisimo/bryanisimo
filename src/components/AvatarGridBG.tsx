@@ -74,7 +74,7 @@ const Block = forwardRef<BlockHandle, BlockProps>(({ index, size, x, y }, ref) =
       const radius = size / 2;
 
       // Quarter circles in any corner (fully randomized)
-      let pathData = "";
+      let pathData: string;
 
       if (corner === 0) {
         // Quarter circle in bottom-right corner
@@ -104,7 +104,7 @@ const Block = forwardRef<BlockHandle, BlockProps>(({ index, size, x, y }, ref) =
       pathRef.current!.setAttribute("fill", secondary);
     } else if (state.shape === "split") {
       const dir = state.splitDir || 0;
-      let splitPath = "";
+      let splitPath: string;
 
       if (dir === 0) {
         // Horizontal split - top half

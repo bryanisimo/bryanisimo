@@ -14,6 +14,10 @@ export default tseslint.config(
     rules: {
       // Disable the "is declared but its value is never read" rule
       '@typescript-eslint/no-unused-vars': 'off',
+      // Allow `any` — used legitimately with Three.js, Vanta and Lightbox
+      '@typescript-eslint/no-explicit-any': 'off',
+      // Allow declare global namespace for JSX intrinsic elements
+      '@typescript-eslint/no-namespace': 'off',
     },
   },
 )

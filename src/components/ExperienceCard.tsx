@@ -4,7 +4,7 @@ import { Experience } from '../data/experience';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { getAssetPath } from '../utils/paths';
-// @ts-ignore
+// @ts-expect-error - Vanta has no TypeScript declarations
 import NET from 'vanta/dist/vanta.net.min';
 
 interface ExperienceCardProps {
